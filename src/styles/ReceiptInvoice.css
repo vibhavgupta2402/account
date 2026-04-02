@@ -1,0 +1,155 @@
+/* ================= MAIN ================= */
+.receipt-wrapper {
+  background: white;
+  padding: 16px 20px;
+  font-family: Arial;
+}
+
+/* ================= HEADER ================= */
+.receipt-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.receipt-date {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.receipt-date input {
+  height: 26px;
+}
+
+/* ================= LEDGER ================= */
+.receipt-ledger {
+  margin: 10px 0;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.receipt-ledger select {
+  width: 220px;
+  height: 26px;
+}
+
+/* ================= LINE ================= */
+hr {
+  border: none;
+  border-top: 1px solid #333;
+  margin: 10px 0;
+}
+
+/* ================= SEARCH ================= */
+.R-customer-header {
+  display: flex;
+  gap: 10px;
+}
+
+.R-customer-header input {
+  width: 170px;
+  height: 26px;
+  border: 1px solid #999;
+}
+
+.R-new-btn {
+  background: red;
+  border-radius: 8px;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+}
+
+/* ================= TABLE ================= */
+.R-table-head {
+  display: grid;
+  grid-template-columns: 317px 193px 193px 167px;
+  margin-top: 10px;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.R-table-head span:first-child {
+  visibility: hidden;
+}
+
+.R-customer-row {
+  display: grid;
+  grid-template-columns: 300px 180px 180px 180px;
+  gap: 10px;
+  margin-top: 10px;
+  align-items: center;
+}
+
+.R-customer-name {
+  font-weight: bold;
+}
+
+.R-customer-row input {
+  width: 100%;
+  height: 26px;
+  border: 1px solid #999;
+}
+
+/* ================= TOTAL ================= */
+.R-total-section {
+  display: grid;
+  grid-template-columns: 1fr 180px;
+  margin-top: 10px;
+}
+
+.total-section input {
+  height: 26px;
+}
+
+/* ================= NARRATION ================= */
+.narration {
+  margin-top: 15px;
+}
+
+.narration textarea {
+  width: 450px;
+  height: 90px;
+  border: 1px solid #999;
+}
+
+/* ================= BUTTONS ================= */
+.R-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.R-save-btn {
+  background: green;
+  border-radius: 8px;
+  color: white;
+  padding: 6px 14px;
+  border: none;
+}
+
+.R-send-btn {
+  background: #3aaed8;
+  border-radius: 8px;
+  color: white;
+  padding: 6px 14px;
+  border: none;
+}
+
+.R-print-btn {
+  background: #e83e8c;
+  border-radius: 8px;
+  color: white;
+  padding: 6px 14px;
+  border: none;
+}
+
+.R-cancel-btn {
+  background: red;
+  border-radius: 8px;
+  color: white;
+  padding: 6px 14px;
+  border: none;
+}

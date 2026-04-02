@@ -1,0 +1,234 @@
+/* ================== LAYOUT ================== */
+
+.purchase-order-app {
+  width: 100%;
+}
+
+/* sidebar spacing */
+.po-main-content {
+  margin-left: 250px;
+  margin-top: 65px;
+  padding: 15px;
+  transition: 0.3s;
+}
+
+.po-main-content.collapsed {
+  margin-left: 80px;
+}
+
+/* ================== WRAPPER ================== */
+
+.po-wrapper {
+  background: #ffffff;
+  padding: 15px;
+  border-radius: 8px;
+}
+
+/* ================== HEADER ================== */
+
+.po-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.po-header-row h2 {
+  font-size: 18px;
+}
+
+/* ================== SECTION ================== */
+
+.po-card {
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.po-card h3 {
+  font-size: 15px;
+  margin-bottom: 6px;
+}
+
+/* ================== GRID ================== */
+
+.po-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+
+.po-grid-3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 6px;
+}
+
+.po-full {
+  grid-column: span 2;
+}
+
+/* ================== FORM ================== */
+
+.po-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.po-form-group label {
+  font-size: 12px;
+}
+
+/* INPUT */
+.po-input,
+.po-select,
+.po-textarea {
+  height: 30px;
+  padding: 3px 6px;
+  font-size: 13px;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+}
+
+.po-textarea {
+  height: auto;
+  min-height: 70px;
+  resize: vertical;
+}
+
+/* ================== SUPPLIER BLOCK ================== */
+
+.po-supplier-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.po-supplier-card {
+  border: 1px solid #e5e7eb;
+  padding: 8px;
+  border-radius: 6px;
+  background: #f9fafb;
+}
+
+.po-supplier-card h4 {
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+
+.po-add-btn {
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  font-size: 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* ================== TABLE ================== */
+
+.po-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.po-table th {
+  background: #1e293b;
+  color: white;
+  font-size: 12px;
+  padding: 6px;
+}
+
+.po-table td {
+  border: 1px solid #e5e7eb;
+  padding: 4px;
+}
+
+.po-table input,
+.po-table select {
+  width: 100%;
+  height: 28px;
+  font-size: 12px;
+}
+
+/* ================== ADD ROW ================== */
+
+.po-add-row-btn {
+  margin-top: 6px;
+  padding: 5px 10px;
+  font-size: 12px;
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* ================== NOTES ================== */
+
+.po-notes {
+  width: 60%;
+}
+
+.po-notes textarea {
+  width: 100%;
+}
+
+/* ================== SUMMARY ================== */
+
+.po-summary-box {
+  width: 260px;
+  margin-left: auto;
+  margin-top: 10px;
+  border: 1px solid #e5e7eb;
+  padding: 8px;
+  font-size: 13px;
+}
+
+.po-summary-box div {
+  margin-bottom: 5px;
+}
+
+.po-summary-box .po-total {
+  font-weight: bold;
+}
+
+/* ================== FOOTER ================== */
+
+.po-footer-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.po-footer-actions button {
+  padding: 6px 12px;
+  font-size: 13px;
+  border: none;
+  border-radius: 4px;
+}
+
+/* buttons */
+.po-footer-actions button:nth-child(1) {
+  background: green;
+  color: white;
+}
+
+.po-footer-actions button:nth-child(2) {
+  background: blue;
+  color: white;
+}
+
+.po-footer-actions button:nth-child(3) {
+  background: orange;
+  color: white;
+}
+
+.po-footer-actions button:nth-child(4) {
+  background: red;
+  color: white;
+}

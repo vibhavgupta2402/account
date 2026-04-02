@@ -1,0 +1,167 @@
+/* ================= MAIN ================= */
+.contra-wrapper {
+  background: white;
+  padding: 18px 22px;
+  min-height: 100vh;
+  font-family: Arial;
+}
+
+/* ================= HEADER ================= */
+.contra-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.contra-header h2 {
+  margin: 0;
+}
+
+.contra-date {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.contra-date input {
+  height: 26px;
+  width: 150px;
+}
+
+/* ================= MODE ================= */
+.contra-mode {
+  margin-top: 15px;
+}
+
+.contra-mode select {
+  margin-left: 10px;
+  height: 28px;
+  width: 200px;
+}
+
+/* ================= LINE ================= */
+hr {
+  border: none;
+  border-top: 1px solid #ccc;
+  margin: 18px 0;
+}
+
+/* ================= LEDGER ================= */
+.contra-ledger {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+}
+
+.contra-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.contra-row label {
+  width: 120px;
+  font-weight: 600;
+}
+
+.contra-row input {
+  flex: 1;
+  height: 26px;
+  border: 1px solid #ccc;
+  padding: 4px 6px;
+}
+
+/* ================= EXTRA ================= */
+.contra-extra {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin-top: 15px;
+  gap: 20px;
+}
+
+/* ================= TOTAL ================= */
+.contra-total {
+  display: grid;
+  grid-template-columns: 1fr 150px;
+  align-items: center;
+}
+
+.contra-total span {
+  text-align: right;
+  padding-right: 10px;
+  font-weight: 600;
+}
+
+.contra-total input {
+  height: 26px;
+  border: 1px solid #ccc;
+}
+
+/* ================= NARRATION ================= */
+.contra-narration {
+  margin-top: 15px;
+}
+.contra-narration label{
+  display: block;
+  margin-top: 8px;
+
+}
+.contra-narration textarea {
+  width: 450px;
+  height: 90px;
+  border: 1px solid #ccc;
+  
+}
+.contra-actions{
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--ledger-border-light);
+}
+
+/* ================= BUTTONS ================= */
+.cont-save-btn,
+.cont-cancel-btn {
+  padding: 10px 24px;
+  border: none;
+  border-radius: var(--ledger-radius-md);
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  transition: var(--ledger-transition);
+  letter-spacing: 0.3px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cont-save-btn {
+  background: linear-gradient(135deg, var(--ledger-success), #059669);
+  color: white;
+  box-shadow: 0 2px 4px rgba(16, 185, 129, 0.2);
+}
+
+.cont-save-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(16, 185, 129, 0.25);
+  filter: brightness(1.05);
+}
+
+.cont-cancel-btn {
+  background: linear-gradient(135deg, var(--ledger-danger), #DC2626);
+  color: white;
+  box-shadow: 0 2px 4px rgba(239, 68, 68, 0.2);
+}
+
+.cont-cancel-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(239, 68, 68, 0.25);
+  filter: brightness(1.05);
+}
+
+.cont-save-btn:active,
+.cont-cancel-btn:active {
+  transform: translateY(0);
+}

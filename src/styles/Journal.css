@@ -1,0 +1,146 @@
+/* ================= MAIN ================= */
+.journal-wrapper {
+  background: white;
+  padding: 16px 20px;
+  font-family: Arial;
+  min-height: 100vh;
+}
+
+/* ================= HEADER ================= */
+.journal-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.journal-header h2 {
+  margin: 0;
+}
+
+.journal-date {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.journal-date input {
+  height: 24px;
+  width: 140px;
+}
+
+/* ================= LEDGER ================= */
+.ledger-select {
+  margin: 12px 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ledger-select select {
+  width: 220px;
+  height: 24px;
+}
+
+/* ================= LINE ================= */
+hr {
+  border: none;
+  border-top: 1px solid #333;
+  margin: 12px 0;
+}
+
+/* ================= TABLE HEADER ================= */
+.journal-table-head {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+/* RIGHT ALIGN */
+.right {
+  text-align: left;
+}
+
+/* ================= ROW ================= */
+.journal-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1fr;  /* ✅ match header */
+  gap: 8px;   /* ❌ remove 580px */
+  margin-top: 8px;
+}
+
+.journal-row input,
+.journal-row select {
+  width: 100%;
+  height: 28px;
+  padding: 4px 6px;
+  border: 1px solid #333;
+  font-size: 12px;
+  box-sizing: border-box;
+}
+
+/* AMOUNT ALIGN RIGHT */
+.amount-input {
+  text-align: right;
+}
+
+/* ================= TOTAL ================= */
+.J-total-section {
+  display: grid;
+  grid-template-columns: 1fr 150px;
+  margin-top: 10px;
+  align-items: center;
+}
+
+.J-total-section span {
+  text-align: right;
+  padding-right: 10px;
+}
+
+.J-total-section input {
+  height: 24px;
+  border: 1px solid #333;
+}
+
+/* ================= NARRATION ================= */
+.J-narration {
+  margin-top: 15px;
+}
+
+.J-narration label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.J-narration textarea {
+  width: 450px;
+  height: 90px;
+  padding: 6px;
+  border: 1px solid #999;
+  resize: none;
+  font-size: 13px;
+}
+
+/* ================= BUTTONS ================= */
+.J-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.J-save-btn {
+  background: green;
+  color: white;
+  padding: 5px 14px;
+  border: none;
+}
+
+.J-cancel-btn {
+  background: red;
+  color: white;
+  padding: 5px 14px;
+  border: none;
+}
+

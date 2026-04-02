@@ -1,0 +1,229 @@
+/* ===============================
+   CUSTOMER DETAILS SECTION
+================================ */
+
+.purchase-customer-details {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-top: 20px;
+}
+.add-btn {
+    background: #ef4444;
+    color: #fff;
+    border: none;
+    padding: 5px 7px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+/* CARD DESIGN */
+.purchase-customer-card {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 18px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.04);
+  transition: all 0.25s ease;
+  position: relative;
+}
+
+.purchase-customer-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.06);
+}
+
+/* TITLE */
+.purchase-customer-card h4 {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 12px;
+}
+
+/* INPUT */
+.cust-input {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  font-size: 13px;
+  outline: none;
+  transition: all 0.2s ease;
+  margin-bottom: 12px;
+}
+
+.cust-input:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.15);
+}
+
+/* INFO TEXT */
+.cust-info {
+  font-size: 13px;
+  color: #475569;
+  line-height: 1.6;
+}
+
+.cust-info p {
+  margin: 2px 0;
+}
+
+.cust-info b {
+  color: #0f172a;
+  font-weight: 600;
+}
+
+/* EDIT BUTTON */
+.pur-edit-btn {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  background: #eff6ff;
+  color: #2563eb;
+  border: none;
+  font-size: 12px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.edit-btn:hover {
+  background: #2563eb;
+  color: #ffffff;
+}
+
+.purchase-narration {
+  margin-top: 15px;
+}
+.purchase-narration label{
+  display: block;
+  margin-top: 8px;
+
+}
+.purchase-narration textarea {
+  width: 450px;
+  height: 90px;
+  border: 1px solid #ccc;
+}
+/* ===============================
+   CUSTOMER SEARCH (UPGRADE)
+================================ */
+
+.purchase-customer {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.purchase-customer input {
+  flex: 1;
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  font-size: 14px;
+  outline: none;
+  transition: 0.2s;
+}
+
+.purchase-customer input:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.15);
+}
+
+.new-btn {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  color: white;
+  border: none;
+  padding: 6px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.new-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.3);
+}
+.pur-actions{
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--ledger-border-light);
+}
+
+/* ================= TOTAL ================= */
+.purchase-summary {
+  display: grid;
+  grid-template-columns: 1fr 150px;
+  align-items: center;
+}
+
+.purchase-summary span {
+  text-align: right;
+  padding-right: 10px;
+  font-weight: 600;
+}
+
+.purchase-summary input {
+  height: 26px;
+  border: 1px solid #ccc;
+}
+
+/* ================= BUTTONS ================= */
+.pur-save-btn,
+.pur-cancel-btn {
+  padding: 10px 24px;
+  border: none;
+  border-radius: var(--ledger-radius-md);
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  transition: var(--ledger-transition);
+  letter-spacing: 0.3px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pur-save-btn {
+  background: linear-gradient(135deg, var(--ledger-success), #059669);
+  color: white;
+  box-shadow: 0 2px 4px rgba(16, 185, 129, 0.2);
+}
+
+.pur-save-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(16, 185, 129, 0.25);
+  filter: brightness(1.05);
+}
+
+.pur-cancel-btn {
+  background: linear-gradient(135deg, var(--ledger-danger), #DC2626);
+  color: white;
+  box-shadow: 0 2px 4px rgba(239, 68, 68, 0.2);
+}
+
+.pur-cancel-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(239, 68, 68, 0.25);
+  filter: brightness(1.05);
+}
+
+.pur-save-btn:active,
+.pur-cancel-btn:active {
+  transform: translateY(0);
+}
+
+/* ===============================
+   RESPONSIVE
+================================ */
+
+@media (max-width: 768px) {
+  .purchase-customer-details {
+    grid-template-columns: 1fr;
+  }
+}

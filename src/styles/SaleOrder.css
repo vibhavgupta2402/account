@@ -1,0 +1,205 @@
+/* ================== LAYOUT ================== */
+
+.sale-order-app {
+  width: 100%;
+}
+
+.so-main-content {
+  margin-left: 250px;
+  margin-top: 65px;
+  padding: 15px;
+  transition: 0.3s;
+}
+
+.so-main-content.collapsed {
+  margin-left: 80px;
+}
+
+/* ================== WRAPPER ================== */
+
+.so-wrapper {
+  background: #ffffff;
+  padding: 15px;
+  border-radius: 8px;
+}
+
+/* ================== CARD ================== */
+
+.so-card {
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+.so-header-row h2 {
+  font-size: 18px;
+}
+
+
+/* ================== HEADER ================== */
+
+.so-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 15px;
+}
+
+/* ================== GRID ================== */
+
+.so-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+
+.so-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+}
+
+/* ================== FORM ================== */
+
+.so-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.so-form-group label {
+  font-size: 12px;
+}
+
+/* INPUT */
+.so-input,
+.so-select,
+.so-textarea {
+  height: 30px;
+  padding: 3px 6px;
+  font-size: 13px;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+}
+
+.so-textarea {
+  height: auto;
+  min-height: 60px;
+  resize: vertical;
+}
+
+/* ================== CUSTOMER ================== */
+
+.so-customer-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.so-customer-card {
+  border: 1px solid #e5e7eb;
+  padding: 8px;
+  border-radius: 6px;
+  background: #f9fafb;
+}
+
+.so-add-btn {
+  margin-top: 5px;
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 5px;
+  font-size: 12px;
+  border-radius: 4px;
+}
+
+/* ================== TABLE ================== */
+
+.so-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.so-table th {
+  background: #1e293b;
+  color: white;
+  font-size: 12px;
+  padding: 6px;
+}
+
+.so-table td {
+  border: 1px solid #e5e7eb;
+  padding: 4px;
+}
+
+.so-table input,
+.so-table select {
+  width: 100%;
+  height: 28px;
+}
+
+/* ================== BUTTON ================== */
+
+.so-add-row-btn {
+  margin-top: 6px;
+  padding: 5px 10px;
+  font-size: 12px;
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 4px;
+}
+
+/* ================== NOTES ================== */
+
+.so-notes {
+  width: 60%;
+}
+
+/* ================== SUMMARY ================== */
+
+.so-summary-box {
+  width: 260px;
+  margin-left: auto;
+  border: 1px solid #e5e7eb;
+  padding: 8px;
+}
+
+.so-total {
+  font-weight: bold;
+}
+
+/* ================== FOOTER ================== */
+
+.so-footer-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.so-footer-actions button {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+}
+
+.so-footer-actions button:nth-child(1) {
+  background: green;
+  color: white;
+}
+
+.so-footer-actions button:nth-child(2) {
+  background: blue;
+  color: white;
+}
+
+.so-footer-actions button:nth-child(3) {
+  background: orange;
+  color: white;
+}
+
+.so-footer-actions button:nth-child(4) {
+  background: red;
+  color: white;
+}

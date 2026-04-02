@@ -1,0 +1,619 @@
+/* ================== LAYOUT FIX ================== */
+
+/* Main wrapper */
+.sales-invoice-app {
+  width: 100%;
+}
+
+/* This fixes sidebar overlap */
+.main-content {
+  margin-left: 250px;   /* sidebar width */
+  margin-top: 65px;
+  padding: 15px;
+  transition: 0.3s;
+}
+
+/* when sidebar collapsed */
+.main-content.collapsed {
+  margin-left: 80px;
+}
+
+/* ================== INVOICE WRAPPER ================== */
+
+.invoice-wrapper {
+  background: #ffffff;
+  padding: 15px;
+  border-radius: 8px;
+}
+
+/* ================== HEADER ================== */
+
+.invoice-header-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  gap: 10px;
+}
+
+.invoice-header-section input {
+  width: 75%;
+  height: 30px;
+  padding: 5px 8px;
+  font-size: 13px;
+ 
+}
+
+/* ================== SECTION ================== */
+
+.section-card {
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+/* section title */
+.section-card h2 {
+  font-size: 15px;
+  margin-bottom: 6px;
+}
+.title{
+    text-align: center;
+    display: flex;
+}
+
+/* ================== SALE SECTION ================== */
+
+.sale-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.type-supply-right {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.type-supply-right select,
+.type-supply-right input {
+  height: 28px;
+  font-size: 12px;
+  padding: 4px;
+}
+
+/* grid */
+.sale-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+
+/* ================== DISPATCH ================== */
+
+.dispatch-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+
+/* ================== FORM ================== */
+
+.form-group {
+  gap: 8px;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-size: 12px;
+  margin-bottom: 2px;
+  
+}
+
+/* inputs */
+input, select {
+  height: 30px;
+  padding: 3px;
+  font-size: 13px;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+}
+
+/* ================== CUSTOMER ================== */
+
+.customer-top {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.customer-top input {
+  flex: 1;
+}
+
+.customer-top button {
+  background: red;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+}
+
+/* grid */
+.customer-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+/* card */
+.customer-card {
+  border: 1px solid #e5e7eb;
+  padding: 8px;
+  border-radius: 6px;
+}
+
+/* header */
+.customer-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+.customer-header button {
+  font-size: 12px;
+  padding: 2px 6px;
+}
+
+/* ================== TABLE ================== */
+
+.items-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.items-table th {
+  background: #1e293b;
+  color: white;
+  font-size: 12px;
+  padding: 6px;
+}
+
+.items-table td {
+  border: 1px solid #e5e7eb;
+  padding: 4px;
+}
+
+.items-table input,
+.items-table select {
+  width: 100%;
+  height: 28px;
+  font-size: 12px;
+}
+
+/* ================== BUTTON ================== */
+
+.add-row-btn {
+  margin-top: 6px;
+  padding: 5px 10px;
+  font-size: 12px;
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 4px;
+}
+
+/* ================== TAX SUMMARY ================== */
+
+.tax-summary-box {
+  width: 250px;
+  margin-left: auto;
+  margin-top: 10px;
+  border: 1px solid #e5e7eb;
+  padding: 8px;
+  font-size: 13px;
+}
+
+.tax-summary-box .total {
+  font-weight: bold;
+}
+
+/* ================== FOOTER ================== */
+
+.footer-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.footer-actions button {
+  padding: 6px 12px;
+  font-size: 13px;
+  border: none;
+  border-radius: 4px;
+}
+
+.footer-actions button:nth-child(1) {
+  background: green;
+  color: white;
+}
+
+.footer-actions button:nth-child(2) {
+  background: blue;
+  color: white;
+}
+
+.footer-actions button:nth-child(3) {
+  background: red;
+  color: white;
+}
+
+.search-customer {
+  margin-bottom: 20px;
+}
+
+.search-customer label {
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
+  color: #4b5563;
+  margin-bottom: 6px;
+}
+
+.search-box {
+  display: flex;
+  gap: 8px;
+}
+
+.search-box input {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.new-customer-btn {
+  padding: 8px 16px;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  color: #1e40af;
+  border-radius: 4px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.new-customer-btn:hover {
+  background: #dbeafe;
+}
+
+/* Customer Details Container */
+.customer-details-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.customer-card {
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  padding: 16px;
+}
+
+.customer-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.customer-card-header h3 {
+  font-size: 15px;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.edit-btn {
+  padding: 4px 12px;
+  background: white;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #4b5563;
+  cursor: pointer;
+}
+
+.edit-btn:hover {
+  background: #f3f4f6;
+}
+
+/* Customer Details Display */
+.customer-details {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.customer-name {
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 4px;
+}
+
+.customer-address {
+  font-size: 13px;
+  color: #4b5563;
+  line-height: 1.4;
+}
+
+.customer-contact {
+  font-size: 13px;
+  color: #4b5563;
+  margin-top: 4px;
+}
+
+.customer-tax {
+  font-size: 13px;
+  font-family: monospace;
+  color: #047857;
+  margin-top: 2px;
+}
+
+.customer-pos {
+  font-size: 13px;
+  color: #7c3aed;
+  margin-top: 2px;
+}
+
+/* Customer Edit Form */
+.customer-edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.customer-edit-form input {
+  padding: 6px 8px;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  font-size: 13px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+
+/* container */
+.type-supply-container {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+/* eco section */
+.eco-section {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+/* eco row */
+.eco-row {
+  display: flex;
+  gap: 5px;
+}
+
+/* add button */
+.add-eco-btn {
+  margin-top: 4px;
+  padding: 4px 8px;
+  font-size: 12px;
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* manual section */
+.manual-field {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 15px;
+  margin-right: 45px;
+}
+
+/* radio buttons */
+.manual-options {
+  display: flex;
+  gap: 10px;
+}
+
+.manual-options label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 14px;
+}
+
+
+.eco-section {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.eco-add-box {
+  display: flex;
+  gap: 5px;
+}
+
+.eco-add-box input {
+  height: 30px;
+}
+
+.add-eco-btn {
+  width: fit-content;
+  padding: 4px 8px;
+  font-size: 12px;
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* ECO WRAPPER */
+.eco-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* INLINE */
+.eco-inline {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* EDIT BUTTON */
+.eco-edit-btn {
+  height: 30px;
+  width: 36px;
+  border: 1px solid #d1d5db;
+  background: white;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.eco-edit-btn:hover {
+  background: #f3f4f6;
+  border-color: #9ca3af;
+}
+
+/* 🔥 DROPDOWN PANEL */
+.eco-dropdown-panel {
+  position: absolute;
+  top: 60px;
+  right: -16;
+  width: 160px;
+  background: white;
+  border-radius: 10px;
+  padding: 12px;
+  z-index: 100;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+  border: 1px solid #e5e7eb;
+  animation: fadeIn 0.2s ease;
+}
+
+/* animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ADD ROW */
+.eco-add-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.eco-add-row input {
+  flex: 1;
+  height: 34px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  padding: 0 8px;
+  font-size: 13px;
+}
+
+/* ADD BUTTON */
+.eco-add-row button {
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 0 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: 0.2s;
+}
+
+.eco-add-row button:hover {
+  background: #1d4ed8;
+}
+
+/* ECO ITEMS */
+.eco-item-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 4px;
+  border-radius: 6px;
+  transition: 0.2s;
+}
+
+.eco-item-row:hover {
+  background: #f9fafb;
+}
+
+/* ECO TEXT */
+.eco-item-row span {
+  font-size: 14px;
+  color: #111827;
+}
+
+/* DELETE BUTTON */
+.eco-item-row button {
+  background: transparent;
+  border: none;
+  color: #ef4444;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.eco-item-row button:hover {
+  transform: scale(1.2);
+}
+
+.delete-btn {
+  background: #fee2e2;
+  color: #dc2626;
+  border: none;
+  padding: 6px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 10px;
+}
+
+.delete-btn:hover {
+  background: #dc2626;
+  color: white;
+  transform: scale(1.05);
+  transition: 0.2s ease;
+}

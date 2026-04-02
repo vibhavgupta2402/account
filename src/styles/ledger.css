@@ -1,0 +1,683 @@
+/* ============================================
+   LEDGER MODULE - PREMIUM CORPORATE DESIGN (LIGHT THEME)
+   ============================================ */
+
+/* Root Variables - Light Theme Only */
+:root {
+  --ledger-primary: #2563EB;
+  --ledger-primary-dark: #1E40AF;
+  --ledger-primary-light: #3B82F6;
+  --ledger-success: #10B981;
+  --ledger-danger: #EF4444;
+  --ledger-warning: #F59E0B;
+  --ledger-info: #06B6D4;
+  
+  --ledger-text-primary: #111827;
+  --ledger-text-secondary: #6B7280;
+  --ledger-text-tertiary: #9CA3AF;
+  
+  --ledger-bg-primary: #FFFFFF;
+  --ledger-bg-secondary: #F9FAFB;
+  --ledger-bg-tertiary: #F3F4F6;
+  
+  --ledger-border-light: #E5E7EB;
+  --ledger-border-medium: #D1D5DB;
+  --ledger-border-dark: #9CA3AF;
+  
+  --ledger-shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --ledger-shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  --ledger-shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+  --ledger-shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+  
+  --ledger-radius-sm: 6px;
+  --ledger-radius-md: 8px;
+  --ledger-radius-lg: 12px;
+  --ledger-radius-xl: 16px;
+  
+  --ledger-transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Main Container */
+.ledger-container {
+  background: var(--ledger-bg-primary);
+  border-radius: var(--ledger-radius-xl);
+  padding: 28px;
+  box-shadow: var(--ledger-shadow-sm);
+  border: 1px solid var(--ledger-border-light);
+  transition: var(--ledger-transition);
+}
+
+.ledger-container:hover {
+  box-shadow: var(--ledger-shadow-md);
+}
+
+/* ============================================
+   HEADER SECTION - ENHANCED
+   ============================================ */
+
+.ledger-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 28px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid var(--ledger-border-light);
+  position: relative;
+}
+
+.ledger-header::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 60px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--ledger-primary), var(--ledger-primary-light));
+  border-radius: 2px;
+}
+
+.heading {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 12px;
+  gap: 8px;
+}
+
+.heading h2 {
+  font-size: 24px;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--ledger-text-primary), var(--ledger-primary-dark));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin: 0;
+}
+
+.sec-hed {
+  font-size: 13px;
+  color: var(--ledger-text-secondary);
+  font-weight: 500;
+  letter-spacing: 0.3px;
+}
+
+/* ============================================
+   BODY SECTION - MODERN GRID
+   ============================================ */
+
+.ledger-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+  margin-bottom: 28px;
+}
+
+/* Left Section - Enhanced */
+.ledger-left {
+  border-right: 1px solid var(--ledger-border-light);
+  padding-right: 28px;
+  position: relative;
+}
+
+/* Right Section */
+.ledger-right-section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* ============================================
+   CARDS - PREMIUM STYLING
+   ============================================ */
+
+.card {
+  background: var(--ledger-bg-secondary);
+  border: 1px solid var(--ledger-border-light);
+  border-radius: var(--ledger-radius-lg);
+  padding: 20px;
+  transition: var(--ledger-transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--ledger-primary), var(--ledger-primary-light));
+  opacity: 0;
+  transition: var(--ledger-transition);
+}
+
+.card:hover {
+  border-color: var(--ledger-primary-light);
+  box-shadow: var(--ledger-shadow-md);
+  transform: translateY(-2px);
+}
+
+.card:hover::before {
+  opacity: 1;
+}
+
+/* ============================================
+   FORM STYLES - MODERN & CLEAN
+   ============================================ */
+
+.form-row {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.form-row label {
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--ledger-text-primary);
+  letter-spacing: 0.3px;
+}
+
+.form-row input,
+.form-row textarea {
+  padding: 10px 12px;
+  border: 1.5px solid var(--ledger-border-light);
+  border-radius: var(--ledger-radius-md);
+  font-size: 14px;
+  transition: var(--ledger-transition);
+  background: var(--ledger-bg-primary);
+  font-family: inherit;
+}
+
+.form-row input:hover,
+.form-row textarea:hover {
+  border-color: var(--ledger-border-dark);
+}
+
+.form-row input:focus,
+.form-row textarea:focus {
+  outline: none;
+  border-color: var(--ledger-primary);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+/* ============================================
+   FOOTER BUTTONS - MODERN
+   ============================================ */
+
+.ledger-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--ledger-border-light);
+}
+
+.led-save-btn,
+.led-cancel-btn {
+  padding: 10px 24px;
+  border: none;
+  border-radius: var(--ledger-radius-md);
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  transition: var(--ledger-transition);
+  letter-spacing: 0.3px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.led-save-btn {
+  background: linear-gradient(135deg, var(--ledger-success), #059669);
+  color: white;
+  box-shadow: 0 2px 4px rgba(16, 185, 129, 0.2);
+}
+
+.led-save-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(16, 185, 129, 0.25);
+  filter: brightness(1.05);
+}
+
+.led-cancel-btn {
+  background: linear-gradient(135deg, var(--ledger-danger), #DC2626);
+  color: white;
+  box-shadow: 0 2px 4px rgba(239, 68, 68, 0.2);
+}
+
+.led-cancel-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(239, 68, 68, 0.25);
+  filter: brightness(1.05);
+}
+
+.led-save-btn:active,
+.led-cancel-btn:active {
+  transform: translateY(0);
+}
+
+/* ============================================
+   MAILING BLOCK - ENHANCED
+   ============================================ */
+
+.ledger-mailing {
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.ledger-mailing h3 {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--ledger-text-primary);
+  border-bottom: 2px solid var(--ledger-border-light);
+  padding-bottom: 10px;
+  margin-bottom: 16px;
+  position: relative;
+}
+
+.ledger-mailing h3::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 40px;
+  height: 2px;
+  background: var(--ledger-primary);
+}
+
+.ledger-mailing h4 {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ledger-text-secondary);
+  margin: 10px 0 12px 0;
+  padding-left: 8px;
+  border-left: 3px solid var(--ledger-primary);
+}
+
+/* ============================================
+   LINE STRUCTURE - MODERN GRID
+   ============================================ */
+
+.ledger-line {
+  display: grid;
+  grid-template-columns: 200px 20px 1fr;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: -1px;
+  padding: 6px 0;
+  transition: var(--ledger-transition);
+}
+
+.ledger-line:hover {
+  background: var(--ledger-bg-tertiary);
+  border-radius: var(--ledger-radius-sm);
+  padding-left: 8px;
+}
+
+.ledger-line span:first-child {
+  font-weight: 600;
+  color: var(--ledger-text-primary);
+  font-size: 13px;
+}
+
+.ledger-line span:nth-child(2) {
+  color: var(--ledger-text-tertiary);
+  font-weight: 500;
+  text-align: center;
+}
+
+/* ============================================
+   INPUT STYLES - UNIFIED
+   ============================================ */
+
+.tally-input,
+.tally-textarea,
+.tally-select,
+.sundry-tally-input,
+.sundry-tally-select {
+  border: 1.5px solid var(--ledger-border-light);
+  border-radius: var(--ledger-radius-md);
+  padding: 8px 12px;
+  font-size: 13px;
+  transition: var(--ledger-transition);
+  background: var(--ledger-bg-primary);
+  font-family: inherit;
+}
+
+.tally-input:hover,
+.tally-textarea:hover,
+.tally-select:hover {
+  border-color: var(--ledger-border-dark);
+}
+
+.tally-input:focus,
+.tally-textarea:focus,
+.tally-select:focus {
+  outline: none;
+  border-color: var(--ledger-primary);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.tally-input {
+  height: 36px;
+}
+
+.tally-textarea {
+  min-height: 70px;
+  resize: vertical;
+}
+
+.tally-select {
+  height: 36px;
+  cursor: pointer;
+}
+
+/* ============================================
+   LEDGER WRAPPER - ENHANCED
+   ============================================ */
+
+.ledger-wrapper {
+  background: var(--ledger-bg-primary);
+  padding: 24px;
+  border-radius: var(--ledger-radius-lg);
+  box-shadow: var(--ledger-shadow-sm);
+  border: 1px solid var(--ledger-border-light);
+}
+
+/* Top Row */
+.ledger-row {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  margin-bottom: 16px;
+  align-items: center;
+  gap: 12px;
+}
+
+.ledger-row label {
+  font-weight: 600;
+  color: var(--ledger-text-primary);
+  font-size: 13px;
+}
+
+/* Divider */
+.ledger-divider {
+  border-top: 2px solid var(--ledger-border-medium);
+  margin: 24px 0;
+  position: relative;
+}
+
+.ledger-divider::after {
+  content: '●';
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--ledger-bg-primary);
+  padding: 0 8px;
+  color: var(--ledger-primary);
+  font-size: 12px;
+}
+
+/* Bottom Split */
+.ledger-bottom {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-top: 8px;
+}
+
+.ledger-left {
+  padding-right: 0;
+}
+
+.ledger-right {
+  border-left: 2px solid var(--ledger-border-light);
+  padding-left: 24px;
+}
+
+/* ============================================
+   GROUP PANEL - MODERN SIDEBAR
+   ============================================ */
+
+.ledger-group-panel {
+  position: fixed;
+  right: 24px;
+  top: 100px;
+  width: 320px;
+  max-height: calc(100vh - 120px);
+  background: var(--ledger-bg-primary);
+  border-radius: var(--ledger-radius-lg);
+  box-shadow: var(--ledger-shadow-xl);
+  border: 1px solid var(--ledger-border-light);
+  overflow-y: auto;
+  padding: 16px;
+  z-index: 100;
+  transition: var(--ledger-transition);
+}
+
+.ledger-group-panel:hover {
+  box-shadow: var(--ledger-shadow-xl);
+  transform: translateX(-4px);
+}
+
+.ledger-group-panel::-webkit-scrollbar {
+  width: 6px;
+}
+
+.ledger-group-panel::-webkit-scrollbar-track {
+  background: var(--ledger-bg-tertiary);
+  border-radius: 3px;
+}
+
+.ledger-group-panel::-webkit-scrollbar-thumb {
+  background: var(--ledger-border-medium);
+  border-radius: 3px;
+}
+
+.ledger-group-panel::-webkit-scrollbar-thumb:hover {
+  background: var(--ledger-border-dark);
+}
+
+.group-item {
+  padding: 10px 12px;
+  margin-bottom: 4px;
+  border-radius: var(--ledger-radius-md);
+  cursor: pointer;
+  transition: var(--ledger-transition);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ledger-text-secondary);
+}
+
+.group-item:hover {
+  background: var(--ledger-bg-tertiary);
+  color: var(--ledger-primary);
+  transform: translateX(4px);
+}
+
+.group-item.active {
+
+  background: linear-gradient(135deg, var(--ledger-primary), var(--ledger-primary-dark));
+  color: white;
+  box-shadow: var(--ledger-shadow-md);
+}
+.group-text {
+  display: block;
+}
+
+/* ============================================
+   SUNDRY LEDGER LINE - ENHANCED
+   ============================================ */
+
+.sundry-ledger-line {
+  display: grid;
+  grid-template-columns: 240px 20px 1fr;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+  padding: 8px 0;
+  transition: var(--ledger-transition);
+}
+
+.sundry-ledger-line:hover {
+  background: var(--ledger-bg-tertiary);
+  border-radius: var(--ledger-radius-sm);
+  padding-left: 8px;
+}
+
+.sundry-tally-input {
+  height: 36px;
+  width: 100%;
+}
+
+.sundry-tally-select {
+  height: 36px;
+  width: 80px;
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+
+@media (max-width: 1200px) {
+  .ledger-group-panel {
+    width: 280px;
+    right: 16px;
+  }
+  
+  .ledger-body {
+    gap: 20px;
+  }
+  
+  .ledger-left {
+    padding-right: 20px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .ledger-container {
+    padding: 20px;
+  }
+  
+  .ledger-body {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  
+  .ledger-left {
+    border-right: none;
+    padding-right: 0;
+  }
+  
+  .ledger-group-panel {
+    position: static;
+    width: 100%;
+    margin-top: 24px;
+    max-height: 300px;
+  }
+  
+  .ledger-bottom {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  .ledger-right {
+    border-left: none;
+    padding-left: 0;
+    border-top: 2px solid var(--ledger-border-light);
+    padding-top: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .ledger-container {
+    padding: 16px;
+  }
+  
+  .ledger-line,
+  .sundry-ledger-line {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  
+  .ledger-line span:nth-child(2) {
+    display: none;
+  }
+  
+  .ledger-header {
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .ledger-footer {
+    flex-direction: column;
+  }
+  
+  .led-save-btn,
+  .led-cancel-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* ============================================
+   ANIMATIONS & MICRO-INTERACTIONS
+   ============================================ */
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.ledger-container {
+  animation: fadeInUp 0.4s ease-out;
+}
+
+.card,
+.ledger-wrapper,
+.ledger-group-panel {
+  animation: fadeInUp 0.4s ease-out backwards;
+}
+
+.card:nth-child(1) { animation-delay: 0.05s; }
+.card:nth-child(2) { animation-delay: 0.1s; }
+.card:nth-child(3) { animation-delay: 0.15s; }
+
+/* ============================================
+   ACCESSIBILITY & FOCUS STATES
+   ============================================ */
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.3);
+}
+
+/* ============================================
+   PRINT STYLES
+   ============================================ */
+
+@media print {
+  .ledger-group-panel,
+  .ledger-footer {
+    display: none;
+  }
+  
+  .ledger-container {
+    box-shadow: none;
+    border: 1px solid #ddd;
+    background: white;
+  }
+}

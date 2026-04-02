@@ -1,0 +1,427 @@
+/* ===============================
+   CORPORATE DESIGN SYSTEM
+================================ */
+
+:root {
+  --corporate-primary: #1e40af;
+  --corporate-primary-light: #3b82f6;
+  --corporate-secondary: #0f172a;
+  --corporate-success: #059669;
+  --corporate-warning: #d97706;
+  --corporate-bg: #f8fafc;
+  --corporate-surface: #ffffff;
+  --corporate-border: #e2e8f0;
+  --corporate-text-primary: #1e293b;
+  --corporate-text-secondary: #64748b;
+  --corporate-shadow-sm: 0 1px 2px rgb(0 0 0 / 5%);
+  --corporate-shadow-md: 0 4px 8px rgb(0 0 0 / 8%);
+  --corporate-shadow-lg: 0 10px 15px rgb(0 0 0 / 10%);
+  --border-radius: 8px;
+  --border-radius-lg: 8px;
+  
+  /* Button Colors - Premium Corporate Palette */
+  --color-sale: #0891B2;
+  --color-credit: #06B6D4;
+  --color-debit: #4F46E5;
+  --color-payment: #10B981;
+  --color-receipt: #34D399;
+  --color-purchase: #14B8A6;
+  --color-journal: #8B5CF6;
+  --color-delivery: #A855F7;
+  --color-purchase-order: #F59E0B;
+  --color-sale-order: #F97316;
+  --color-contra: #64748B;
+  
+  /* New Colors */
+  --color-purchase-new: #EC489A;
+  --color-contra-new: #8B5CF6;
+  
+  /* Shared Styles */
+  --transition-default: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 2px 4px -1px rgb(0 0 0 / 0.1);
+}
+
+
+/* ===============================
+   TOPBAR BASE
+================================ */
+
+.topbar {
+  position: fixed;
+  top: 0;
+  left: 233px;
+  right: 0;
+  height: 56px;
+  background: var(--corporate-surface);
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  border-bottom: 1px solid var(--corporate-border);
+  z-index: 900;
+  transition: all 0.3s ease;
+  box-shadow: var(--corporate-shadow-sm);
+}
+
+.topbar.collapsed {
+  left: 70px;
+}
+
+
+/* ===============================
+   SIDEBAR TOGGLE
+================================ */
+
+.toggle-wrapper {
+  display: flex;
+  align-items: center;
+  margin-right: 16px;
+  flex-shrink: 0;
+}
+
+.toggle-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--border-radius);
+  background: var(--corporate-bg);
+  border: 1px solid var(--corporate-border);
+  color: var(--corporate-text-secondary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.toggle-btn:hover {
+  background: var(--corporate-primary);
+  color: white;
+  transform: translateX(2px);
+}
+
+
+/* ===============================
+   ACTION CONTAINER
+================================ */
+
+.top-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: 0 1 auto; 
+  overflow-x: auto;
+  scrollbar-width: thin;
+  padding: 4px 0;
+}
+
+.top-actions::-webkit-scrollbar {
+  height: 3px;
+}
+
+.top-actions::-webkit-scrollbar-track {
+  background: var(--corporate-border);
+  border-radius: 3px;
+}
+
+.top-actions::-webkit-scrollbar-thumb {
+  background: var(--corporate-text-secondary);
+  border-radius: 3px;
+}
+
+
+/* ===============================
+   MENU BUTTONS - COMPACT SIZE
+================================ */
+
+.menu-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  color: white;
+  white-space: nowrap;
+  transition: var(--transition-default);
+}
+
+.menu-btn:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.05);
+  box-shadow: var(--shadow-md);
+}
+
+.menu-btn:active {
+  transform: translateY(0);
+}
+
+.menu-btn.active {
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.4);
+  transform: scale(0.98);
+}
+
+
+/* ===============================
+   INDIVIDUAL BUTTON COLORS - PREMIUM GRADIENTS
+================================ */
+
+.sale-btn {
+  background: linear-gradient(135deg, var(--color-sale), #0E5E6F);
+}
+
+.credit-btn {
+  background: linear-gradient(135deg, var(--color-credit), #0891B2);
+}
+
+.debit-btn {
+  background: linear-gradient(135deg, var(--color-debit), #4338CA);
+}
+
+.payment-btn {
+  background: linear-gradient(135deg, var(--color-payment), #059669);
+}
+
+.receipt-btn {
+  background: linear-gradient(135deg, var(--color-receipt), #10B981);
+}
+
+.purchase-btn {
+  background: linear-gradient(135deg, #EC489A, #DB2777);
+}
+
+.journal-btn {
+  background: linear-gradient(135deg, var(--color-journal), #7C3AED);
+}
+
+.deliverychallan-btn {
+  background: linear-gradient(135deg, var(--color-delivery), #9333EA);
+}
+
+.Purchaseorder-btn {
+  background: linear-gradient(135deg, var(--color-purchase-order), #D97706);
+}
+
+.Saleorder-btn {
+  background: linear-gradient(135deg, var(--color-sale-order), #EA580C);
+}
+
+.Contra-btn {
+  background: linear-gradient(135deg, #8B5CF6, #6D28D9);
+}
+
+
+/* ===============================
+   HOVER EFFECTS
+================================ */
+
+.sale-btn:hover {
+  background: linear-gradient(135deg, #0E6B7F, #0A4A5A);
+  box-shadow: 0 4px 12px rgba(8, 145, 178, 0.3);
+}
+
+.credit-btn:hover {
+  background: linear-gradient(135deg, #0891B2, #0C6E8F);
+  box-shadow: 0 4px 12px rgba(6, 182, 212, 0.3);
+}
+
+.debit-btn:hover {
+  background: linear-gradient(135deg, #4F46E5, #4338CA);
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+}
+
+.payment-btn:hover {
+  background: linear-gradient(135deg, #059669, #047857);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.receipt-btn:hover {
+  background: linear-gradient(135deg, #10B981, #059669);
+  box-shadow: 0 4px 12px rgba(52, 211, 153, 0.3);
+}
+
+.purchase-btn:hover {
+  background: linear-gradient(135deg, #DB2777, #BE185D);
+  box-shadow: 0 4px 12px rgba(236, 72, 153, 0.3);
+}
+
+.journal-btn:hover {
+  background: linear-gradient(135deg, #7C3AED, #6D28D9);
+  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+}
+
+.deliverychallan-btn:hover {
+  background: linear-gradient(135deg, #9333EA, #7E22CE);
+  box-shadow: 0 4px 12px rgba(168, 85, 247, 0.3);
+}
+
+.Purchaseorder-btn:hover {
+  background: linear-gradient(135deg, #D97706, #B45309);
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+}
+
+.Saleorder-btn:hover {
+  background: linear-gradient(135deg, #EA580C, #C2410C);
+  box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
+}
+
+.Contra-btn:hover {
+  background: linear-gradient(135deg, #6D28D9, #5B21B6);
+  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+}
+
+
+/* ===============================
+   CTA BUTTONS
+================================ */
+
+.cta-buttons {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  margin-left: 8px;
+}
+
+.cta-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 12px;
+  cursor: pointer;
+  border: none;
+  transition: var(--transition-default);
+  color: white;
+  white-space: nowrap;
+}
+
+.cta-icon {
+  width: 14px;
+  height: 14px;
+}
+
+.sale-cta {
+  background: linear-gradient(135deg, #14B8A6, #0D9488);
+  box-shadow: var(--shadow-sm);
+}
+
+.purchase-cta {
+  background: linear-gradient(135deg, #3B82F6, #2563EB);
+  box-shadow: var(--shadow-sm);
+}
+
+.cta-btn:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.05);
+  box-shadow: var(--shadow-md);
+}
+
+.cta-btn:active {
+  transform: translateY(0);
+}
+
+
+/* ===============================
+   RESPONSIVE DESIGN
+================================ */
+
+@media (max-width: 1200px) {
+  .menu-btn {
+    padding: 5px 10px;
+    font-size: 11px;
+    gap: 4px;
+  }
+  
+  .cta-btn {
+    padding: 5px 12px;
+    font-size: 11px;
+  }
+  
+  .cta-icon {
+    width: 12px;
+    height: 12px;
+  }
+}
+
+@media (max-width: 768px) {
+  .topbar {
+    left: 0;
+    padding: 0 12px;
+    height: 52px;
+  }
+  
+  .topbar.collapsed {
+    left: 0;
+  }
+  
+  .toggle-wrapper {
+    position: absolute;
+    left: 12px;
+    top: 8px;
+  }
+  
+  .top-actions {
+    margin-left: 48px;
+    width: calc(100% - 48px);
+  }
+  
+  .cta-buttons {
+    position: absolute;
+    right: 12px;
+    top: 8px;
+  }
+  
+  .menu-btn {
+    padding: 5px 8px;
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .menu-btn {
+    padding: 4px 6px;
+    font-size: 9px;
+    gap: 3px;
+  }
+  
+  .cta-btn {
+    padding: 4px 8px;
+    font-size: 9px;
+  }
+  
+  .cta-icon {
+    width: 10px;
+    height: 10px;
+  }
+}
+
+
+/* ===============================
+   FOCUS ACCESSIBILITY
+================================ */
+
+.menu-btn:focus-visible,
+.cta-btn:focus-visible,
+.toggle-btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(30, 64, 175, 0.3);
+  transform: scale(0.98);
+}
+
+
+/* ===============================
+   SMOOTH SCROLL
+================================ */
+
+/* @media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+} */
