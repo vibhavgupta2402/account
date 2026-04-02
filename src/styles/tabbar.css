@@ -332,7 +332,7 @@
    RESPONSIVE DESIGN
 ================================ */
 
-@media (max-width: 1200px) {
+@media (max-width: 1100px) {
   .menu-btn {
     padding: 5px 10px;
     font-size: 11px;

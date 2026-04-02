@@ -100,7 +100,7 @@ export default function Topbar({ collapsed, toggleSidebar }) {
               className={`menu-btn ${item.key}-btn ${activeMenu === item.key ? 'active' : ''}`}
               onClick={() => handleMenuClick(item.path, item.key)}
             >
-              <span className="menu-icon">{item.icon}</span>
+              {/* <span className="menu-icon">{item.icon}</span> */}
               <span className="menu-label">{item.label}</span>
             </button>
           ))}
