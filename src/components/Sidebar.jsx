@@ -198,7 +198,7 @@ export default function Sidebar({ collapsed }) {
         <li className={`dropdown ${openDropdown === "banking" ? "active-dropdown" : ""}`}>
           <a href="#" onClick={(e) => handleDropdown("banking", e)}>
             <i className="fa-solid fa-building-columns"></i>
-            <span>Bank Book / Cash Book</span>
+            <span>Bank/Cash Book</span>
             <i className="fa-solid fa-chevron-down" style={{ marginLeft: "auto" }}></i>
           </a>
           <div className="submenu" style={{ display: openDropdown === "banking" ? "block" : "none" }}>
