@@ -21,23 +21,202 @@
 /* ================== INVOICE WRAPPER ================== */
 
 .invoice-wrapper {
-  background: #ffffff;
+  background: #f9fafb;
   padding: 15px;
   border-radius: 8px;
+}
+.invoice-wrapper h2{
+  margin-bottom: 8px;
+}
+
+.invoice-input-box {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.settings-btn {
+  height: 30px;
+  width: 34px;
+  border-radius: 6px;
+  border: 1px solid #e5e7eb;
+  background: white;
+  cursor: pointer;
+}
+
+.settings-btn:hover {
+  background: #f3f4f6;
+}
+
+/* POPUP */
+/* OVERLAY */
+.invoice-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(15, 23, 42, 0.35);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+/* POPUP CARD */
+/* POPUP CARD - COMPACT */
+/* POPUP CARD */
+.invoice-popup {
+  width: 270px;
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 18px 20px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+}
+
+/* TITLE */
+.invoice-popup h3 {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: #111827;
+}
+
+/* FORM GROUP (LABEL LEFT, INPUT RIGHT) */
+.popup-group {
+  display: grid;
+  grid-template-columns: 87px 1fr;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;   /* 🔥 spacing between rows */
+}
+
+/* LABEL */
+.popup-group label {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+/* INPUT */
+.popup-group input {
+  height: 32px;
+  padding: 5px 10px;
+  font-size: 13px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  background: #f9fafb;
+  transition: 0.2s;
+}
+
+/* INPUT FOCUS */
+.popup-group input:focus {
+  outline: none;
+  border-color: #2563eb;
+  background: #ffffff;
+}
+
+/* ACTION BUTTONS */
+.popup-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 14px;
+  padding-right: 10px;   /* 🔥 move buttons slightly left */
+}
+
+/* CANCEL BUTTON */
+.popup-actions button:first-child {
+  padding: 6px 16px;
+  font-size: 13px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  background: #f71905;
+  color: #fbfcfd;
+  cursor: pointer;
+}
+
+/* CANCEL HOVER */
+.popup-actions button:first-child:hover {
+  background: #f91403;
+}
+
+/* SAVE BUTTON */
+.popup-actions button:last-child {
+  padding: 6px 18px;
+  font-size: 13px;
+  border-radius: 8px;
+  border: none;
+  background: #2563eb;
+  color: white;
+  font-weight: 500;
+  cursor: pointer;
+}
+.invoice-popup .popup-input-box{
+  width: 78%;
+  height: 30px;
+  padding: 5px 8px;
+  font-size: 13px;
+}
+
+.voucher-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.voucher-row label {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.voucher-value {
+  font-size: 14px;
+  font-weight: 600;
+  color: #111827;
+  background: #f3f4f6;
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+
+/* ROW 2 */
+.invoice-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 20px;
+  align-items: end;
+}
+
+/* Invoice */
+.invoice-no-group label {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+/* SAVE HOVER */
+.popup-actions button:last-child:hover {
+  background: #1d4ed8;
 }
 
 /* ================== HEADER ================== */
 
-.invoice-header-section {
+/* .invoice-header-section {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
   gap: 10px;
+} */
+
+.invoice-header-section {
+  display: grid;
+  grid-template-columns: 2fr 1fr; 
+  gap: 15px;
+  align-items: end;
 }
 
 .invoice-header-section input {
-  width: 75%;
+  width: 35%;
   height: 30px;
   padding: 5px 8px;
   font-size: 13px;
@@ -48,6 +227,8 @@
 
 .section-card {
   border: 1px solid #e5e7eb;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.05);
+  background: white;
   border-radius: 6px;
   padding: 10px;
   margin-bottom: 10px;
@@ -65,11 +246,17 @@
 
 /* ================== SALE SECTION ================== */
 
-.sale-header {
+/* .sale-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 6px;
+} */
+
+.sale-header {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .type-supply-right {
@@ -88,7 +275,7 @@
 /* grid */
 .sale-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(4, 1fr);
   gap: 6px;
 }
 
@@ -96,13 +283,13 @@
 
 .dispatch-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(4, 1fr);
   gap: 6px;
 }
 
 /* ================== FORM ================== */
 
-.form-group {
+/* .form-group {
   gap: 8px;
   display: flex;
   flex-direction: column;
@@ -112,15 +299,36 @@
   font-size: 12px;
   margin-bottom: 2px;
   
+} */
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.form-group label {
+  font-size: 11px;
+  color: #6b7280;
 }
 
 /* inputs */
-input, select {
+/* input, select {
   height: 30px;
+  width: 150px;
   padding: 3px;
   font-size: 13px;
   border: 1px solid #d1d5db;
   border-radius: 4px;
+} */
+ input, select {
+  height: 30px;
+  width: 100%;   /* 🔥 FIX */
+  padding: 4px 8px;
+  font-size: 12px;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  background: #f9fafb;
 }
 
 /* ================== CUSTOMER ================== */
@@ -213,6 +421,9 @@ input, select {
   margin-left: auto;
   margin-top: 10px;
   border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.05);
+  background: white;
   padding: 8px;
   font-size: 13px;
 }
@@ -270,7 +481,8 @@ input, select {
 }
 
 .search-box input {
-  flex: 1;
+  flex: 0;
+  width: 260px;
   padding: 8px 12px;
   border: 1px solid #d1d5db;
   border-radius: 4px;
@@ -278,7 +490,7 @@ input, select {
 }
 
 .new-customer-btn {
-  padding: 8px 16px;
+  padding: 5px 16px;
   background: #eff6ff;
   border: 1px solid #bfdbfe;
   color: #1e40af;
@@ -393,11 +605,10 @@ input, select {
 }
 
 
-/* container */
 .type-supply-container {
-  display: flex;
-  gap: 20px;
-  align-items: flex-start;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
 }
 
 /* eco section */
@@ -425,19 +636,16 @@ input, select {
   cursor: pointer;
 }
 
-/* manual section */
-.manual-field {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-top: 15px;
-  margin-right: 45px;
+.manual-field label {
+  font-size: 12px;
+  color: #6b7280;
 }
 
-/* radio buttons */
 .manual-options {
   display: flex;
-  gap: 10px;
+  gap: 12px;
+  align-items: center;
+  height: 30px;
 }
 
 .manual-options label {
@@ -487,6 +695,11 @@ input, select {
   display: flex;
   align-items: center;
   gap: 6px;
+}
+.eco-wrapper label {
+  font-size: 11px;
+  margin-bottom: 3px;
+  display: block;
 }
 
 /* EDIT BUTTON */

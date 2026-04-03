@@ -30,9 +30,10 @@ import Journal from "./pages/Journal";
 import Delivery from "./pages/DeliveryChallan";
 import PurchaseOrder from "./pages/PurchaseOrder";
 import SaleOrder from "./pages/SaleOrder";
-import Ledgerbook from "./pages/Ledgerbook"
-import Contra from "./pages/contra"
-import Purchase from "./pages/purchasevoucher"
+import Ledgerbook from "./pages/Ledgerbook";
+import Contra from "./pages/contra";
+import Purchase from "./pages/purchasevoucher";
+import SaleSummary from "./pages/SaleSummary";
 
 
 // JournalEntries
@@ -74,6 +75,7 @@ export default function App() {
           <Route path="/SaleOrder" element={<SaleOrder />} />
           <Route path="/contra" element={<Contra/>} />
           <Route path="/purchasevoucher" element={<Purchase/>} />
+          <Route path="/SaleSummary" element={<SaleSummary/>} />
         
 
 
