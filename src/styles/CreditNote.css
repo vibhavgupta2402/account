@@ -7,10 +7,51 @@
   grid-template-columns: repeat(3, 1fr);
   gap: 8px;
 }
+.header-cr h2{
+  margin-bottom: 8px;
+}
 
 .customer-box {
   display: flex;
   gap: 10px;
+}
+.dis-section-card{
+  border: 1px solid #e5e7eb;
+  width: 100%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.05);
+  background: white;
+  border-radius: 6px;
+  padding: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  gap: 12px;
+
+}
+.dispatch-section h3{
+  font-size: 15px;
+    margin-bottom: -8px;
+
+}
+.cr-section-card{
+  border: 1px solid #e5e7eb;
+  width: 305%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.05);
+  background: white;
+  border-radius: 6px;
+  padding: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  gap: 12px;
+}
+.cr-section-card input,
+.cr-section-card select {
+  height: 30px;
+  padding: 4px 8px;
+  font-size: 12px;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .card {

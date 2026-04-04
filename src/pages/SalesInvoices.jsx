@@ -8,6 +8,7 @@
     // ================= INVOICE =================
     const [manualEntry, setManualEntry] = useState(false);
     const [invoiceNo, setInvoiceNo] = useState("");
+    const [customer,setCustomer] = useState({});
     // ================= TYPE + ECO =================
     const [typeOfSupply, setTypeOfSupply] = useState("");
     // NEW STATES
@@ -50,6 +51,17 @@
     "Blinkit"
     ]);
 
+    const states = [
+  "Andhra Pradesh","Arunachal Pradesh","Assam","Bihar","Chhattisgarh",
+  "Goa","Gujarat","Haryana","Himachal Pradesh","Jharkhand",
+  "Karnataka","Kerala","Madhya Pradesh","Maharashtra","Manipur",
+  "Meghalaya","Mizoram","Nagaland","Odisha","Punjab","Rajasthan",
+  "Sikkim","Tamil Nadu","Telangana","Tripura","Uttar Pradesh",
+  "Uttarakhand","West Bengal"
+];
+const [openStateDropdown, setOpenStateDropdown] = useState(false);
+const [selectedState, setSelectedState] = useState("");
+
     const deleteRow = (index) => {
     const updated = items.filter((_, i) => i !== index);
     setItems(updated.length ? updated : [{
@@ -79,6 +91,45 @@
     setCurrentCount(prev => prev + 1);
     setVoucherCount(prev => prev + 1);
   };
+  const [gstin, setGstin] = useState("");
+const [gstData, setGstData] = useState(null);
+const [gstLoading, setGstLoading] = useState(false);
+const [gstError, setGstError] = useState("");
+const [showCustomerPopup, setShowCustomerPopup] = useState(false);
+const validateGST = async (value) => {
+  if (value.length !== 15) return;
+
+  try {
+    setGstLoading(true);
+    setGstError("");
+    setGstData(null);
+
+    const res = await fetch(`/api/gst/${value}`); // 🔥 your backend
+
+    if (res.status === 200) {
+      const data = await res.json();
+      setGstData(data);
+    } else {
+      setGstError("Invalid GSTIN");
+    }
+  } catch (err) {
+    setGstError("Error validating GSTIN");
+  } finally {
+    setGstLoading(false);
+  }
+};
+const handleGSTChange = (e) => {
+  const value = e.target.value.toUpperCase();
+
+  setGstin(value);
+
+  if (value.length === 15) {
+    validateGST(value);
+  } else {
+    setGstData(null);
+    setGstError("");
+  }
+};
   const [currentCount, setCurrentCount] = useState(1);
   const generateInvoice = () => {
     const { prefix, zero } = invoiceConfig;
@@ -117,6 +168,18 @@
       }
     ]);
   };
+
+  useEffect(() => {
+  const handleClickOutside = () => {
+    setOpenStateDropdown(false);
+  };
+
+  document.addEventListener("click", handleClickOutside);
+
+  return () => {
+    document.removeEventListener("click", handleClickOutside);
+  };
+}, []);
 
   /* ✅ ADD THIS HERE */
   useEffect(() => {
@@ -414,10 +477,34 @@
 
                 <input placeholder="Dispatch Doc No" />
                 <input placeholder="Vehicle No" />
-                <input placeholder="Transport GSTIN" />
+                {/* <input placeholder="Transport GSTIN" /> */}
                 {/* <input placeholder="Agent Name" /> */}
                 <input placeholder="LR-RR No" />
                 <input type="date" />
+                <div className="gstin-container">
+                <label>Transport GSTIN</label>
+                <input
+                  value={gstin}
+                  onChange={handleGSTChange}
+                  placeholder="Enter GSTIN"
+                />
+
+                {/* LOADING */}
+                {gstLoading && <div className="gst-status">Validating...</div>}
+
+                {/* ERROR */}
+                {gstError && <div className="gst-error">{gstError}</div>}
+
+                {/* SUCCESS */}
+                {gstData && (
+                  <div className="gst-result-box">
+                    <p><strong>{gstData.name}</strong></p>
+                    <p>{gstData.state}</p>
+                    <p>Status: {gstData.status}</p>
+                  </div>
+                )}
+
+              </div>
               </div>
             </div>
             )}
@@ -428,7 +515,160 @@
                 <label>Search Customer Name</label>
                 <div className="search-box">
                   <input type="text" placeholder="Search customer..." />
-                  <button className="new-customer-btn">New Customer</button>
+                  <button
+                    className="new-customer-btn"
+                    onClick={() => setShowCustomerPopup(true)}
+                  >
+                    New Customer
+                  </button>
+                 {showCustomerPopup && (
+                  <div
+                    className="cust-overlay"
+                    onClick={() => setShowCustomerPopup(false)}   // 🔥 outside click close
+                  >
+
+                    <div
+                      className="cust-popup"
+                      onClick={(e) => e.stopPropagation()}        // 🔥 prevent inside click close
+                    >
+
+                      {/* HEADER */}
+                      <div className="cust-header">
+                        <h3>Add New Customer</h3>
+
+                        <button
+                          className="cust-close-btn"
+                          onClick={() => setShowCustomerPopup(false)}
+                        >
+                          ✕
+                        </button>
+                      </div>
+
+                      <div className="cust-form-wrapper">
+
+                        {/* LEFT */}
+                        <div className="cust-left">
+
+                          {/* GST ROW */}
+                          <div className="cust-gst-row">
+                            <input
+                              className="cust-input"
+                              placeholder="GSTIN / URP"
+                              onChange={(e)=>setCustomer({...customer,gstin:e.target.value})}
+                            />
+
+                            <button className="cust-get-btn">Get Data</button>
+                          </div>
+
+                          <input className="cust-input" placeholder="Party Name"
+                            onChange={(e)=>setCustomer({...customer,name:e.target.value})}
+                          />
+
+                          <input className="cust-input" placeholder="Billing Address 1"
+                            onChange={(e)=>setCustomer({...customer,address1:e.target.value})}
+                          />
+
+                          <input className="cust-input" placeholder="Billing Address 2"
+                            onChange={(e)=>setCustomer({...customer,address2:e.target.value})}
+                          />
+
+                          <input className="cust-input" placeholder="Pin"
+                            onChange={(e)=>setCustomer({...customer,pin:e.target.value})}
+                          />
+
+                          <div className="cust-select">
+
+                          <div
+                            className="cust-select-box"
+                            onClick={() => setOpenStateDropdown(!openStateDropdown)}
+                          >
+                            {selectedState || "Select State"}
+                            <span className="arrow">▼</span>
+                          </div>
+
+                          {openStateDropdown && (
+                            <div className="cust-select-dropdown">
+
+                              {states.map((state) => (
+                                <div
+                                  key={state}
+                                  className="cust-option"
+                                  onClick={() => {
+                                    setSelectedState(state);
+                                    setCustomer({...customer, state});
+                                    setOpenStateDropdown(false);
+                                  }}
+                                >
+                                  {state}
+                                </div>
+                              ))}
+
+                            </div>
+                          )}
+
+                        </div>
+
+                          <input className="cust-input" placeholder="Contact No"
+                            onChange={(e)=>setCustomer({...customer,contact:e.target.value})}
+                          />
+
+                          <input className="cust-input" placeholder="Email ID"
+                            onChange={(e)=>setCustomer({...customer,email:e.target.value})}
+                          />
+
+                          <input className="cust-input" placeholder="PAN"
+                            onChange={(e)=>setCustomer({...customer,pan:e.target.value})}
+                          />
+
+                          <div className="cust-row">
+                            <input className="cust-input" placeholder="Opening Balance"
+                              onChange={(e)=>setCustomer({...customer,balance:e.target.value})}
+                            />
+
+                            <select className="cust-input"
+                              onChange={(e)=>setCustomer({...customer,drcr:e.target.value})}
+                            >
+                              <option>Dr</option>
+                              <option>Cr</option>
+                            </select>
+                          </div>
+
+                        </div>
+
+                        {/* RIGHT */}
+                        <div className="cust-right">
+
+                          <label>Registration Type</label>
+
+                          <select className="sale-cust-input"
+                            onChange={(e)=>setCustomer({...customer,registration:e.target.value})}
+                          >
+                            <option>Select</option>
+                            <option>Composition</option>
+                            <option>Regular</option>
+                            <option>Unregistered / Consumer</option>
+                            <option>Government Entity / TDS</option>
+                            <option>Regular - SEZ</option>
+                            <option>Regular - Exports (EOU)</option>
+                            <option>E-Commerce Operator</option>
+                            <option>Input Service Distributor</option>
+                            <option>Embassy / UN Body</option>
+                            <option>Non Resident Taxpayer</option>
+                          </select>
+
+                        </div>
+
+                      </div>
+
+                      {/* ACTIONS */}
+                      <div className="cust-actions">
+                        <button className="cust-save-btn">Save Customer</button>
+                      </div>
+
+                    </div>
+
+                  </div>
+                )}
                 </div>
               </div>
               {/* Billed To and Shipped To */}
@@ -437,12 +677,6 @@
                 <div className="customer-card">
                   <div className="customer-card-header">
                     <h3>Billed To:</h3>
-                    {/* <button 
-                      className="edit-btn"
-                      onClick={() => setEditBilled(!editBilled)}
-                    >
-                      {editBilled ? 'Save' : 'Edit'}
-                    </button> */}
                   </div>
                   
                   {editBilled ? (

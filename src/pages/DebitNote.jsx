@@ -13,6 +13,18 @@ export default function CreditNote() {
   const [originalInvoice, setOriginalInvoice] = useState("");
   const [originalDate, setOriginalDate] = useState("");
   const [type, setType] = useState("");
+  const [customer,setCustomer] = useState({});
+   const [showCustomerPopup, setShowCustomerPopup] = useState(false);
+   const states = [
+  "Andhra Pradesh","Arunachal Pradesh","Assam","Bihar","Chhattisgarh",
+  "Goa","Gujarat","Haryana","Himachal Pradesh","Jharkhand",
+  "Karnataka","Kerala","Madhya Pradesh","Maharashtra","Manipur",
+  "Meghalaya","Mizoram","Nagaland","Odisha","Punjab","Rajasthan",
+  "Sikkim","Tamil Nadu","Telangana","Tripura","Uttar Pradesh",
+  "Uttarakhand","West Bengal"
+];
+const [openStateDropdown, setOpenStateDropdown] = useState(false);
+const [selectedState, setSelectedState] = useState("");
 
   // ================= DISPATCH =================
   const [dispatch, setDispatch] = useState({
@@ -90,6 +102,7 @@ export default function CreditNote() {
           <div className="header-cr">
             <h2>Debit Note</h2>
             <div className="header-grid">
+              <div className="debit-section-card">
               <div className="form-group">
                 <label>Dr.Note Number</label>
               <input 
@@ -136,9 +149,11 @@ export default function CreditNote() {
                 </select>
               </div>
             </div>
+            </div>
           </div>
 
           {/* DISPATCH */}
+          <div className="debit-dispatch-section">
           <div className="dispatch-section">
             <h3>Dispatch Details</h3>
             <div className="grid">
@@ -169,6 +184,7 @@ export default function CreditNote() {
               />
             </div>
           </div>
+          </div>
 
           {/* ================= CUSTOMER ================= */}
           <div className="section-card">
@@ -177,7 +193,160 @@ export default function CreditNote() {
               <label>Search Customer Name</label>
               <div className="search-box">
                 <input type="text" placeholder="Search customer..." />
-                <button className="new-customer-btn">New Customer</button>
+                <button
+                    className="new-customer-btn"
+                    onClick={() => setShowCustomerPopup(true)}
+                  >
+                    New Customer
+                  </button>
+                 {showCustomerPopup && (
+                  <div
+                    className="cust-overlay"
+                    onClick={() => setShowCustomerPopup(false)}   // 🔥 outside click close
+                  >
+
+                    <div
+                      className="cust-popup"
+                      onClick={(e) => e.stopPropagation()}        // 🔥 prevent inside click close
+                    >
+
+                      {/* HEADER */}
+                      <div className="cust-header">
+                        <h3>Add New Customer</h3>
+
+                        <button
+                          className="cust-close-btn"
+                          onClick={() => setShowCustomerPopup(false)}
+                        >
+                          ✕
+                        </button>
+                      </div>
+
+                      <div className="cust-form-wrapper">
+
+                        {/* LEFT */}
+                        <div className="cust-left">
+
+                          {/* GST ROW */}
+                          <div className="cust-gst-row">
+                            <input
+                              className="cust-input"
+                              placeholder="GSTIN / URP"
+                              onChange={(e)=>setCustomer({...customer,gstin:e.target.value})}
+                            />
+
+                            <button className="cust-get-btn">Get Data</button>
+                          </div>
+
+                          <input className="cust-input" placeholder="Party Name"
+                            onChange={(e)=>setCustomer({...customer,name:e.target.value})}
+                          />
+
+                          <input className="cust-input" placeholder="Billing Address 1"
+                            onChange={(e)=>setCustomer({...customer,address1:e.target.value})}
+                          />
+
+                          <input className="cust-input" placeholder="Billing Address 2"
+                            onChange={(e)=>setCustomer({...customer,address2:e.target.value})}
+                          />
+
+                          <input className="cust-input" placeholder="Pin"
+                            onChange={(e)=>setCustomer({...customer,pin:e.target.value})}
+                          />
+
+                          <div className="cust-select">
+
+                          <div
+                            className="cust-select-box"
+                            onClick={() => setOpenStateDropdown(!openStateDropdown)}
+                          >
+                            {selectedState || "Select State"}
+                            <span className="arrow">▼</span>
+                          </div>
+
+                          {openStateDropdown && (
+                            <div className="cust-select-dropdown">
+
+                              {states.map((state) => (
+                                <div
+                                  key={state}
+                                  className="cust-option"
+                                  onClick={() => {
+                                    setSelectedState(state);
+                                    setCustomer({...customer, state});
+                                    setOpenStateDropdown(false);
+                                  }}
+                                >
+                                  {state}
+                                </div>
+                              ))}
+
+                            </div>
+                          )}
+
+                        </div>
+
+                          <input className="cust-input" placeholder="Contact No"
+                            onChange={(e)=>setCustomer({...customer,contact:e.target.value})}
+                          />
+
+                          <input className="cust-input" placeholder="Email ID"
+                            onChange={(e)=>setCustomer({...customer,email:e.target.value})}
+                          />
+
+                          <input className="cust-input" placeholder="PAN"
+                            onChange={(e)=>setCustomer({...customer,pan:e.target.value})}
+                          />
+
+                          <div className="cust-row">
+                            <input className="cust-input" placeholder="Opening Balance"
+                              onChange={(e)=>setCustomer({...customer,balance:e.target.value})}
+                            />
+
+                            <select className="cust-input"
+                              onChange={(e)=>setCustomer({...customer,drcr:e.target.value})}
+                            >
+                              <option>Dr</option>
+                              <option>Cr</option>
+                            </select>
+                          </div>
+
+                        </div>
+
+                        {/* RIGHT */}
+                        <div className="cust-right">
+
+                          <label>Registration Type</label>
+
+                          <select className="sale-cust-input"
+                            onChange={(e)=>setCustomer({...customer,registration:e.target.value})}
+                          >
+                            <option>Select</option>
+                            <option>Composition</option>
+                            <option>Regular</option>
+                            <option>Unregistered / Consumer</option>
+                            <option>Government Entity / TDS</option>
+                            <option>Regular - SEZ</option>
+                            <option>Regular - Exports (EOU)</option>
+                            <option>E-Commerce Operator</option>
+                            <option>Input Service Distributor</option>
+                            <option>Embassy / UN Body</option>
+                            <option>Non Resident Taxpayer</option>
+                          </select>
+
+                        </div>
+
+                      </div>
+
+                      {/* ACTIONS */}
+                      <div className="cust-actions">
+                        <button className="cust-save-btn">Save Customer</button>
+                      </div>
+
+                    </div>
+
+                  </div>
+                )}
               </div>
             </div>
             

@@ -42,14 +42,14 @@
 
 /* INPUT */
 .cust-input {
-  width: 100%;
-  padding: 10px 12px;
+  width: 62%;
+  padding: 5px 12px;
   border-radius: 8px;
   border: 1px solid #d1d5db;
   font-size: 13px;
   outline: none;
   transition: all 0.2s ease;
-  margin-bottom: 12px;
+  /* margin-bottom: 12px; */
 }
 
 .cust-input:focus {
