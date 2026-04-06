@@ -20,10 +20,22 @@
   display: flex;
   align-items: center;
   gap: 6px;
+  margin-right: 50px;
+}
+.payment-ledger {
+  margin: 10px 0;
+  display: flex;
+  gap: 10px;
+  align-items: center;
 }
 
+.payment-ledger select {
+  width: 100px;
+  height: 26px;
+}
 .payment-date input {
   height: 26px;
+  width: 85px;
 }
 
 /* ================= PAYMENT BY ================= */
@@ -35,9 +47,10 @@
 }
 
 .payment-by select {
-  width: 220px;
+  width: 100px;
   height: 26px;
 }
+
 
 /* ================= LINE ================= */
 hr {

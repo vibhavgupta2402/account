@@ -311,6 +311,16 @@
   font-size: 11px;
   color: #6b7280;
 }
+.rcm-form-group label {
+  font-size: 11px;
+  color: #6b7280;
+}
+.rcm-form-group select {
+      width: 25%;
+    padding: 5px;
+    border-radius: 8px;
+    border: 1px solid #E5E7EB;
+}
 
 /* inputs */
 /* input, select {
@@ -864,7 +874,11 @@
   position: relative;
   width: 100%;
 }
-
+.rcm-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
 /* BOX */
 .cust-select-box {
   height: 30px;

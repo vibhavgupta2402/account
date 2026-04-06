@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { useOutletContext } from "react-router-dom";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import "../styles/Purchase.css";
 
 export default function Purchase() {
   const { collapsed } = useOutletContext();
+  const [invoiceDate, setInvoiceDate] = useState(new Date());
 
   const [voucherNo] = useState("PUR-01");
-  const [date, setDate] = useState("");
   const [mode, setMode] = useState("item");
 
   const [items, setItems] = useState([
@@ -47,21 +49,43 @@ export default function Purchase() {
             </div>
 
             <div className="purchase-top-right">
-              <div>
-                <label>Date</label>
-                <input
-                  type="date"
-                  value={date}
-                  onChange={(e) => setDate(e.target.value)}
+              <div className="purchase-section">
+                <label>Date :</label>
+                <DatePicker
+                  selected={invoiceDate}
+                  onChange={(date) => setInvoiceDate(date)}
+                  dateFormat="dd/MM/yyyy"
+                  maxDate={new Date()}   // prevent future date
+                  className="date-input"
+  
+                  onChangeRaw={(e) => {
+                    let value = e.target.value;
+  
+                    // 🔥 limit total length (dd/MM/yyyy = 10 chars)
+                    if (value.length > 10) {
+                      value = value.slice(0, 10);
+                    }
+  
+                    const parts = value.split("/");
+  
+                    // 🔥 restrict year to max 4 digits
+                    if (parts[2] && parts[2].length > 4) {
+                      parts[2] = parts[2].slice(0, 4);
+                      value = parts.join("/");
+                    }
+  
+                    e.target.value = value;
+                  }}
                 />
-              </div>
+              
 
-              <div>
-                <label>Voucher Mode</label>
+              <div className="pur-voucher">
+                <label>Voucher Mode :</label>
                 <select value={mode} onChange={(e) => setMode(e.target.value)}>
                   <option value="item">Item Invoice</option>
                   <option value="accounting">Accounting Invoice</option>
                 </select>
+              </div>
               </div>
             </div>
           </div>

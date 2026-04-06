@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useOutletContext } from "react-router-dom";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import "../styles/PaymentInvoice.css";
 
 export default function Payment() {
@@ -8,6 +10,7 @@ export default function Payment() {
   const [paymentDate, setPaymentDate] = useState("");
   const [ledger, setLedger] = useState("");
   const [voucherNo] = useState("PAY-01");
+  const [invoiceDate, setInvoiceDate] = useState(new Date());
 
   const [againstType, setAgainstType] = useState("invoice"); 
 // invoice | advance | on_account
@@ -42,17 +45,47 @@ export default function Payment() {
 
             <div className="payment-date">
               <label>Payment Date:</label>
-              <input
-                type="date"
-                value={paymentDate}
-                onChange={(e) => setPaymentDate(e.target.value)}
+              <DatePicker
+                selected={invoiceDate}
+                onChange={(date) => setInvoiceDate(date)}
+                dateFormat="dd/MM/yyyy"
+                maxDate={new Date()}   // prevent future date
+                className="date-input"
+
+                onChangeRaw={(e) => {
+                  let value = e.target.value;
+
+                  // 🔥 limit total length (dd/MM/yyyy = 10 chars)
+                  if (value.length > 10) {
+                    value = value.slice(0, 10);
+                  }
+
+                  const parts = value.split("/");
+
+                  // 🔥 restrict year to max 4 digits
+                  if (parts[2] && parts[2].length > 4) {
+                    parts[2] = parts[2].slice(0, 4);
+                    value = parts.join("/");
+                  }
+
+                  e.target.value = value;
+                }}
               />
             </div>
           </div>
 
           {/* PAYMENT BY */}
-          <div className="payment-by">
-            <label>Against Type</label>
+          <div className="payment-ledger">
+            <label>Payment by :</label>
+            <select
+              value={ledger}
+              onChange={(e) => setLedger(e.target.value)}
+            >
+              <option value="">Select</option>
+              <option value="cash">Cash</option>
+              <option value="bank">Bank</option>
+            </select>
+            <label>Against Type :</label>
             <select
               value={againstType}
               onChange={(e) => setAgainstType(e.target.value)}

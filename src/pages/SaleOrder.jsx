@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useOutletContext } from "react-router-dom";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import "../styles/SaleOrder.css";
 
 export default function SaleOrder() {
@@ -7,6 +9,7 @@ export default function SaleOrder() {
 
   /* ================= HEADER ================= */
   const [soNo, setSoNo] = useState("SO-01");
+  const [invoiceDate, setInvoiceDate] = useState(new Date());
   const [soDate, setSoDate] = useState("");
   const [soRef, setSoRef] = useState("");
   const [soType, setSoType] = useState("");
@@ -77,7 +80,32 @@ export default function SaleOrder() {
 
                 <div className="so-form-group">
                     <label>SO Date</label>
-                    <input className="so-input" type="date" onChange={(e) => setSoDate(e.target.value)} />
+                    <DatePicker
+                  selected={invoiceDate}
+                  onChange={(date) => setInvoiceDate(date)}
+                  dateFormat="dd/MM/yyyy"
+                  maxDate={new Date()}   // prevent future date
+                  className="date-input"
+  
+                  onChangeRaw={(e) => {
+                    let value = e.target.value;
+  
+                    // 🔥 limit total length (dd/MM/yyyy = 10 chars)
+                    if (value.length > 10) {
+                      value = value.slice(0, 10);
+                    }
+  
+                    const parts = value.split("/");
+  
+                    // 🔥 restrict year to max 4 digits
+                    if (parts[2] && parts[2].length > 4) {
+                      parts[2] = parts[2].slice(0, 4);
+                      value = parts.join("/");
+                    }
+  
+                    e.target.value = value;
+                  }}
+                />
                 </div>
 
                 <div className="so-form-group">

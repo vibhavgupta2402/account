@@ -1,11 +1,14 @@
 import { useState } from "react";
 import { useOutletContext } from "react-router-dom";
 import { FaTrash } from "react-icons/fa";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import "../styles/CreditNote.css";
 
 export default function CreditNote() {
 
   const { collapsed } = useOutletContext();
+  const [invoiceDate, setInvoiceDate] = useState(new Date());
 
   // ================= HEADER =================
   const [creditNo, setCreditNo] = useState("");
@@ -111,11 +114,32 @@ const [selectedState, setSelectedState] = useState("");
               <div className="cr-section-card"> 
               <div className="form-group">
               <label>CR.Note Date</label>
-              <input 
-                type="date"
-                value={creditDate}
-                onChange={(e) => setCreditDate(e.target.value)}
-              />
+              <DatePicker
+                  selected={invoiceDate}
+                  onChange={(date) => setInvoiceDate(date)}
+                  dateFormat="dd/MM/yyyy"
+                  maxDate={new Date()}   // prevent future date
+                  className="date-input"
+
+                  onChangeRaw={(e) => {
+                    let value = e.target.value;
+
+                    // 🔥 limit total length (dd/MM/yyyy = 10 chars)
+                    if (value.length > 10) {
+                      value = value.slice(0, 10);
+                    }
+
+                    const parts = value.split("/");
+
+                    // 🔥 restrict year to max 4 digits
+                    if (parts[2] && parts[2].length > 4) {
+                      parts[2] = parts[2].slice(0, 4);
+                      value = parts.join("/");
+                    }
+
+                    e.target.value = value;
+                  }}
+                />
               </div>
               <div className="form-group">
                 <label>Type of CR. Note</label>
@@ -160,11 +184,32 @@ const [selectedState, setSelectedState] = useState("");
                 value={dispatch.gstin}
                 onChange={(e) => setDispatch({ ...dispatch, gstin: e.target.value })}
               />
-              <input 
-                type="date"
-                value={dispatch.date}
-                onChange={(e) => setDispatch({ ...dispatch, date: e.target.value })}
-              />
+              <DatePicker
+                  selected={invoiceDate}
+                  onChange={(date) => setInvoiceDate(date)}
+                  dateFormat="dd/MM/yyyy"
+                  maxDate={new Date()}   // prevent future date
+                  className="date-input"
+
+                  onChangeRaw={(e) => {
+                    let value = e.target.value;
+
+                    // 🔥 limit total length (dd/MM/yyyy = 10 chars)
+                    if (value.length > 10) {
+                      value = value.slice(0, 10);
+                    }
+
+                    const parts = value.split("/");
+
+                    // 🔥 restrict year to max 4 digits
+                    if (parts[2] && parts[2].length > 4) {
+                      parts[2] = parts[2].slice(0, 4);
+                      value = parts.join("/");
+                    }
+
+                    e.target.value = value;
+                  }}
+                />
             </div>
           </div>
             </div>

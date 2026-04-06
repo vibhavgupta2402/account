@@ -1,6 +1,8 @@
   import { useState, useRef, useEffect } from "react";
   import { useOutletContext } from "react-router-dom";
   import { FaTrash } from "react-icons/fa";
+  import DatePicker from "react-datepicker";
+  import "react-datepicker/dist/react-datepicker.css";
   import "../styles/SalesInvoice.css";
 
   export default function SalesInvoice() {
@@ -9,6 +11,7 @@
     const [manualEntry, setManualEntry] = useState(false);
     const [invoiceNo, setInvoiceNo] = useState("");
     const [customer,setCustomer] = useState({});
+    const [invoiceDate, setInvoiceDate] = useState(new Date());
     // ================= TYPE + ECO =================
     const [typeOfSupply, setTypeOfSupply] = useState("");
     // NEW STATES
@@ -343,7 +346,7 @@ const handleGSTChange = (e) => {
                       <option value="accounting">Accounting Invoice</option>
                     </select>
                   </div>
-                  <div className="form-group">
+                  <div className="rcm-form-group">
                     <label>RCM Applicable</label>
                     <select onChange={(e) => setRcmApplicable(e.target.value === "yes")}>
                       <option value="no">No</option>
@@ -455,12 +458,62 @@ const handleGSTChange = (e) => {
 
                 <div className="form-group">
                   <label>Invoice Date</label>
-                  <input type="date" />
+                  <DatePicker
+                    selected={invoiceDate}
+                    onChange={(date) => setInvoiceDate(date)}
+                    dateFormat="dd/MM/yyyy"
+                    maxDate={new Date()}   // prevent future date
+                    className="date-input"
+
+                    onChangeRaw={(e) => {
+                      let value = e.target.value;
+
+                      // 🔥 limit total length (dd/MM/yyyy = 10 chars)
+                      if (value.length > 10) {
+                        value = value.slice(0, 10);
+                      }
+
+                      const parts = value.split("/");
+
+                      // 🔥 restrict year to max 4 digits
+                      if (parts[2] && parts[2].length > 4) {
+                        parts[2] = parts[2].slice(0, 4);
+                        value = parts.join("/");
+                      }
+
+                      e.target.value = value;
+                    }}
+                  />
                 </div>
 
                 <div className="form-group">
                   <label>Order Date</label>
-                  <input type="date" />
+                  <DatePicker
+                    selected={invoiceDate}
+                    onChange={(date) => setInvoiceDate(date)}
+                    dateFormat="dd/MM/yyyy"
+                    maxDate={new Date()}   // prevent future date
+                    className="date-input"
+
+                    onChangeRaw={(e) => {
+                      let value = e.target.value;
+
+                      // 🔥 limit total length (dd/MM/yyyy = 10 chars)
+                      if (value.length > 10) {
+                        value = value.slice(0, 10);
+                      }
+
+                      const parts = value.split("/");
+
+                      // 🔥 restrict year to max 4 digits
+                      if (parts[2] && parts[2].length > 4) {
+                        parts[2] = parts[2].slice(0, 4);
+                        value = parts.join("/");
+                      }
+
+                      e.target.value = value;
+                    }}
+                  />
                 </div>
 
               </div>
@@ -480,7 +533,32 @@ const handleGSTChange = (e) => {
                 {/* <input placeholder="Transport GSTIN" /> */}
                 {/* <input placeholder="Agent Name" /> */}
                 <input placeholder="LR-RR No" />
-                <input type="date" />
+                <DatePicker
+                    selected={invoiceDate}
+                    onChange={(date) => setInvoiceDate(date)}
+                    dateFormat="dd/MM/yyyy"
+                    maxDate={new Date()}   // prevent future date
+                    className="date-input"
+
+                    onChangeRaw={(e) => {
+                      let value = e.target.value;
+
+                      // 🔥 limit total length (dd/MM/yyyy = 10 chars)
+                      if (value.length > 10) {
+                        value = value.slice(0, 10);
+                      }
+
+                      const parts = value.split("/");
+
+                      // 🔥 restrict year to max 4 digits
+                      if (parts[2] && parts[2].length > 4) {
+                        parts[2] = parts[2].slice(0, 4);
+                        value = parts.join("/");
+                      }
+
+                      e.target.value = value;
+                    }}
+                  />
                 <div className="gstin-container">
                 <label>Transport GSTIN</label>
                 <input

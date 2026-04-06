@@ -1,9 +1,12 @@
 import { useState } from "react";
 import { useOutletContext } from "react-router-dom";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import "../styles/Journal.css";
 
 export default function Journal() {
   const { collapsed } = useOutletContext();
+  const [invoiceDate, setInvoiceDate] = useState(new Date());
 
   const [date, setDate] = useState("");
   const [ledger, setLedger] = useState("");
@@ -34,11 +37,32 @@ const total =
 
             <div className="journal-date">
               <label>Date:</label>
-              <input
-                type="date"
-                value={date}
-                onChange={(e) => setDate(e.target.value)}
-              />
+              <DatePicker
+                  selected={invoiceDate}
+                  onChange={(date) => setInvoiceDate(date)}
+                  dateFormat="dd/MM/yyyy"
+                  maxDate={new Date()}   // prevent future date
+                  className="date-input"
+  
+                  onChangeRaw={(e) => {
+                    let value = e.target.value;
+  
+                    // 🔥 limit total length (dd/MM/yyyy = 10 chars)
+                    if (value.length > 10) {
+                      value = value.slice(0, 10);
+                    }
+  
+                    const parts = value.split("/");
+  
+                    // 🔥 restrict year to max 4 digits
+                    if (parts[2] && parts[2].length > 4) {
+                      parts[2] = parts[2].slice(0, 4);
+                      value = parts.join("/");
+                    }
+  
+                    e.target.value = value;
+                  }}
+                />
             </div>
             <div className="journal-mode">
               <label>Transaction Mode:</label>
