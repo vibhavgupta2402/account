@@ -18,6 +18,52 @@
     const [invoiceType, setInvoiceType] = useState("item"); // item | accounting
     const [rcmApplicable, setRcmApplicable] = useState(false);
 
+    const [openGroupDropdown, setOpenGroupDropdown] = useState(false);
+
+    const [ledger, setLedger] = useState({
+      gstin: "",
+      name: "",
+      address1: "",
+      address2: "",
+      state: "",
+      group: "Sundry Debtors"   // ✅ ALWAYS DEFAULT
+    });
+
+    const [groupList, setGroupList] = useState([]);
+    useEffect(() => {
+    const savedGroups = JSON.parse(localStorage.getItem("ledgerGroups")) || [];
+
+    setGroupList(savedGroups);
+
+    // ✅ ensure default always set
+    setLedger((prev) => ({
+      ...prev,
+      group: prev.group || "Sundry Debtors"
+    }));
+  }, []);
+
+  const fetchGSTDetails = async (gstin) => {
+  if (gstin.length !== 15) return;
+
+  try {
+    const res = await fetch(`/api/gst/${gstin}`);
+
+    if (res.status === 200) {
+      const data = await res.json();
+
+      setLedger((prev) => ({
+        ...prev,
+        name: data.name || "",
+        address1: data.address1 || "",
+        address2: data.address2 || "",
+        state: data.state || ""
+      }));
+    }
+  } catch (err) {
+    console.log("GST Fetch Error:", err);
+  }
+};
+
     // ================= ITEMS =================
     const [items, setItems] = useState([
       { description: "", hsn: "", qty: "", rate: "", discount: "", tax: "", amount: "" }
@@ -78,6 +124,7 @@ const [selectedState, setSelectedState] = useState("");
     }]);
   };
     const [showInvoiceSettings, setShowInvoiceSettings] = useState(false);
+    const [registrationType, setRegistrationType] = useState("E-commerce operator");
 
   const [invoiceConfig, setInvoiceConfig] = useState({
     prefix: "Tax/2025-26",
@@ -249,29 +296,7 @@ const handleGSTChange = (e) => {
                   </div>
 
                   {/* Manual */}
-                  <div className="manual-field">
-                    <label>Manual:</label>
-
-                    <div className="manual-options">
-                      <label>
-                        <input
-                          type="radio"
-                          checked={manualEntry}
-                          onChange={() => setManualEntry(true)}
-                        />
-                        Yes
-                      </label>
-
-                      <label>
-                        <input
-                          type="radio"
-                          checked={!manualEntry}
-                          onChange={() => setManualEntry(false)}
-                        />
-                        No
-                      </label>
-                    </div>
-                  </div>
+                  
                 </div>
                   {showInvoiceSettings && (
                     <div className="invoice-popup-overlay">
@@ -326,6 +351,30 @@ const handleGSTChange = (e) => {
                               }
                             }}
                           />
+                        </div>
+                        <div className="popup-group">
+                          
+                            <label>Manual:</label>
+                            <div className="popup-radio">
+                              <label>
+                                <input
+                                  type="radio"
+                                  checked={manualEntry}
+                                  onChange={() => setManualEntry(true)}
+                                />
+                                Yes
+                              </label>
+
+                              <label>
+                                <input
+                                  type="radio"
+                                  checked={!manualEntry}
+                                  onChange={() => setManualEntry(false)}
+                                />
+                                No
+                              </label>
+                            </div>
+                          
                         </div>
 
                         <div className="popup-actions">
@@ -395,59 +444,166 @@ const handleGSTChange = (e) => {
                     {/* 🔥 DROPDOWN EDIT PANEL */}
                     {showEcoEditor && (
                       <div className="eco-dropdown-panel">
+                        <h4>Create ECO</h4>
 
-                        {/* ADD */}
-                        <div className="eco-add-row">
-                          <input
-                            value={newEco}
-                            onChange={(e) => setNewEco(e.target.value)}
-                            placeholder="Enter ECO name"
-                          />
+                        <div className="eco-form">
+
+                          {/* LEFT */}
+                          <div className="eco-left">
+
+                            <div className="eco-field">
+                              <label>GSTIN</label>
+                              <div className="eco-inline">
+                                <input
+                                  placeholder="Enter GSTIN"
+                                  value={ledger.gstin}
+                                  onChange={(e) => {
+                                    const value = e.target.value.toUpperCase();
+                                    setLedger({ ...ledger, gstin: value });
+                                    fetchGSTDetails(value);
+                                  }}
+                                />
+                                <span className="eco-auto">
+                                  {ledger.gstin.length === 15 ? "Fetching..." : "Auto"}
+                                </span>
+                              </div>
+                            </div>
+
+                            <div className="eco-field">
+                              <label>Name</label>
+                              <input
+                                placeholder="Enter Name"
+                                value={ledger.name}
+                                onChange={(e) =>
+                                  setLedger({ ...ledger, name: e.target.value })
+                                }
+                              />
+                            </div>
+
+                            <div className="eco-field">
+                              <label>Address</label>
+                              <input
+                                placeholder="Address Line 1"
+                                value={ledger.address1}
+                                onChange={(e) =>
+                                  setLedger({ ...ledger, address1: e.target.value })
+                                }
+                              />
+                              <input
+                                placeholder="Address Line 2"
+                                value={ledger.address2}
+                                onChange={(e) =>
+                                  setLedger({ ...ledger, address2: e.target.value })
+                                }
+                              />
+                            </div>
+
+                            <div className="eco-field">
+                              <label>State</label>
+                              <input
+                                placeholder="Select State"
+                                value={ledger.state}
+                                onChange={(e) =>
+                                  setLedger({ ...ledger, state: e.target.value })
+                                }
+                              />
+                            </div>
+
+                          </div>
+
+                          {/* RIGHT */}
+                          <div className="eco-right">
+
+                            <div className="eco-field">
+                              <label>Type</label>
+                              <input
+                                value={customer?.registration || "E-commerce operator"}
+                                readOnly
+                              />
+                            </div>
+
+                            {/* GROUP DROPDOWN */}
+                            <div className="eco-field">
+                              <label>Group</label>
+
+                              <div className="eco-select">
+
+                                <div
+                                  className="eco-select-box"
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    setOpenGroupDropdown(!openGroupDropdown);
+                                  }}
+                                >
+                                  {ledger.group || "Sundry Debtors"}
+                                </div>
+
+                                {openGroupDropdown && (
+                                  <div className="eco-select-dropdown">
+
+                                    {(groupList.length ? groupList : ["Sundry Debtors"]).map((grp) => (
+                                      <div
+                                        key={grp}
+                                        className="eco-option"
+                                        onClick={() => {
+                                          setLedger({ ...ledger, group: grp });
+                                          setOpenGroupDropdown(false);
+                                        }}
+                                      >
+                                        {grp}
+                                      </div>
+                                    ))}
+
+                                  </div>
+                                )}
+
+                              </div>
+                            </div>
+
+                            <div className="eco-field">
+                              <label>Opening Balance</label>
+                              <div className="eco-inline">
+                                <input placeholder="0.00" />
+                                <select>
+                                  <option>Dr</option>
+                                  <option>Cr</option>
+                                </select>
+                              </div>
+                            </div>
+
+                          </div>
+
+                        </div>
+
+                        {/* ACTION */}
+                        <div className="eco-actions">
                           <button
+                            className="eco-cancel"
+                            onClick={() => setShowEcoEditor(false)}
+                          >
+                            Cancel
+                          </button>
+
+                          <button
+                            className="eco-save"
                             onClick={() => {
-                              if (newEco.trim()) {
-                                setEcoOptions([...ecoOptions, newEco]);
-                                setNewEco("");
-                                setShowEcoEditor(false);
-                              }
+                              console.log("ECO DATA:", ledger);
+
+                              const existing = JSON.parse(localStorage.getItem("ecoList")) || [];
+                              localStorage.setItem("ecoList", JSON.stringify([...existing, ledger]));
+
+                              setShowEcoEditor(false);
                             }}
                           >
-                            Add
+                            Save
                           </button>
                         </div>
 
-                        {/* LIST */}
-                        {ecoOptions.map((eco, index) => (
-                          <div key={index} className="eco-item-row">
-
-                            <span>{eco}</span>
-
-                            <button
-                              onClick={() => {
-                                const updated = ecoOptions.filter((_, i) => i !== index);
-                                setEcoOptions(updated);
-
-                                // remove selection if deleted
-                                if (eco === selectedEco) {
-                                  setSelectedEco("");
-                                }
-                              }}
-                            >
-                              ❌
-                            </button>
-
-                          </div>
-                        ))}
-
                       </div>
                     )}
-
                   </div>
-
                 </div>
-
               </div>
-
               <div className="sale-grid">
                 <div className="form-group">
                   <label>Order Number</label>
