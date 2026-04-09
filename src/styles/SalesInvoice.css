@@ -367,7 +367,41 @@
   margin-bottom: 3px;
   display: block;
 }
-
+.dis-container label{
+  font-size: 11px;
+  margin-bottom: 3px;
+  display: block;
+}
+.veh-container label{
+  font-size: 11px;
+  margin-bottom: 3px;
+  display: block;
+}
+.LR label{
+  font-size: 11px;
+  margin-bottom: 3px;
+  display: block;
+}
+.port label{
+  font-size: 11px;
+  margin-bottom: 3px;
+  display: block;
+}
+.country label{
+  font-size: 11px;
+  margin-bottom: 3px;
+  display: block;
+}
+.ship-bill label{
+  font-size: 11px;
+  margin-bottom: 3px;
+  display: block;
+}
+.LUT label{
+  font-size: 11px;
+  margin-bottom: 3px;
+  display: block;
+}
 /* INPUT */
 .gstin-container input {
   height: 30px;
@@ -708,6 +742,39 @@
   z-index: 9999;
 }
 
+.date-container {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;   /* space between label & input */
+}
+
+.date-container label {
+  font-size: 11px;
+  /* margin-bottom: 3px; */
+  display: block;
+}
+.type-form-group{
+  display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+.type-form-group label{
+  font-size: 11px;
+  color: #6b7280;
+}
+.type-form-group select{
+  width: 70%;
+    padding: 5px;
+    border-radius: 8px;
+    border: 1px solid #E5E7EB;
+}
+
+.date-input {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
 
 /* eco row */
 .eco-row {

@@ -404,13 +404,13 @@ const handleGSTChange = (e) => {
                   </div>
 
                   {/* TYPE */}
-                  <div className="form-group">
+                  <div className="type-form-group">
                     <label>Type of Supply:</label>
                     <select value={typeOfSupply} onChange={(e) => setTypeOfSupply(e.target.value)}>
-                      <option>Outward Supply</option>
-                      <option>Export with payment</option>
-                      <option>Export without payment</option>
-                      <option>SEZ supply</option>
+                      <option value="Outward">Outward Supply</option>
+                      <option value="Export_with_payment">Export with payment</option>
+                      <option value="Export_without_payment">Export without payment</option>
+                      <option value="SEZ">SEZ supply</option>
                     </select>
                   </div>
 
@@ -683,62 +683,100 @@ const handleGSTChange = (e) => {
               <h2>Dispatch Details</h2>
 
               <div className="dispatch-grid">
-
-                <input placeholder="Dispatch Doc No" />
-                <input placeholder="Vehicle No" />
+                <div className="dis-container">
+                  <label>Dispatch Doc No</label>
+                  <input placeholder="Dispatch Doc No" />
+                </div>
+                <div className="veh-container">
+                  <label>Vehical No</label>
+                  <input placeholder="Vehicle No" />
+                </div>
                 {/* <input placeholder="Transport GSTIN" /> */}
                 {/* <input placeholder="Agent Name" /> */}
-                <input placeholder="LR-RR No" />
-                <DatePicker
-                    selected={invoiceDate}
-                    onChange={(date) => setInvoiceDate(date)}
-                    dateFormat="dd/MM/yyyy"
-                    maxDate={new Date()}   // prevent future date
-                    className="date-input"
+                <div className="LR">
+                  <label>LR-RR No</label>
+                  <input placeholder="LR-RR No" />
+                </div>
+                <div className="date-container">
+                  <label>Date</label>
+                  <DatePicker
+                      selected={invoiceDate}
+                      onChange={(date) => setInvoiceDate(date)}
+                      dateFormat="dd/MM/yyyy"
+                      maxDate={new Date()}   // prevent future date
+                      className="date-input"
 
-                    onChangeRaw={(e) => {
-                      let value = e.target.value;
+                      onChangeRaw={(e) => {
+                        let value = e.target.value;
 
-                      // 🔥 limit total length (dd/MM/yyyy = 10 chars)
-                      if (value.length > 10) {
-                        value = value.slice(0, 10);
-                      }
+                        // 🔥 limit total length (dd/MM/yyyy = 10 chars)
+                        if (value.length > 10) {
+                          value = value.slice(0, 10);
+                        }
 
-                      const parts = value.split("/");
+                        const parts = value.split("/");
 
-                      // 🔥 restrict year to max 4 digits
-                      if (parts[2] && parts[2].length > 4) {
-                        parts[2] = parts[2].slice(0, 4);
-                        value = parts.join("/");
-                      }
+                        // 🔥 restrict year to max 4 digits
+                        if (parts[2] && parts[2].length > 4) {
+                          parts[2] = parts[2].slice(0, 4);
+                          value = parts.join("/");
+                        }
 
-                      e.target.value = value;
-                    }}
-                  />
-                <div className="gstin-container">
-                <label>Transport GSTIN</label>
-                <input
-                  value={gstin}
-                  onChange={handleGSTChange}
-                  placeholder="Enter GSTIN"
-                />
-
-                {/* LOADING */}
-                {gstLoading && <div className="gst-status">Validating...</div>}
-
-                {/* ERROR */}
-                {gstError && <div className="gst-error">{gstError}</div>}
-
-                {/* SUCCESS */}
-                {gstData && (
-                  <div className="gst-result-box">
-                    <p><strong>{gstData.name}</strong></p>
-                    <p>{gstData.state}</p>
-                    <p>Status: {gstData.status}</p>
+                        e.target.value = value;
+                      }}
+                    />
                   </div>
-                )}
+                <div className="gstin-container">
+                  <label>Transport GSTIN</label>
+                  <input 
+                    value={gstin}
+                    onChange={handleGSTChange}
+                    placeholder="Transport GSTIN"
+                  />
 
-              </div>
+                  {/* LOADING */}
+                  {gstLoading && <div className="gst-status">Validating...</div>}
+
+                  {/* ERROR */}
+                  {gstError && <div className="gst-error">{gstError}</div>}
+
+                  {/* SUCCESS */}
+                  {gstData && (
+                    <div className="gst-result-box">
+                      <p><strong>{gstData.name}</strong></p>
+                      <p>{gstData.state}</p>
+                      <p>Status: {gstData.status}</p>
+                    </div>
+                  )}
+                </div>
+                {/* 🔥 EXPORT / SEZ EXTRA FIELDS */}
+                  {(typeOfSupply === "Export_with_payment" || 
+                    typeOfSupply === "Export_without_payment" ||
+                    typeOfSupply === "SEZ") && (
+                    
+                    <>
+                    <div className="port">
+                      <label>Port of Export</label>
+                      <input placeholder="Port No." />
+                    </div>
+                    <div className="country">
+                      <label>Country Name</label>
+                      <input placeholder="Country" />
+                    </div>
+                    <div className="ship-bill">
+                      <label>Shipping Bill No</label>
+                      <input placeholder="Shipping Bill No" />
+                    </div>
+                      
+                      {/* ONLY FOR EXPORT WITHOUT PAYMENT */}
+                      {typeOfSupply === "Export_without_payment" && (
+                        <div className="LUT">
+                          <label>LUT / Bond No</label>
+                          <input placeholder="LUT / Bond No" />
+                        </div>
+                      )}
+                    </>
+                  )}
               </div>
             </div>
             )}
