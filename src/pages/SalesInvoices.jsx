@@ -12,6 +12,8 @@
     const [invoiceNo, setInvoiceNo] = useState("");
     const [customer,setCustomer] = useState({});
     const [invoiceDate, setInvoiceDate] = useState(new Date());
+    const [orderDate, setOrderDate] = useState(new Date());
+    const [dispatchDate, setDispatchDate] = useState(new Date());
     // ================= TYPE + ECO =================
     const [typeOfSupply, setTypeOfSupply] = useState("");
     // NEW STATES
@@ -308,8 +310,10 @@ const handleGSTChange = (e) => {
                           <label>Prefix</label>
                           <input className="popup-input-box"
                             value={invoiceConfig.prefix}
+                            readOnly={!manualEntry}
                             onChange={(e) =>
                               setInvoiceConfig({ ...invoiceConfig, prefix: e.target.value })
+                              
                             }
                           />
                         </div>
@@ -320,6 +324,7 @@ const handleGSTChange = (e) => {
                               type="number"
                               min="0"
                               value={invoiceConfig.zero}
+                              readOnly={!manualEntry}
                               onChange={(e) => {
                                 const val = e.target.value;
 
@@ -336,6 +341,7 @@ const handleGSTChange = (e) => {
                           <input className="popup-input-box"
                             type="number"
                             value={invoiceConfig.start}
+                            readOnly={!manualEntry}
                             onChange={(e) => {
                               const val = e.target.value;
 
@@ -618,25 +624,31 @@ const handleGSTChange = (e) => {
                     selected={invoiceDate}
                     onChange={(date) => setInvoiceDate(date)}
                     dateFormat="dd/MM/yyyy"
-                    maxDate={new Date()}   // prevent future date
+                    minDate={new Date(new Date().setFullYear(new Date().getFullYear() - 1))} // ✅ last 1 year
                     className="date-input"
-
                     onChangeRaw={(e) => {
-                      let value = e.target.value;
-
-                      // 🔥 limit total length (dd/MM/yyyy = 10 chars)
+                      if (!e || !e.target) return;
+                      let value = e.target.value || "";
+                      // allow only numbers + /
+                      value = value.replace(/[^0-9/]/g, "");
+                      // auto format DD/MM/YYYY
+                      if (value.length === 2 || value.length === 5) {
+                        if (!value.endsWith("/")) value += "/";
+                      }
+                      // restrict length
                       if (value.length > 10) {
                         value = value.slice(0, 10);
                       }
-
                       const parts = value.split("/");
-
-                      // 🔥 restrict year to max 4 digits
+                      // day check
+                      if (parts[0] && Number(parts[0]) > 31) parts[0] = "31";
+                      // month check
+                      if (parts[1] && Number(parts[1]) > 12) parts[1] = "12";
+                      // year limit (4 digit)
                       if (parts[2] && parts[2].length > 4) {
                         parts[2] = parts[2].slice(0, 4);
-                        value = parts.join("/");
                       }
-
+                      value = parts.join("/");
                       e.target.value = value;
                     }}
                   />
@@ -645,28 +657,34 @@ const handleGSTChange = (e) => {
                 <div className="form-group">
                   <label>Order Date</label>
                   <DatePicker
-                    selected={invoiceDate}
-                    onChange={(date) => setInvoiceDate(date)}
+                    selected={orderDate}
+                    onChange={(date) => setOrderDate(date)}
                     dateFormat="dd/MM/yyyy"
-                    maxDate={new Date()}   // prevent future date
+                    minDate={new Date(new Date().setFullYear(new Date().getFullYear() - 1))} // ✅ last 1 year
                     className="date-input"
-
                     onChangeRaw={(e) => {
-                      let value = e.target.value;
-
-                      // 🔥 limit total length (dd/MM/yyyy = 10 chars)
+                      if (!e || !e.target) return;
+                      let value = e.target.value || "";
+                      // allow only numbers + /
+                      value = value.replace(/[^0-9/]/g, "");
+                      // auto format DD/MM/YYYY
+                      if (value.length === 2 || value.length === 5) {
+                        if (!value.endsWith("/")) value += "/";
+                      }
+                      // restrict length
                       if (value.length > 10) {
                         value = value.slice(0, 10);
                       }
-
                       const parts = value.split("/");
-
-                      // 🔥 restrict year to max 4 digits
+                      // day check
+                      if (parts[0] && Number(parts[0]) > 31) parts[0] = "31";
+                      // month check
+                      if (parts[1] && Number(parts[1]) > 12) parts[1] = "12";
+                      // year limit (4 digit)
                       if (parts[2] && parts[2].length > 4) {
                         parts[2] = parts[2].slice(0, 4);
-                        value = parts.join("/");
                       }
-
+                      value = parts.join("/");
                       e.target.value = value;
                     }}
                   />
@@ -700,30 +718,36 @@ const handleGSTChange = (e) => {
                 <div className="date-container">
                   <label>Date</label>
                   <DatePicker
-                      selected={invoiceDate}
-                      onChange={(date) => setInvoiceDate(date)}
-                      dateFormat="dd/MM/yyyy"
-                      maxDate={new Date()}   // prevent future date
-                      className="date-input"
-
-                      onChangeRaw={(e) => {
-                        let value = e.target.value;
-
-                        // 🔥 limit total length (dd/MM/yyyy = 10 chars)
-                        if (value.length > 10) {
-                          value = value.slice(0, 10);
-                        }
-
-                        const parts = value.split("/");
-
-                        // 🔥 restrict year to max 4 digits
-                        if (parts[2] && parts[2].length > 4) {
-                          parts[2] = parts[2].slice(0, 4);
-                          value = parts.join("/");
-                        }
-
-                        e.target.value = value;
-                      }}
+                    selected={dispatchDate}
+                    onChange={(date) => setDispatchDate(date)}
+                    dateFormat="dd/MM/yyyy"
+                    minDate={new Date(new Date().setFullYear(new Date().getFullYear() - 1))} // ✅ last 1 year
+                    className="date-input"
+                    onChangeRaw={(e) => {
+                      if (!e || !e.target) return;
+                      let value = e.target.value || "";
+                      // allow only numbers + /
+                      value = value.replace(/[^0-9/]/g, "");
+                      // auto format DD/MM/YYYY
+                      if (value.length === 2 || value.length === 5) {
+                        if (!value.endsWith("/")) value += "/";
+                      }
+                      // restrict length
+                      if (value.length > 10) {
+                        value = value.slice(0, 10);
+                      }
+                      const parts = value.split("/");
+                      // day check
+                      if (parts[0] && Number(parts[0]) > 31) parts[0] = "31";
+                      // month check
+                      if (parts[1] && Number(parts[1]) > 12) parts[1] = "12";
+                      // year limit (4 digit)
+                      if (parts[2] && parts[2].length > 4) {
+                        parts[2] = parts[2].slice(0, 4);
+                      }
+                      value = parts.join("/");
+                      e.target.value = value;
+                    }}
                     />
                   </div>
                 <div className="gstin-container">
@@ -1309,9 +1333,28 @@ const handleGSTChange = (e) => {
                   }, 0);
                 }
 
-                const igst = typeOfSupply === "Export with payment" ? gst : 0;
-                const cgst = typeOfSupply !== "Export with payment" ? gst / 2 : 0;
-                const sgst = typeOfSupply !== "Export with payment" ? gst / 2 : 0;
+                let igst = 0;
+                let cgst = 0;
+                let sgst = 0;
+
+                if (typeOfSupply === "Outward") {
+                  cgst = gst / 2;
+                  sgst = gst / 2;
+                }
+
+                if (typeOfSupply === "Export_with_payment") {
+                  igst = gst;
+                }
+
+                if (typeOfSupply === "Export_without_payment") {
+                  igst = 0;
+                  cgst = 0;
+                  sgst = 0;
+                }
+
+                if (typeOfSupply === "SEZ") {
+                  igst = gst; // can refine later
+                }
 
                 const cess = 0;
                 const tcs = 0;

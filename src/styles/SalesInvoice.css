@@ -360,7 +360,7 @@
 .gstin-container {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 0px;
 }
 .gstin-container label{
   font-size: 11px;
@@ -409,6 +409,7 @@
   border-radius: 6px;
   border: 1px solid #e5e7eb;
 }
+
 
 /* STATUS */
 .gst-status {
