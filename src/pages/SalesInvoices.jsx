@@ -183,16 +183,28 @@ const handleGSTChange = (e) => {
   }
 };
   const [currentCount, setCurrentCount] = useState(1);
+  // const generateInvoice = () => {
+  //   const { prefix, zero } = invoiceConfig;
+
+  //   const zeroCount = Number(zero) || 0;   // convert HERE only
+  //   const zeros = "0".repeat(zeroCount);
+  //   const number = zeros + String(currentCount);
+  //   return `${prefix}/${number}`;
+  // };
   const generateInvoice = () => {
-    const { prefix, zero } = invoiceConfig;
-
-    const zeroCount = Number(zero) || 0;   // convert HERE only
-    const zeros = "0".repeat(zeroCount);
-
-    const number = zeros + String(currentCount);
-
-    return `${prefix}/${number}`;
-  };
+  const { prefix, zero } = invoiceConfig;
+  const zeroCount = Number(zero) || 0;
+  let number = String(currentCount);
+  // 🔥 final output ALWAYS 4 digit
+  const totalLength = zeroCount + number.length;
+  if (totalLength > 4) {
+    // trim number from left
+    number = number.slice(0, 4 - zeroCount);
+  }
+  // pad remaining
+  const finalNumber = "0".repeat(zeroCount) + number;
+  return `${prefix}/${finalNumber}`;
+};
   useEffect(() => {
     if (!invoiceConfig.manual) {
       setInvoiceNo(generateInvoice());
@@ -280,11 +292,32 @@ const handleGSTChange = (e) => {
                     <label>Invoice No</label>
 
                     <div className="invoice-input-box">
-                      <input
+                      {/* <input
                         value={invoiceNo}
                         onChange={(e) => setInvoiceNo(e.target.value)}
                         placeholder="Tax/2025-26/001"
                         readOnly={!manualEntry}
+                      /> */}
+                      <input
+                        value={invoiceNo}
+                        readOnly={!manualEntry}
+                        placeholder="Tax/2025-26/0001"
+                        onChange={(e) => {
+                          let value = e.target.value;
+                          const prefix = invoiceConfig.prefix + "/";
+                          // 🔥 prefix lock
+                          if (!value.startsWith(prefix)) {
+                            value = prefix;
+                          }
+                          // 🔥 extract number
+                          let numberPart = value.replace(prefix, "");
+                          // only digits
+                          numberPart = numberPart.replace(/\D/g, "");
+                          // limit 4 digits
+                          numberPart = numberPart.slice(0, 4);
+                          value = prefix + numberPart;
+                          setInvoiceNo(value);
+                        }}
                       />
 
                       {/* ⚙️ SETTINGS ICON */}
@@ -305,59 +338,6 @@ const handleGSTChange = (e) => {
 
                       <div className="invoice-popup">
                         <h3>Invoice Settings</h3>
-
-                        <div className="popup-group full">
-                          <label>Prefix</label>
-                          <input className="popup-input-box"
-                            value={invoiceConfig.prefix}
-                            readOnly={!manualEntry}
-                            onChange={(e) =>
-                              setInvoiceConfig({ ...invoiceConfig, prefix: e.target.value })
-                              
-                            }
-                          />
-                        </div>
-
-                        <div className="popup-group">
-                          <label>Zero Padding</label>
-                          <input className="popup-input-box"
-                              type="number"
-                              min="0"
-                              value={invoiceConfig.zero}
-                              readOnly={!manualEntry}
-                              onChange={(e) => {
-                                const val = e.target.value;
-
-                                setInvoiceConfig({
-                                  ...invoiceConfig,
-                                  zero: val === "" ? "" : val
-                                });
-                              }}
-                            />
-                        </div>
-
-                        <div className="popup-group">
-                          <label>Start No</label>
-                          <input className="popup-input-box"
-                            type="number"
-                            value={invoiceConfig.start}
-                            readOnly={!manualEntry}
-                            onChange={(e) => {
-                              const val = e.target.value;
-
-                              // store raw value (string)
-                              setInvoiceConfig({
-                                ...invoiceConfig,
-                                start: val === "" ? "" : val
-                              });
-
-                              // update counter only if valid number
-                              if (val !== "") {
-                                setCurrentCount(Number(val));
-                              }
-                            }}
-                          />
-                        </div>
                         <div className="popup-group">
                           
                             <label>Manual:</label>
@@ -383,9 +363,111 @@ const handleGSTChange = (e) => {
                           
                         </div>
 
+                        <div className="popup-group full">
+                          <label>Prefix</label>
+                          {/* <input className="popup-input-box"
+                            value={invoiceConfig.prefix}
+                            readOnly={!manualEntry}
+                            onChange={(e) =>
+                              setInvoiceConfig({ ...invoiceConfig, prefix: e.target.value })
+                              
+                            }
+                          /> */}
+                          <input
+                            className="popup-input-box"
+                            value={invoiceConfig.prefix}
+                            disabled={!manualEntry}
+                            onChange={(e) => {
+                              let value = e.target.value;
+
+                              // ❌ max 11 char
+                              if (value.length > 11) {
+                                value = value.slice(0, 11);
+                              }
+
+                              setInvoiceConfig({ ...invoiceConfig, prefix: value });
+                            }}
+                          />
+                        </div>
+
+                        <div className="popup-group">
+                          <label>Zero Padding</label>
+                          {/* <input className="popup-input-box"
+                              type="number"
+                              min="0"
+                              value={invoiceConfig.zero}
+                              readOnly={!manualEntry}
+                              onChange={(e) => {
+                                const val = e.target.value;
+
+                                setInvoiceConfig({
+                                  ...invoiceConfig,
+                                  zero: val === "" ? "" : val
+                                });
+                              }}
+                            /> */}
+                            <input
+                              type="number"
+                              min="0"
+                              max="4"
+                              value={invoiceConfig.zero}
+                              disabled={!manualEntry}
+                              onChange={(e) => {
+                                let val = Number(e.target.value) || 0;
+
+                                if (val > 4) val = 4;
+
+                                setInvoiceConfig({ ...invoiceConfig, zero: val });
+                              }}
+                            />
+                        </div>
+
+                        <div className="popup-group">
+                          <label>Start No</label>
+                          {/* <input className="popup-input-box"
+                            type="number"
+                            value={invoiceConfig.start}
+                            readOnly={!manualEntry}
+                            onChange={(e) => {
+                              const val = e.target.value;
+
+                              // store raw value (string)
+                              setInvoiceConfig({
+                                ...invoiceConfig,
+                                start: val === "" ? "" : val
+                              });
+
+                              // update counter only if valid number
+                              if (val !== "") {
+                                setCurrentCount(Number(val));
+                              }
+                            }}
+                          /> */}
+                          <input
+                            type="number"
+                            value={invoiceConfig.start}
+                            disabled={!manualEntry}
+                            onChange={(e) => {
+                              let val = Math.max(0, Number(e.target.value) || 0);
+
+                              setInvoiceConfig({ ...invoiceConfig, start: val });
+                              setCurrentCount(val);
+                            }}
+                          />
+                        </div>
                         <div className="popup-actions">
                           <button onClick={() => setShowInvoiceSettings(false)}>Cancel</button>
-                          <button onClick={() => setShowInvoiceSettings(false)}>Save</button>
+                          <button
+                            onClick={() => {
+                              if ((Number(invoiceConfig.zero) || 0) + String(invoiceConfig.start).length > 4) {
+                                alert("Zero + Start digits cannot exceed 4");
+                                return;
+                              }
+                              setShowInvoiceSettings(false);
+                            }}
+                          >
+                            Save
+                          </button>
                         </div>
                       </div>
 
@@ -463,6 +545,7 @@ const handleGSTChange = (e) => {
                                 <input
                                   placeholder="Enter GSTIN"
                                   value={ledger.gstin}
+                                  maxLength={15}
                                   onChange={(e) => {
                                     const value = e.target.value.toUpperCase();
                                     setLedger({ ...ledger, gstin: value });
