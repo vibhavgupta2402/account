@@ -35,6 +35,7 @@ import Contra from "./pages/contra";
 import Purchase from "./pages/purchasevoucher";
 import SaleSummary from "./pages/SaleSummary";
 import SaleReturnSummary from "./pages/SaleReturnSummary";
+import SecGroupList from "./pages/SecGroupList";
 
 
 // JournalEntries
@@ -78,6 +79,7 @@ export default function App() {
           <Route path="/purchasevoucher" element={<Purchase/>} />
           <Route path="/SaleSummary" element={<SaleSummary/>} />
           <Route path="/SaleReturnSummary" element={<SaleReturnSummary/>} />
+          <Route path="/SecGroupList" element={<SecGroupList/>} />
         
 
 

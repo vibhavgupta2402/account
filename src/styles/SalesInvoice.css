@@ -8,7 +8,7 @@
 /* This fixes sidebar overlap */
 .main-content {
   margin-left: 250px;   /* sidebar width */
-  margin-top: 65px;
+  margin-top: 50px;
   padding: 15px;
   transition: 0.3s;
 }
@@ -404,7 +404,7 @@
 }
 /* INPUT */
 .gstin-container input {
-  height: 30px;
+  height: 26px;
   padding: 4px 8px;
   border-radius: 6px;
   border: 1px solid #e5e7eb;
@@ -1189,6 +1189,55 @@
 
 .eco-add-row button:hover {
   background: #1d4ed8;
+}
+.dispatch-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.transporter-box {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;   
+  margin-bottom: 8px;
+}
+
+.transporter-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.transporter-box label{
+    font-size: 11px;
+  margin-bottom: 3px;
+  display: block;
+}
+
+.transporter-row select {
+  padding: 1px 10px;
+  width: 150px;
+  height: 24px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+/* 🔥 FIX 3: button size match */
+.transporter-create-btn {
+  padding: 0 10px;
+  height: 24px;          /* SAME AS SELECT */
+  line-height: 24px;     /* ADD THIS - matches height for vertical centering */
+  border-radius: 6px;
+  border: none;
+  background-color: #4CAF50;
+  color: white;
+  cursor: pointer;
+  white-space: nowrap;
+  text-align: center;    /* CHANGE from 'justify' to 'center' */
+}
+
+.transporter-create-btn:hover {
+  background-color: #45a049;
 }
 
 /* ECO ITEMS */

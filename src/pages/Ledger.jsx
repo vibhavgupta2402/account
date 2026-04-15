@@ -1,267 +1,6 @@
-// import { useOutletContext } from "react-router-dom";
-// import React, { useState, useEffect } from "react";
-// import "../styles/ledger.css";
-
-// const GROUPS = [
-//   "Bank Accounts",
-//   "Cash-in-Hand",
-//   "Capital Account",
-//   "Current Assets",
-//   "Current Liabilities",
-//   "Direct Expenses",
-//   "Direct Incomes",
-//   "Indirect Expenses",
-//   "Indirect Incomes",
-//   "Sales Accounts",
-//   "Purchase Accounts"
-// ];
-
-// export default function LedgerCreate() {
-//   const { collapsed } = useOutletContext();
-
-//   const [ledger, setLedger] = useState({
-//     name: "",
-//     address: "",
-//     group: "",
-//     mailingName: "",
-//     accountNo: ""
-//   });
-
-//   const [showGroup, setShowGroup] = useState(false);
-//   const [groupIndex, setGroupIndex] = useState(0);
-
-//   // 🔥 Auto sync
-//   useEffect(() => {
-//     setLedger(prev => ({
-//       ...prev,
-//       mailingName: prev.name
-//     }));
-//   }, [ledger.name]);
-
-//   // 🔥 Focus group panel
-//   useEffect(() => {
-//     if (showGroup) {
-//       document.getElementById("group-panel")?.focus();
-//     }
-//   }, [showGroup]);
-
-//   // 🔥 TAB FLOW
-//   const handleTab = (e, next) => {
-//     if (e.key === "Tab") {
-//       e.preventDefault();
-//       if (next === "group") setShowGroup(true);
-//     }
-//   };
-
-//   // 🔥 GROUP NAVIGATION
-//   const handleGroupKeys = (e) => {
-//     if (!showGroup) return;
-
-//     if (e.key === "ArrowDown") {
-//       e.preventDefault();
-//       setGroupIndex(prev => (prev + 1) % GROUPS.length);
-//     }
-
-//     if (e.key === "ArrowUp") {
-//       e.preventDefault();
-//       setGroupIndex(prev =>
-//         prev === 0 ? GROUPS.length - 1 : prev - 1
-//       );
-//     }
-
-//     if (e.key === "Enter") {
-//       e.preventDefault();
-
-//       setLedger(prev => ({
-//         ...prev,
-//         group: GROUPS[groupIndex]
-//       }));
-
-//       setShowGroup(false);
-
-//       // 🔥 focus address manually
-//       document.getElementById("address-input")?.focus();
-//     }
-
-//     if (e.key === "Escape") {
-//       setShowGroup(false);
-//     }
-//   };
-
-//   return (
-//     <div className="ledger-app">
-//   <div className={`main-content ${collapsed ? "collapsed" : ""}`}>
-//     <div className="ledger-container">
-
-//       {/* HEADER */}
-//       <div className="ledger-header">
-//         <h2>Ledger Creation</h2>
-//       </div>
-
-//       {/* BODY */}
-//       <div className="ledger-body">
-
-//         {/* LEFT SIDE */}
-//         <div className="ledger-left">
-
-//           <div className="form-row">
-//             <label>Name</label>
-//             <input
-//               value={ledger.name}
-//               onChange={(e) =>
-//                 setLedger(prev => ({ ...prev, name: e.target.value }))
-//               }
-//             />
-//           </div>
-
-//           <div className="form-row">
-//             <label>Address</label>
-//             <textarea
-//               value={ledger.address}
-//               onChange={(e) =>
-//                 setLedger(prev => ({ ...prev, address: e.target.value }))
-//               }
-//             />
-//           </div>
-
-//           <div className="form-row">
-//             <label>Under</label>
-//             <input value={ledger.group} readOnly />
-//           </div>
-
-//         </div>
-
-//         {/* RIGHT SIDE */}
-//         <div className="ledger-right-section">
-
-//           {/* MAILING */}
-//           <div className="ledger-mailing">
-
-//             <h3>Mailing Details</h3>
-
-//             <div className="ledger-line">
-//               <span>Name</span>
-//               <span>:</span>
-//               <input
-//                 className="tally-input"
-//                 value={ledger.mailingName}
-//                 onChange={(e) =>
-//                   setLedger(prev => ({ ...prev, mailingName: e.target.value }))
-//                 }
-//               />
-//             </div>
-
-//             <div className="ledger-line">
-//               <span>Address</span>
-//               <span>:</span>
-//               <textarea
-//                 className="tally-textarea"
-//                 value={ledger.address}
-//                 onChange={(e) =>
-//                   setLedger(prev => ({ ...prev, address: e.target.value }))
-//                 }
-//               />
-//             </div>
-
-//             <div className="ledger-line">
-//               <span>State</span>
-//               <span>:</span>
-//               <b>Uttar Pradesh</b>
-//             </div>
-
-//             <div className="ledger-line">
-//               <span>Country</span>
-//               <span>:</span>
-//               <b>India</b>
-//             </div>
-
-//             <div className="ledger-line">
-//               <span>Pincode</span>
-//               <span>:</span>
-//               <input className="tally-input" />
-//             </div>
-
-//             {/* BANKING */}
-//             <h4>Banking Details</h4>
-
-//             <div className="ledger-line">
-//               <span>Provide bank details</span>
-//               <span>:</span>
-//               <select className="tally-select">
-//                 <option>No</option>
-//                 <option>Yes</option>
-//               </select>
-//             </div>
-
-//             {/* TAX */}
-//             <h4>Tax Registration Details</h4>
-
-//             <div className="ledger-line">
-//               <span>PAN/IT No.</span>
-//               <span>:</span>
-//               <input className="tally-input" />
-//             </div>
-
-//             <div className="ledger-line">
-//               <span>Registration type</span>
-//               <span>:</span>
-//               <b>Regular</b>
-//             </div>
-
-//             <div className="ledger-line">
-//               <span>GSTIN/UIN</span>
-//               <span>:</span>
-//               <input className="tally-input" />
-//             </div>
-
-//             <div className="ledger-line">
-//               <span>Set/Alter GST details</span>
-//               <span>:</span>
-//               <select className="tally-select">
-//                 <option>No</option>
-//                 <option>Yes</option>
-//               </select>
-//             </div>
-
-//           </div>
-//           {/* BANK */}
-//           {ledger.group === "Bank Accounts" && (
-//             <div className="card">
-//               <h3>Bank Details</h3>
-
-//               <div className="form-row">
-//                 <label>Account No</label>
-//                 <input
-//                   value={ledger.accountNo}
-//                   onChange={(e) =>
-//                     setLedger(prev => ({
-//                       ...prev,
-//                       accountNo: e.target.value
-//                     }))
-//                   }
-//                 />
-//               </div>
-//             </div>
-//           )}
-
-//         </div>
-
-//       </div>
-
-//       {/* FOOTER */}
-//       <div className="ledger-footer">
-//         <button className="led-save-btn">Save</button>
-//         <button className="led-cancel-btn">Cancel</button>
-//       </div>
-
-//     </div>
-//   </div>
-// </div>
-//   );
-// }
-
-import { useOutletContext } from "react-router-dom";
-import React, { useState, useEffect } from "react";
+import { useOutletContext, useNavigate, } from "react-router-dom";
+import { useState, useEffect } from "react";
+import GroupSecondary from "../pages/SecGroupList";
 import "../styles/ledger.css";
 
 /* ================= GROUP TREE ================= */
@@ -328,6 +67,7 @@ const flattenGroups = (tree, depth = 0) => {
 
 const GROUP_LIST = flattenGroups(GROUP_TREE);
 
+
 /* ================= GROUP TYPE ================= */
 const getGroupType = (group) => {
   if (group === "Bank Accounts") return "bank";
@@ -344,6 +84,10 @@ const getGroupType = (group) => {
 
 export default function LedgerCreate() {
   const { collapsed } = useOutletContext();
+  const navigate = useNavigate();
+  const [showGroupModal, setShowGroupModal] = useState(false);
+
+  const [groupList, setGroupList] = useState(GROUP_LIST);
 
   /* ================= STATE ================= */
   const [ledger, setLedger] = useState({
@@ -392,6 +136,25 @@ export default function LedgerCreate() {
       mailingName: prev.name
     }));
   }, [ledger.name]);
+  useEffect(() => {
+  const handleClickOutside = (e) => {
+    // अगर group panel open है और click panel के बाहर हुआ
+    if (showGroup) {
+      const panel = document.querySelector(".ledger-group-panel");
+      const modal = document.querySelector(".group-modal-box");
+
+      if (panel && !panel.contains(e.target) && (!modal || !modal.contains(e.target))) {
+        setShowGroup(false);   // 🔥 CLOSE DROPDOWN
+      }
+    }
+  };
+
+  document.addEventListener("mousedown", handleClickOutside);
+
+  return () => {
+    document.removeEventListener("mousedown", handleClickOutside);
+  };
+}, [showGroup]);
 
   /* ================= KEYBOARD NAV ================= */
   const handleGroupKeys = (e) => {
@@ -443,13 +206,15 @@ export default function LedgerCreate() {
               />
             </div>
 
-            <div className="ledger-row">
+            <div className="add-ledger-row">
               <label>Address</label>
-              <input
+              <textarea
+                className="ledger-textarea"
                 value={ledger.address}
                 onChange={(e) =>
                   setLedger(prev => ({ ...prev, address: e.target.value }))
                 }
+                placeholder="Enter Address"
               />
             </div>
 
@@ -463,7 +228,7 @@ export default function LedgerCreate() {
             {/* LEFT */}
             <div className="ledger-left">
 
-              <div className="ledger-row">
+              <div className="under-ledger-row">
                 <label>Under</label>
                 <input
                   value={ledger.group}
@@ -979,7 +744,11 @@ export default function LedgerCreate() {
             tabIndex={0}
             onKeyDown={handleGroupKeys}
           >
-            <h3>List of Groups</h3>
+            <div className="list-group-header">
+                <h3>List of Groups</h3>
+                <button className="group-create-btn" onClick={() => setShowGroupModal(true)}>Create</button>
+
+            </div>
 
             {GROUP_LIST.map((g, i) => (
               <div
@@ -1001,6 +770,37 @@ export default function LedgerCreate() {
             ))}
           </div>
         )}
+        {showGroupModal && (
+        <div
+          className="group-modal-overlay"
+          onClick={() => setShowGroupModal(false)}   // 🔥 outside click
+        >
+          <div
+            className="group-modal-box"
+            onClick={(e) => e.stopPropagation()}     // 🔥 prevent close inside
+          >
+            <GroupSecondary
+              onClose={() => setShowGroupModal(false)}   // 🔥 cancel button
+              onSave={(data) => {
+
+                const newGroup = {
+                  name: data.name,
+                  depth: 1
+                };
+
+                setGroupList(prev => [...prev, newGroup]);
+
+                setLedger(prev => ({
+                  ...prev,
+                  group: data.name
+                }));
+
+                setShowGroupModal(false);
+              }}
+            />
+          </div>
+        </div>
+      )}
 
       </div>
     </div>

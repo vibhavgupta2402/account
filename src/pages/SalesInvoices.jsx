@@ -1,9 +1,10 @@
   import { useState, useRef, useEffect } from "react";
-  import { useOutletContext } from "react-router-dom";
+  import { useOutletContext,useNavigate } from "react-router-dom";
   import { FaTrash } from "react-icons/fa";
   import DatePicker from "react-datepicker";
   import "react-datepicker/dist/react-datepicker.css";
   import "../styles/SalesInvoice.css";
+
 
   export default function SalesInvoice() {
     const { collapsed } = useOutletContext();
@@ -14,6 +15,7 @@
     const [invoiceDate, setInvoiceDate] = useState(new Date());
     const [orderDate, setOrderDate] = useState(new Date());
     const [dispatchDate, setDispatchDate] = useState(new Date());
+    const [shippingDate, setshippingDate] = useState(new Date());
     // ================= TYPE + ECO =================
     const [typeOfSupply, setTypeOfSupply] = useState("");
     // NEW STATES
@@ -148,6 +150,8 @@ const [gstData, setGstData] = useState(null);
 const [gstLoading, setGstLoading] = useState(false);
 const [gstError, setGstError] = useState("");
 const [showCustomerPopup, setShowCustomerPopup] = useState(false);
+
+const navigate = useNavigate();
 const validateGST = async (value) => {
   if (value.length !== 15) return;
 
@@ -206,10 +210,10 @@ const handleGSTChange = (e) => {
   return `${prefix}/${finalNumber}`;
 };
   useEffect(() => {
-    if (!invoiceConfig.manual) {
-      setInvoiceNo(generateInvoice());
-    }
-  }, [currentCount, invoiceConfig]);
+  if (!manualEntry) {
+    setInvoiceNo(generateInvoice());
+  }
+}, [currentCount, invoiceConfig, manualEntry]);
 
 
     const [selectedEco, setSelectedEco] = useState("");
@@ -301,23 +305,28 @@ const handleGSTChange = (e) => {
                       <input
                         value={invoiceNo}
                         readOnly={!manualEntry}
-                        placeholder="Tax/2025-26/0001"
+                        // placeholder="Tax/2025-26/0001"
+                        maxLength={16}
                         onChange={(e) => {
-                          let value = e.target.value;
-                          const prefix = invoiceConfig.prefix + "/";
-                          // 🔥 prefix lock
-                          if (!value.startsWith(prefix)) {
-                            value = prefix;
-                          }
-                          // 🔥 extract number
-                          let numberPart = value.replace(prefix, "");
-                          // only digits
-                          numberPart = numberPart.replace(/\D/g, "");
-                          // limit 4 digits
-                          numberPart = numberPart.slice(0, 4);
-                          value = prefix + numberPart;
+                        let value = e.target.value;
+                        // 🔥 MANUAL MODE → full freedom
+                        if (manualEntry) {
                           setInvoiceNo(value);
-                        }}
+                          return;
+                        }
+                        // 🔥 AUTO MODE → prefix lock
+                        const prefix = invoiceConfig.prefix + "/";
+                        if (!value.startsWith(prefix)) {
+                          value = prefix;
+                        }
+
+                        let numberPart = value.replace(prefix, "");
+                        numberPart = numberPart.replace(/\D/g, "");
+                        numberPart = numberPart.slice(0, 4);
+
+                        value = prefix + numberPart;
+                        setInvoiceNo(value);
+                      }}
                       />
 
                       {/* ⚙️ SETTINGS ICON */}
@@ -334,145 +343,104 @@ const handleGSTChange = (e) => {
                   
                 </div>
                   {showInvoiceSettings && (
-                    <div className="invoice-popup-overlay">
+                  <div className="invoice-popup-overlay">
+                    <div className="invoice-popup">
+                      <h3>Invoice Settings</h3>
 
-                      <div className="invoice-popup">
-                        <h3>Invoice Settings</h3>
-                        <div className="popup-group">
-                          
-                            <label>Manual:</label>
-                            <div className="popup-radio">
-                              <label>
-                                <input
-                                  type="radio"
-                                  checked={manualEntry}
-                                  onChange={() => setManualEntry(true)}
-                                />
-                                Yes
-                              </label>
-
-                              <label>
-                                <input
-                                  type="radio"
-                                  checked={!manualEntry}
-                                  onChange={() => setManualEntry(false)}
-                                />
-                                No
-                              </label>
-                            </div>
-                          
-                        </div>
-
-                        <div className="popup-group full">
-                          <label>Prefix</label>
-                          {/* <input className="popup-input-box"
-                            value={invoiceConfig.prefix}
-                            readOnly={!manualEntry}
-                            onChange={(e) =>
-                              setInvoiceConfig({ ...invoiceConfig, prefix: e.target.value })
-                              
-                            }
-                          /> */}
-                          <input
-                            className="popup-input-box"
-                            value={invoiceConfig.prefix}
-                            disabled={!manualEntry}
-                            onChange={(e) => {
-                              let value = e.target.value;
-
-                              // ❌ max 11 char
-                              if (value.length > 11) {
-                                value = value.slice(0, 11);
-                              }
-
-                              setInvoiceConfig({ ...invoiceConfig, prefix: value });
-                            }}
-                          />
-                        </div>
-
-                        <div className="popup-group">
-                          <label>Zero Padding</label>
-                          {/* <input className="popup-input-box"
-                              type="number"
-                              min="0"
-                              value={invoiceConfig.zero}
-                              readOnly={!manualEntry}
-                              onChange={(e) => {
-                                const val = e.target.value;
-
-                                setInvoiceConfig({
-                                  ...invoiceConfig,
-                                  zero: val === "" ? "" : val
-                                });
+                      <div className="popup-group">
+                        <label>Manual:</label>
+                        <div className="popup-radio">
+                          <label>
+                            <input
+                              type="radio"
+                              checked={manualEntry}
+                              onChange={() => {
+                                setManualEntry(true);
+                                setInvoiceNo("");   // 🔥 CLEAR INPUT
                               }}
-                            /> */}
+                            />
+                            Yes
+                          </label>
+
+                          <label>
+                            <input
+                              type="radio"
+                              checked={!manualEntry}
+                              onChange={() => setManualEntry(false)}
+                            />
+                            No
+                          </label>
+                        </div>
+                      </div>
+
+                      {/* 🔥 MAIN FIX: hide all when manual = true */}
+                      {!manualEntry && (
+                        <>
+                          <div className="popup-group full">
+                            <label>Prefix</label>
+                            <input
+                              className="popup-input-box"
+                              value={invoiceConfig.prefix}
+                              onChange={(e) => {
+                                let value = e.target.value;
+                                if (value.length > 11) value = value.slice(0, 11);
+
+                                setInvoiceConfig({ ...invoiceConfig, prefix: value });
+                              }}
+                            />
+                          </div>
+
+                          <div className="popup-group">
+                            <label>Zero Padding</label>
                             <input
                               type="number"
                               min="0"
                               max="4"
                               value={invoiceConfig.zero}
-                              disabled={!manualEntry}
                               onChange={(e) => {
                                 let val = Number(e.target.value) || 0;
-
                                 if (val > 4) val = 4;
 
                                 setInvoiceConfig({ ...invoiceConfig, zero: val });
                               }}
                             />
-                        </div>
+                          </div>
 
-                        <div className="popup-group">
-                          <label>Start No</label>
-                          {/* <input className="popup-input-box"
-                            type="number"
-                            value={invoiceConfig.start}
-                            readOnly={!manualEntry}
-                            onChange={(e) => {
-                              const val = e.target.value;
+                          <div className="popup-group">
+                            <label>Start No</label>
+                            <input
+                              type="number"
+                              value={invoiceConfig.start}
+                              onChange={(e) => {
+                                let val = Math.max(0, Number(e.target.value) || 0);
+                                setInvoiceConfig({ ...invoiceConfig, start: val });
+                                setCurrentCount(val);
+                              }}
+                            />
+                          </div>
+                        </>
+                      )}
 
-                              // store raw value (string)
-                              setInvoiceConfig({
-                                ...invoiceConfig,
-                                start: val === "" ? "" : val
-                              });
-
-                              // update counter only if valid number
-                              if (val !== "") {
-                                setCurrentCount(Number(val));
-                              }
-                            }}
-                          /> */}
-                          <input
-                            type="number"
-                            value={invoiceConfig.start}
-                            disabled={!manualEntry}
-                            onChange={(e) => {
-                              let val = Math.max(0, Number(e.target.value) || 0);
-
-                              setInvoiceConfig({ ...invoiceConfig, start: val });
-                              setCurrentCount(val);
-                            }}
-                          />
-                        </div>
-                        <div className="popup-actions">
-                          <button onClick={() => setShowInvoiceSettings(false)}>Cancel</button>
-                          <button
-                            onClick={() => {
-                              if ((Number(invoiceConfig.zero) || 0) + String(invoiceConfig.start).length > 4) {
-                                alert("Zero + Start digits cannot exceed 4");
-                                return;
-                              }
-                              setShowInvoiceSettings(false);
-                            }}
-                          >
-                            Save
-                          </button>
-                        </div>
+                      <div className="popup-actions">
+                        <button onClick={() => setShowInvoiceSettings(false)}>Cancel</button>
+                        <button
+                          onClick={() => {
+                            if (
+                              !manualEntry && 
+                              (Number(invoiceConfig.zero) || 0) + String(invoiceConfig.start).length > 4
+                            ) {
+                              alert("Zero + Start digits cannot exceed 4");
+                              return;
+                            }
+                            setShowInvoiceSettings(false);
+                          }}
+                        >
+                          Save
+                        </button>
                       </div>
-
                     </div>
-                  )}
+                  </div>
+                )}
 
                 </div>
                 <div className="type-supply-container">
@@ -772,6 +740,12 @@ const handleGSTChange = (e) => {
                     }}
                   />
                 </div>
+                <div className="form-group">
+                  <label>Salesman/Agent</label>
+                  <select>
+                    <option>Select</option>
+                  </select>
+                </div>
 
               </div>
 
@@ -780,9 +754,46 @@ const handleGSTChange = (e) => {
             {/* ================= DISPATCH ================= */}
             {invoiceType !== "accounting" && (
             <div className="section-card">
-
+              <div className="dispatch-header">
               <h2>Dispatch Details</h2>
+                <div className="transporter-box">
+                  <label>Transporter Name</label>
+                  <div className="transporter-row"> 
+                    <select>
+                      <option>Select</option>
+                    </select>
+                    <button
+                      className="transporter-create-btn"
+                      onClick={() => navigate("/ledger")}
+                    >
+                      Create
+                    </button>
+                  </div>
+                </div>
+                <div className="gstin-container">
+                  <label>Transport GSTIN</label>
+                  <input 
+                    value={gstin}
+                    onChange={handleGSTChange}
+                    placeholder="Transport GSTIN"
+                  />
 
+                  {/* LOADING */}
+                  {gstLoading && <div className="gst-status">Validating...</div>}
+
+                  {/* ERROR */}
+                  {gstError && <div className="gst-error">{gstError}</div>}
+
+                  {/* SUCCESS */}
+                  {gstData && (
+                    <div className="gst-result-box">
+                      <p><strong>{gstData.name}</strong></p>
+                      <p>{gstData.state}</p>
+                      <p>Status: {gstData.status}</p>
+                    </div>
+                  )}
+                </div>
+              </div>
               <div className="dispatch-grid">
                 <div className="dis-container">
                   <label>Dispatch Doc No</label>
@@ -833,29 +844,7 @@ const handleGSTChange = (e) => {
                     }}
                     />
                   </div>
-                <div className="gstin-container">
-                  <label>Transport GSTIN</label>
-                  <input 
-                    value={gstin}
-                    onChange={handleGSTChange}
-                    placeholder="Transport GSTIN"
-                  />
-
-                  {/* LOADING */}
-                  {gstLoading && <div className="gst-status">Validating...</div>}
-
-                  {/* ERROR */}
-                  {gstError && <div className="gst-error">{gstError}</div>}
-
-                  {/* SUCCESS */}
-                  {gstData && (
-                    <div className="gst-result-box">
-                      <p><strong>{gstData.name}</strong></p>
-                      <p>{gstData.state}</p>
-                      <p>Status: {gstData.status}</p>
-                    </div>
-                  )}
-                </div>
+                
                 {/* 🔥 EXPORT / SEZ EXTRA FIELDS */}
                   {(typeOfSupply === "Export_with_payment" || 
                     typeOfSupply === "Export_without_payment" ||
@@ -864,15 +853,54 @@ const handleGSTChange = (e) => {
                     <>
                     <div className="port">
                       <label>Port of Export</label>
-                      <input placeholder="Port No." />
+                      <select>
+                        <option>Select</option>
+                        <option>INDEA6 - AACHIVS SEZ/NOIDA </option>
+                      </select>
+                      {/* <input placeholder="Port No." /> */}
                     </div>
-                    <div className="country">
+                    {/* <div className="country">
                       <label>Country Name</label>
                       <input placeholder="Country" />
-                    </div>
+                    </div> */}
                     <div className="ship-bill">
                       <label>Shipping Bill No</label>
                       <input placeholder="Shipping Bill No" />
+                    </div>
+                    <div className="ship-bill">
+                      <label>Shipping date</label>
+                       <DatePicker
+                    selected={shippingDate}
+                    onChange={(date) => setshippingDate(date)}
+                    dateFormat="dd/MM/yyyy"
+                    minDate={new Date(new Date().setFullYear(new Date().getFullYear() - 1))} // ✅ last 1 year
+                    className="date-input"
+                    onChangeRaw={(e) => {
+                      if (!e || !e.target) return;
+                      let value = e.target.value || "";
+                      // allow only numbers + /
+                      value = value.replace(/[^0-9/]/g, "");
+                      // auto format DD/MM/YYYY
+                      if (value.length === 2 || value.length === 5) {
+                        if (!value.endsWith("/")) value += "/";
+                      }
+                      // restrict length
+                      if (value.length > 10) {
+                        value = value.slice(0, 10);
+                      }
+                      const parts = value.split("/");
+                      // day check
+                      if (parts[0] && Number(parts[0]) > 31) parts[0] = "31";
+                      // month check
+                      if (parts[1] && Number(parts[1]) > 12) parts[1] = "12";
+                      // year limit (4 digit)
+                      if (parts[2] && parts[2].length > 4) {
+                        parts[2] = parts[2].slice(0, 4);
+                      }
+                      value = parts.join("/");
+                      e.target.value = value;
+                    }}
+                    />
                     </div>
                       
                       {/* ONLY FOR EXPORT WITHOUT PAYMENT */}
