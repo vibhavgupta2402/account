@@ -239,6 +239,18 @@ export default function Sidebar({ collapsed }) {
                 <NavLink to="/SaleReturnSummary" className={({ isActive }) => isActive ? "active-link" : ""}>
                   Sale Return Summary
                 </NavLink>
+                <NavLink to="/PurchaseSummary" className={({ isActive }) => isActive ? "active-link" : ""}>
+                  Purchase Summary
+                </NavLink>
+                <NavLink to="/PurchaseReturnSummary" className={({ isActive }) => isActive ? "active-link" : ""}>
+                  Purchase Return Summary
+                </NavLink>
+                <NavLink to="/SaleOrderSummary" className={({ isActive }) => isActive ? "active-link" : ""}>
+                  Sale Order Summary
+                </NavLink>
+                <NavLink to="/DeliveryChallanSummary" className={({ isActive }) => isActive ? "active-link" : ""}>
+                  Delivery Challan Summary
+                </NavLink>
               </div>
             </div>
             <NavLink to="/StockReports" className={({ isActive }) => isActive ? "active-link" : ""}>Stock Reports</NavLink>

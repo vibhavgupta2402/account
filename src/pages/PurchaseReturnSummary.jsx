@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useOutletContext } from "react-router-dom";
-import "../styles/salesReturn.css";
+import "../styles/purchaseReturn.css";
 
 export default function SalesReturnSummary() {
   const { collapsed } = useOutletContext();
@@ -281,7 +281,7 @@ export default function SalesReturnSummary() {
         return {
           fixedColumns: [
             { key: "customerCode", label: "Customer Code", field: "customerCode" },
-            { key: "customerName", label: "Customer Name", field: "customerName" },
+            { key: "customerName", label: "Vendor Name", field: "customerName" },
             { key: "customerAddress", label: "Customer Address", field: "customerAddress" },
             { key: "gstin", label: "GSTIN", field: "gstin" },
             { key: "totalReturns", label: "Total Returns", field: "totalReturns" },
@@ -299,7 +299,7 @@ export default function SalesReturnSummary() {
           fixedColumns: [
             { key: "voucherNo", label: "Doc No", field: "docNo" },
             { key: "docDate", label: "Doc Date", field: "docDate" },
-            { key: "customerName", label: "Customer Name", field: "customerName" },
+            { key: "customerName", label: "Vendor Name", field: "customerName" },
             { key: "taxableValue", label: "Taxable Value", field: "taxableValue" },
             { key: "totalGST", label: "Total GST", field: "totalGST" },
             { key: "totalAmount", label: "Total Amount", field: "totalAmount" },
@@ -461,8 +461,8 @@ export default function SalesReturnSummary() {
         {/* HEADER */}
         <div className="sr-header">
           <div>
-            <h2 className="sr-title">Sales Return Summary</h2>
-            <p className="sr-subtitle">Manage and track all sales return transactions</p>
+            <h2 className="sr-title">Purchase Return Summary</h2>
+            <p className="sr-subtitle">Manage and track all Purchase return transactions</p>
           </div>
           <div className="sr-header-actions">
             <button className="sr-export-btn" onClick={() => console.log("Export clicked", groupedData)}>
@@ -492,7 +492,7 @@ export default function SalesReturnSummary() {
               >
                 <option value="Document">Document</option>
                 <option value="HSN">HSN</option>
-                <option value="Customer">Customer</option>
+                <option value="Customer">Vendor</option>
               </select>
             </div>
 

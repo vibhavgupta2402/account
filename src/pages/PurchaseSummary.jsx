@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useOutletContext } from "react-router-dom";
-import "../styles/salesummary.css";
+import "../styles/purchasesummary.css";
 
 export default function GeneralReports() {
   const { collapsed } = useOutletContext();
@@ -18,7 +18,7 @@ export default function GeneralReports() {
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage] = useState(10);
   
-  // State for config - All options initially false except essential ones
+  // State for config
   const [config, setConfig] = useState({
     typeOfSupply: false,
     showItems: false,
@@ -32,94 +32,66 @@ export default function GeneralReports() {
     showTDS: false,
   });
 
-  // Sample data for Invoice with date in proper format
+  // Sample data for Invoice
   const invoiceData = [
-    { id: 1, invNo: "INV-001", invDate: "2026-04-01", displayDate: "01-04-2026", customerName: "ABC Pvt Ltd", voucherType: "Sales", taxableValue: 1000, totalGST: 180, invValue: 1180, gstRate: "18%", gstin: "27AAACA1234A1Z", address: "Mumbai" },
-    { id: 2, invNo: "INV-002", invDate: "2026-04-01", displayDate: "01-04-2026", customerName: "XYZ Industries", voucherType: "Sales", taxableValue: 2500, totalGST: 450, invValue: 2950, gstRate: "18%", gstin: "29BBBBC5678B2Z", address: "Pune" },
-    { id: 3, invNo: "INV-003", invDate: "2026-04-02", displayDate: "02-04-2026", customerName: "PQR Solutions", voucherType: "Sales", taxableValue: 5000, totalGST: 900, invValue: 5900, gstRate: "18%", gstin: "33CCCDE7890C3X", address: "Bangalore" },
-    { id: 4, invNo: "INV-004", invDate: "2026-04-02", displayDate: "02-04-2026", customerName: "LMN Enterprises", voucherType: "Sales", taxableValue: 3200, totalGST: 576, invValue: 3776, gstRate: "18%", gstin: "22LMNOP1234D4Y", address: "Chennai" },
-    { id: 5, invNo: "INV-005", invDate: "2026-04-03", displayDate: "03-04-2026", customerName: "RST Group", voucherType: "Sales", taxableValue: 1800, totalGST: 324, invValue: 2124, gstRate: "18%", gstin: "19RSTUV5678E5W", address: "Hyderabad" },
-    { id: 6, invNo: "INV-006", invDate: "2026-04-03", displayDate: "03-04-2026", customerName: "UVW Corp", voucherType: "Sales", taxableValue: 4200, totalGST: 756, invValue: 4956, gstRate: "18%", gstin: "24UVWXYZ7890F6X", address: "Delhi" },
-    { id: 7, invNo: "INV-007", invDate: "2026-04-04", displayDate: "04-04-2026", customerName: "MNO Solutions", voucherType: "Sales", taxableValue: 3500, totalGST: 630, invValue: 4130, gstRate: "18%", gstin: "26MNOPQR4567G7Y", address: "Kolkata" },
-    { id: 8, invNo: "INV-008", invDate: "2026-04-04", displayDate: "04-04-2026", customerName: "DEF Industries", voucherType: "Sales", taxableValue: 2800, totalGST: 504, invValue: 3304, gstRate: "18%", gstin: "28DEFGHI3456H8Z", address: "Ahmedabad" },
-    { id: 9, invNo: "INV-009", invDate: "2026-04-05", displayDate: "05-04-2026", customerName: "GHI Enterprises", voucherType: "Sales", taxableValue: 4500, totalGST: 810, invValue: 5310, gstRate: "18%", gstin: "30GHIJKL2345I9W", address: "Pune" },
-    { id: 10, invNo: "INV-010", invDate: "2026-04-05", displayDate: "05-04-2026", customerName: "JKL Pvt Ltd", voucherType: "Sales", taxableValue: 3800, totalGST: 684, invValue: 4484, gstRate: "18%", gstin: "32JKLMNO1234J0V", address: "Mumbai" },
-    { id: 11, invNo: "INV-011", invDate: "2026-04-06", displayDate: "06-04-2026", customerName: "STU Limited", voucherType: "Sales", taxableValue: 6200, totalGST: 1116, invValue: 7316, gstRate: "18%", gstin: "34STUVWX9876K1U", address: "Bangalore" },
-    { id: 12, invNo: "INV-012", invDate: "2026-04-06", displayDate: "06-04-2026", customerName: "VWX Corp", voucherType: "Sales", taxableValue: 2900, totalGST: 522, invValue: 3422, gstRate: "18%", gstin: "36VWXYZA8765L2T", address: "Chennai" },
+    { id: 1, invNo: "INV-001", invDate: "01-04-2026", customerName: "ABC Pvt Ltd", voucherType: "Sales", taxableValue: 1000, totalGST: 180, invValue: 1180, gstRate: "18%", gstin: "27AAACA1234A1Z", address: "Mumbai" },
+    { id: 2, invNo: "INV-002", invDate: "01-04-2026", customerName: "XYZ Industries", voucherType: "Sales", taxableValue: 2500, totalGST: 450, invValue: 2950, gstRate: "18%", gstin: "29BBBBC5678B2Z", address: "Pune" },
+    { id: 3, invNo: "INV-003", invDate: "02-04-2026", customerName: "PQR Solutions", voucherType: "Sales", taxableValue: 5000, totalGST: 900, invValue: 5900, gstRate: "18%", gstin: "33CCCDE7890C3X", address: "Bangalore" },
+    { id: 4, invNo: "INV-004", invDate: "02-04-2026", customerName: "LMN Enterprises", voucherType: "Sales", taxableValue: 3200, totalGST: 576, invValue: 3776, gstRate: "18%", gstin: "22LMNOP1234D4Y", address: "Chennai" },
+    { id: 5, invNo: "INV-005", invDate: "03-04-2026", customerName: "RST Group", voucherType: "Sales", taxableValue: 1800, totalGST: 324, invValue: 2124, gstRate: "18%", gstin: "19RSTUV5678E5W", address: "Hyderabad" },
+    { id: 6, invNo: "INV-006", invDate: "03-04-2026", customerName: "UVW Corp", voucherType: "Sales", taxableValue: 4200, totalGST: 756, invValue: 4956, gstRate: "18%", gstin: "24UVWXYZ7890F6X", address: "Delhi" },
+    { id: 7, invNo: "INV-007", invDate: "04-04-2026", customerName: "MNO Solutions", voucherType: "Sales", taxableValue: 3500, totalGST: 630, invValue: 4130, gstRate: "18%", gstin: "26MNOPQR4567G7Y", address: "Kolkata" },
+    { id: 8, invNo: "INV-008", invDate: "04-04-2026", customerName: "DEF Industries", voucherType: "Sales", taxableValue: 2800, totalGST: 504, invValue: 3304, gstRate: "18%", gstin: "28DEFGHI3456H8Z", address: "Ahmedabad" },
+    { id: 9, invNo: "INV-009", invDate: "05-04-2026", customerName: "GHI Enterprises", voucherType: "Sales", taxableValue: 4500, totalGST: 810, invValue: 5310, gstRate: "18%", gstin: "30GHIJKL2345I9W", address: "Pune" },
+    { id: 10, invNo: "INV-010", invDate: "05-04-2026", customerName: "JKL Pvt Ltd", voucherType: "Sales", taxableValue: 3800, totalGST: 684, invValue: 4484, gstRate: "18%", gstin: "32JKLMNO1234J0V", address: "Mumbai" },
+    { id: 11, invNo: "INV-011", invDate: "06-04-2026", customerName: "STU Limited", voucherType: "Sales", taxableValue: 6200, totalGST: 1116, invValue: 7316, gstRate: "18%", gstin: "34STUVWX9876K1U", address: "Bangalore" },
+    { id: 12, invNo: "INV-012", invDate: "06-04-2026", customerName: "VWX Corp", voucherType: "Sales", taxableValue: 2900, totalGST: 522, invValue: 3422, gstRate: "18%", gstin: "36VWXYZA8765L2T", address: "Chennai" },
   ];
 
-  // Sample data for HSN with date filtering
+  // Sample data for HSN
   const hsnData = [
-    { id: 1, hsnCode: "84713000", taxableValue: 15000, totalGST: 2700, description: "Laptops", gstRate: "18%", invDate: "2026-04-01" },
-    { id: 2, hsnCode: "84715000", taxableValue: 8500, totalGST: 1530, description: "Servers", gstRate: "18%", invDate: "2026-04-01" },
-    { id: 3, hsnCode: "84716000", taxableValue: 5200, totalGST: 936, description: "Keyboards", gstRate: "18%", invDate: "2026-04-02" },
-    { id: 4, hsnCode: "84717000", taxableValue: 12400, totalGST: 2232, description: "Storage Devices", gstRate: "18%", invDate: "2026-04-02" },
-    { id: 5, hsnCode: "84718000", taxableValue: 3800, totalGST: 684, description: "Other Peripherals", gstRate: "18%", invDate: "2026-04-03" },
-    { id: 6, hsnCode: "84719000", taxableValue: 2900, totalGST: 522, description: "Other Machines", gstRate: "18%", invDate: "2026-04-03" },
-    { id: 7, hsnCode: "84733000", taxableValue: 4300, totalGST: 774, description: "Parts", gstRate: "18%", invDate: "2026-04-04" },
-    { id: 8, hsnCode: "84734000", taxableValue: 2100, totalGST: 378, description: "Accessories", gstRate: "18%", invDate: "2026-04-04" },
-    { id: 9, hsnCode: "84735000", taxableValue: 1800, totalGST: 324, description: "Components", gstRate: "18%", invDate: "2026-04-05" },
-    { id: 10, hsnCode: "84741000", taxableValue: 5600, totalGST: 1008, description: "Sorting Machines", gstRate: "18%", invDate: "2026-04-05" },
-    { id: 11, hsnCode: "84742000", taxableValue: 8900, totalGST: 1602, description: "Crushing Machines", gstRate: "18%", invDate: "2026-04-06" },
-    { id: 12, hsnCode: "84743000", taxableValue: 3400, totalGST: 612, description: "Mixing Machines", gstRate: "18%", invDate: "2026-04-06" },
+    { id: 1, hsnCode: "84713000", taxableValue: 15000, totalGST: 2700, description: "Laptops", gstRate: "18%" },
+    { id: 2, hsnCode: "84715000", taxableValue: 8500, totalGST: 1530, description: "Servers", gstRate: "18%" },
+    { id: 3, hsnCode: "84716000", taxableValue: 5200, totalGST: 936, description: "Keyboards", gstRate: "18%" },
+    { id: 4, hsnCode: "84717000", taxableValue: 12400, totalGST: 2232, description: "Storage Devices", gstRate: "18%" },
+    { id: 5, hsnCode: "84718000", taxableValue: 3800, totalGST: 684, description: "Other Peripherals", gstRate: "18%" },
+    { id: 6, hsnCode: "84719000", taxableValue: 2900, totalGST: 522, description: "Other Machines", gstRate: "18%" },
+    { id: 7, hsnCode: "84733000", taxableValue: 4300, totalGST: 774, description: "Parts", gstRate: "18%" },
+    { id: 8, hsnCode: "84734000", taxableValue: 2100, totalGST: 378, description: "Accessories", gstRate: "18%" },
+    { id: 9, hsnCode: "84735000", taxableValue: 1800, totalGST: 324, description: "Components", gstRate: "18%" },
+    { id: 10, hsnCode: "84741000", taxableValue: 5600, totalGST: 1008, description: "Sorting Machines", gstRate: "18%" },
+    { id: 11, hsnCode: "84742000", taxableValue: 8900, totalGST: 1602, description: "Crushing Machines", gstRate: "18%" },
+    { id: 12, hsnCode: "84743000", taxableValue: 3400, totalGST: 612, description: "Mixing Machines", gstRate: "18%" },
   ];
 
-  // Sample data for Customer with date filtering
+  // Sample data for Customer
   const customerData = [
-    { id: 1, customerName: "ABC Pvt Ltd", invDate: "2026-04-01", displayDate: "01-04-2026", voucherType: "Sales", gstRate: "18%", taxableValue: 1000, totalGST: 180, invValue: 1180, gstin: "27AAACA1234A1Z", address: "Mumbai" },
-    { id: 2, customerName: "XYZ Industries", invDate: "2026-04-01", displayDate: "01-04-2026", voucherType: "Sales", gstRate: "18%", taxableValue: 2500, totalGST: 450, invValue: 2950, gstin: "29BBBBC5678B2Z", address: "Pune" },
-    { id: 3, customerName: "PQR Solutions", invDate: "2026-04-02", displayDate: "02-04-2026", voucherType: "Sales", gstRate: "18%", taxableValue: 5000, totalGST: 900, invValue: 5900, gstin: "33CCCDE7890C3X", address: "Bangalore" },
-    { id: 4, customerName: "LMN Enterprises", invDate: "2026-04-02", displayDate: "02-04-2026", voucherType: "Sales", gstRate: "18%", taxableValue: 3200, totalGST: 576, invValue: 3776, gstin: "22LMNOP1234D4Y", address: "Chennai" },
-    { id: 5, customerName: "RST Group", invDate: "2026-04-03", displayDate: "03-04-2026", voucherType: "Sales", gstRate: "18%", taxableValue: 1800, totalGST: 324, invValue: 2124, gstin: "19RSTUV5678E5W", address: "Hyderabad" },
-    { id: 6, customerName: "UVW Corp", invDate: "2026-04-03", displayDate: "03-04-2026", voucherType: "Sales", gstRate: "18%", taxableValue: 4200, totalGST: 756, invValue: 4956, gstin: "24UVWXYZ7890F6X", address: "Delhi" },
-    { id: 7, customerName: "MNO Solutions", invDate: "2026-04-04", displayDate: "04-04-2026", voucherType: "Sales", gstRate: "18%", taxableValue: 3500, totalGST: 630, invValue: 4130, gstin: "26MNOPQR4567G7Y", address: "Kolkata" },
-    { id: 8, customerName: "DEF Industries", invDate: "2026-04-04", displayDate: "04-04-2026", voucherType: "Sales", gstRate: "18%", taxableValue: 2800, totalGST: 504, invValue: 3304, gstin: "28DEFGHI3456H8Z", address: "Ahmedabad" },
-    { id: 9, customerName: "GHI Enterprises", invDate: "2026-04-05", displayDate: "05-04-2026", voucherType: "Sales", gstRate: "18%", taxableValue: 4500, totalGST: 810, invValue: 5310, gstin: "30GHIJKL2345I9W", address: "Pune" },
-    { id: 10, customerName: "JKL Pvt Ltd", invDate: "2026-04-05", displayDate: "05-04-2026", voucherType: "Sales", gstRate: "18%", taxableValue: 3800, totalGST: 684, invValue: 4484, gstin: "32JKLMNO1234J0V", address: "Mumbai" },
-    { id: 11, customerName: "STU Limited", invDate: "2026-04-06", displayDate: "06-04-2026", voucherType: "Sales", gstRate: "18%", taxableValue: 6200, totalGST: 1116, invValue: 7316, gstin: "34STUVWX9876K1U", address: "Bangalore" },
-    { id: 12, customerName: "VWX Corp", invDate: "2026-04-06", displayDate: "06-04-2026", voucherType: "Sales", gstRate: "18%", taxableValue: 2900, totalGST: 522, invValue: 3422, gstin: "36VWXYZA8765L2T", address: "Chennai" },
+    { id: 1, customerName: "ABC Pvt Ltd", invDate: "01-04-2026", voucherType: "Sales", gstRate: "18%", taxableValue: 1000, totalGST: 180, invValue: 1180, gstin: "27AAACA1234A1Z", address: "Mumbai" },
+    { id: 2, customerName: "XYZ Industries", invDate: "01-04-2026", voucherType: "Sales", gstRate: "18%", taxableValue: 2500, totalGST: 450, invValue: 2950, gstin: "29BBBBC5678B2Z", address: "Pune" },
+    { id: 3, customerName: "PQR Solutions", invDate: "02-04-2026", voucherType: "Sales", gstRate: "18%", taxableValue: 5000, totalGST: 900, invValue: 5900, gstin: "33CCCDE7890C3X", address: "Bangalore" },
+    { id: 4, customerName: "LMN Enterprises", invDate: "02-04-2026", voucherType: "Sales", gstRate: "18%", taxableValue: 3200, totalGST: 576, invValue: 3776, gstin: "22LMNOP1234D4Y", address: "Chennai" },
+    { id: 5, customerName: "RST Group", invDate: "03-04-2026", voucherType: "Sales", gstRate: "18%", taxableValue: 1800, totalGST: 324, invValue: 2124, gstin: "19RSTUV5678E5W", address: "Hyderabad" },
+    { id: 6, customerName: "UVW Corp", invDate: "03-04-2026", voucherType: "Sales", gstRate: "18%", taxableValue: 4200, totalGST: 756, invValue: 4956, gstin: "24UVWXYZ7890F6X", address: "Delhi" },
+    { id: 7, customerName: "MNO Solutions", invDate: "04-04-2026", voucherType: "Sales", gstRate: "18%", taxableValue: 3500, totalGST: 630, invValue: 4130, gstin: "26MNOPQR4567G7Y", address: "Kolkata" },
+    { id: 8, customerName: "DEF Industries", invDate: "04-04-2026", voucherType: "Sales", gstRate: "18%", taxableValue: 2800, totalGST: 504, invValue: 3304, gstin: "28DEFGHI3456H8Z", address: "Ahmedabad" },
+    { id: 9, customerName: "GHI Enterprises", invDate: "05-04-2026", voucherType: "Sales", gstRate: "18%", taxableValue: 4500, totalGST: 810, invValue: 5310, gstin: "30GHIJKL2345I9W", address: "Pune" },
+    { id: 10, customerName: "JKL Pvt Ltd", invDate: "05-04-2026", voucherType: "Sales", gstRate: "18%", taxableValue: 3800, totalGST: 684, invValue: 4484, gstin: "32JKLMNO1234J0V", address: "Mumbai" },
+    { id: 11, customerName: "STU Limited", invDate: "06-04-2026", voucherType: "Sales", gstRate: "18%", taxableValue: 6200, totalGST: 1116, invValue: 7316, gstin: "34STUVWX9876K1U", address: "Bangalore" },
+    { id: 12, customerName: "VWX Corp", invDate: "06-04-2026", voucherType: "Sales", gstRate: "18%", taxableValue: 2900, totalGST: 522, invValue: 3422, gstin: "36VWXYZA8765L2T", address: "Chennai" },
   ];
 
-  // Function to filter data by date range
-  const filterDataByDate = (data) => {
-    if (!filters.fromDate && !filters.toDate) return data;
-    
-    return data.filter(item => {
-      const itemDate = new Date(item.invDate);
-      const fromDate = filters.fromDate ? new Date(filters.fromDate) : null;
-      const toDate = filters.toDate ? new Date(filters.toDate) : null;
-      
-      if (fromDate) fromDate.setHours(0, 0, 0, 0);
-      if (toDate) toDate.setHours(23, 59, 59, 999);
-      
-      if (fromDate && toDate) {
-        return itemDate >= fromDate && itemDate <= toDate;
-      } else if (fromDate) {
-        return itemDate >= fromDate;
-      } else if (toDate) {
-        return itemDate <= toDate;
-      }
-      return true;
-    });
-  };
-
-  // Get current data based on filter and date range
+  // Get current data based on filter
   const getCurrentData = () => {
-    let data;
     switch(filters.by) {
       case "Invoice":
-        data = [...invoiceData];
-        break;
+        return invoiceData;
       case "HSN":
-        data = [...hsnData];
-        break;
+        return hsnData;
       case "Customer":
-        data = [...customerData];
-        break;
+        return customerData;
       default:
-        data = [...invoiceData];
+        return invoiceData;
     }
-    return filterDataByDate(data);
   };
 
   const currentData = getCurrentData();
@@ -153,7 +125,7 @@ export default function GeneralReports() {
   // Reset page when filter changes
   useEffect(() => {
     setCurrentPage(1);
-  }, [filters.by, filters.fromDate, filters.toDate]);
+  }, [filters.by]);
 
   const formatLabel = (key) => {
     return key
@@ -167,10 +139,9 @@ export default function GeneralReports() {
 
   const handleFilterChange = (key, value) => {
     setFilters(prev => ({ ...prev, [key]: value }));
-    setCurrentPage(1);
   };
 
-  // Calculate totals based on filtered data
+  // Calculate totals
   const calculateTotals = () => {
     return currentData.reduce((acc, row) => ({
       taxableValue: acc.taxableValue + (row.taxableValue || 0),
@@ -181,7 +152,7 @@ export default function GeneralReports() {
 
   const totals = calculateTotals();
 
-  // Render Invoice Table with dynamic columns
+  // Render Invoice Table
   const renderInvoiceTable = () => (
     <div className="table-section">
       <div className="table-header">
@@ -193,7 +164,7 @@ export default function GeneralReports() {
       </div>
       
       <div className="table-wrapper">
-        <table className="data-table">
+        <table>
           <thead>
             <tr>
               <th>#</th>
@@ -218,7 +189,7 @@ export default function GeneralReports() {
               <tr key={row.id}>
                 <td>{indexOfFirstRow + idx + 1}</td>
                 <td>{row.invNo}</td>
-                <td>{row.displayDate || row.invDate}</td>
+                <td>{row.invDate}</td>
                 <td>{row.customerName}</td>
                 {config.showVoucherType && <td>{row.voucherType}</td>}
                 {config.showGSTIN && <td>{row.gstin || "-"}</td>}
@@ -234,22 +205,20 @@ export default function GeneralReports() {
               </tr>
             ))}
           </tbody>
-          {currentData.length > 0 && (
-            <tfoot>
-              <tr className="total-row">
-                <td colSpan={4 + (config.showVoucherType ? 1 : 0) + (config.showGSTIN ? 1 : 0) + (config.showCustomerAddress ? 1 : 0)}>
-                  <strong>Total:</strong>
-                </td>
-                <td><strong>₹{totals.taxableValue.toLocaleString()}</strong></td>
-                {config.showGSTRate && <td></td>}
-                {config.showTaxes && <td><strong>₹{totals.totalGST.toLocaleString()}</strong></td>}
-                <td><strong>₹{totals.invValue.toLocaleString()}</strong></td>
-                {(config.showTDS || config.showItems || config.showNarration || config.typeOfSupply) && 
-                  Array(4).fill().map((_, i) => <td key={i}></td>)
-                }
-              </tr>
-            </tfoot>
-          )}
+          <tfoot>
+            <tr className="total-row">
+              <td colSpan={7 + (config.showVoucherType ? 1 : 0) + (config.showGSTIN ? 1 : 0) + (config.showCustomerAddress ? 1 : 0)}>
+                <strong>Total:</strong>
+              </td>
+              <td><strong>₹{totals.taxableValue.toLocaleString()}</strong></td>
+              {config.showGSTRate && <td></td>}
+              {config.showTaxes && <td><strong>₹{totals.totalGST.toLocaleString()}</strong></td>}
+              <td><strong>₹{totals.invValue.toLocaleString()}</strong></td>
+              {(config.showTDS || config.showItems || config.showNarration || config.typeOfSupply) && 
+                Array(4).fill().map((_, i) => <td key={i}></td>)
+              }
+            </tr>
+          </tfoot>
         </table>
       </div>
       
@@ -259,27 +228,15 @@ export default function GeneralReports() {
           <button onClick={prevPage} disabled={currentPage === 1}>
             Previous
           </button>
-          {[...Array(Math.min(totalPages, 5))].map((_, i) => {
-            let pageNum;
-            if (totalPages <= 5) {
-              pageNum = i + 1;
-            } else if (currentPage <= 3) {
-              pageNum = i + 1;
-            } else if (currentPage >= totalPages - 2) {
-              pageNum = totalPages - 4 + i;
-            } else {
-              pageNum = currentPage - 2 + i;
-            }
-            return (
-              <button
-                key={pageNum}
-                onClick={() => paginate(pageNum)}
-                className={currentPage === pageNum ? "active" : ""}
-              >
-                {pageNum}
-              </button>
-            );
-          })}
+          {[...Array(totalPages)].map((_, i) => (
+            <button
+              key={i}
+              onClick={() => paginate(i + 1)}
+              className={currentPage === i + 1 ? "active" : ""}
+            >
+              {i + 1}
+            </button>
+          ))}
           <button onClick={nextPage} disabled={currentPage === totalPages}>
             Next
           </button>
@@ -288,7 +245,7 @@ export default function GeneralReports() {
     </div>
   );
 
-  // Render HSN Table with dynamic columns
+  // Render HSN Table
   const renderHSNTable = () => (
     <div className="table-section">
       <div className="table-header">
@@ -300,7 +257,7 @@ export default function GeneralReports() {
       </div>
       
       <div className="table-wrapper">
-        <table className="data-table">
+        <table>
           <thead>
             <tr>
               <th>#</th>
@@ -323,16 +280,14 @@ export default function GeneralReports() {
               </tr>
             ))}
           </tbody>
-          {currentData.length > 0 && (
-            <tfoot>
-              <tr className="total-row">
-                <td colSpan={3}><strong>Total:</strong></td>
-                <td><strong>₹{totals.taxableValue.toLocaleString()}</strong></td>
-                {config.showGSTRate && <td></td>}
-                {config.showTaxes && <td><strong>₹{totals.totalGST.toLocaleString()}</strong></td>}
-              </tr>
-            </tfoot>
-          )}
+          <tfoot>
+            <tr className="total-row">
+              <td colSpan={3}><strong>Total:</strong></td>
+              <td><strong>₹{totals.taxableValue.toLocaleString()}</strong></td>
+              {config.showGSTRate && <td></td>}
+              {config.showTaxes && <td><strong>₹{totals.totalGST.toLocaleString()}</strong></td>}
+            </tr>
+          </tfoot>
         </table>
       </div>
       
@@ -342,27 +297,15 @@ export default function GeneralReports() {
           <button onClick={prevPage} disabled={currentPage === 1}>
             Previous
           </button>
-          {[...Array(Math.min(totalPages, 5))].map((_, i) => {
-            let pageNum;
-            if (totalPages <= 5) {
-              pageNum = i + 1;
-            } else if (currentPage <= 3) {
-              pageNum = i + 1;
-            } else if (currentPage >= totalPages - 2) {
-              pageNum = totalPages - 4 + i;
-            } else {
-              pageNum = currentPage - 2 + i;
-            }
-            return (
-              <button
-                key={pageNum}
-                onClick={() => paginate(pageNum)}
-                className={currentPage === pageNum ? "active" : ""}
-              >
-                {pageNum}
-              </button>
-            );
-          })}
+          {[...Array(totalPages)].map((_, i) => (
+            <button
+              key={i}
+              onClick={() => paginate(i + 1)}
+              className={currentPage === i + 1 ? "active" : ""}
+            >
+              {i + 1}
+            </button>
+          ))}
           <button onClick={nextPage} disabled={currentPage === totalPages}>
             Next
           </button>
@@ -371,7 +314,7 @@ export default function GeneralReports() {
     </div>
   );
 
-  // Render Customer Table with dynamic columns
+  // Render Customer Table
   const renderCustomerTable = () => (
     <div className="table-section">
       <div className="table-header">
@@ -383,7 +326,7 @@ export default function GeneralReports() {
       </div>
       
       <div className="table-wrapper">
-        <table className="data-table">
+        <table>
           <thead>
             <tr>
               <th>#</th>
@@ -404,7 +347,7 @@ export default function GeneralReports() {
               <tr key={row.id}>
                 <td>{indexOfFirstRow + idx + 1}</td>
                 <td>{row.customerName}</td>
-                <td>{row.displayDate || row.invDate}</td>
+                <td>{row.invDate}</td>
                 {config.showVoucherType && <td>{row.voucherType}</td>}
                 {config.showGSTIN && <td>{row.gstin || "-"}</td>}
                 {config.showCustomerAddress && <td>{row.address || "-"}</td>}
@@ -416,20 +359,18 @@ export default function GeneralReports() {
               </tr>
             ))}
           </tbody>
-          {currentData.length > 0 && (
-            <tfoot>
-              <tr className="total-row">
-                <td colSpan={4 + (config.showVoucherType ? 1 : 0) + (config.showGSTIN ? 1 : 0) + (config.showCustomerAddress ? 1 : 0)}>
-                  <strong>Total:</strong>
-                </td>
-                <td><strong>₹{totals.taxableValue.toLocaleString()}</strong></td>
-                {config.showGSTRate && <td></td>}
-                {config.showTaxes && <td><strong>₹{totals.totalGST.toLocaleString()}</strong></td>}
-                <td><strong>₹{totals.invValue.toLocaleString()}</strong></td>
-                {config.showTDS && <td></td>}
-              </tr>
-            </tfoot>
-          )}
+          <tfoot>
+            <tr className="total-row">
+              <td colSpan={5 + (config.showVoucherType ? 1 : 0) + (config.showGSTIN ? 1 : 0) + (config.showCustomerAddress ? 1 : 0)}>
+                <strong>Total:</strong>
+              </td>
+              <td><strong>₹{totals.taxableValue.toLocaleString()}</strong></td>
+              {config.showGSTRate && <td></td>}
+              {config.showTaxes && <td><strong>₹{totals.totalGST.toLocaleString()}</strong></td>}
+              <td><strong>₹{totals.invValue.toLocaleString()}</strong></td>
+              {config.showTDS && <td></td>}
+            </tr>
+          </tfoot>
         </table>
       </div>
       
@@ -439,27 +380,15 @@ export default function GeneralReports() {
           <button onClick={prevPage} disabled={currentPage === 1}>
             Previous
           </button>
-          {[...Array(Math.min(totalPages, 5))].map((_, i) => {
-            let pageNum;
-            if (totalPages <= 5) {
-              pageNum = i + 1;
-            } else if (currentPage <= 3) {
-              pageNum = i + 1;
-            } else if (currentPage >= totalPages - 2) {
-              pageNum = totalPages - 4 + i;
-            } else {
-              pageNum = currentPage - 2 + i;
-            }
-            return (
-              <button
-                key={pageNum}
-                onClick={() => paginate(pageNum)}
-                className={currentPage === pageNum ? "active" : ""}
-              >
-                {pageNum}
-              </button>
-            );
-          })}
+          {[...Array(totalPages)].map((_, i) => (
+            <button
+              key={i}
+              onClick={() => paginate(i + 1)}
+              className={currentPage === i + 1 ? "active" : ""}
+            >
+              {i + 1}
+            </button>
+          ))}
           <button onClick={nextPage} disabled={currentPage === totalPages}>
             Next
           </button>
@@ -473,7 +402,7 @@ export default function GeneralReports() {
       <div className="report-container">
         {/* Header */}
         <div className="report-header">
-          <h2 className="report-title">Sale Summary</h2>
+          <h2 className="report-title">Purchase Summary</h2>
           <div className="header-actions">
             <button className="export-btn">Export</button>
             <button className="print-btn">Print</button>
@@ -574,17 +503,9 @@ export default function GeneralReports() {
         </div>
 
         {/* Conditional Table Rendering */}
-        {currentData.length === 0 ? (
-          <div className="no-data-message">
-            <p>No records found for the selected date range.</p>
-          </div>
-        ) : (
-          <>
-            {filters.by === "Invoice" && renderInvoiceTable()}
-            {filters.by === "HSN" && renderHSNTable()}
-            {filters.by === "Customer" && renderCustomerTable()}
-          </>
-        )}
+        {filters.by === "Invoice" && renderInvoiceTable()}
+        {filters.by === "HSN" && renderHSNTable()}
+        {filters.by === "Customer" && renderCustomerTable()}
       </div>
     </div>
   );

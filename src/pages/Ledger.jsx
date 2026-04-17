@@ -110,6 +110,9 @@ export default function LedgerCreate() {
     billByBill: "Yes",
     creditPeriod: "",
     creditCheck: "No",
+    contactPerson: "",
+    mobile: "",
+    email: "",
 
     // loan & advance
 
@@ -182,8 +185,32 @@ export default function LedgerCreate() {
       setShowGroup(false);
     }
   };
+  const handleGetGSTDetails = async () => {
+  if (ledger.gstin.length !== 15) {
+    alert("GSTIN must be 15 characters");
+    return;
+  }
 
-  /* ================= UI ================= */
+  try {
+    const res = await fetch(`/api/gst/${ledger.gstin}`);
+    const data = await res.json();
+
+    setLedger(prev => ({
+      ...prev,
+      name: data.legal_name || "",
+      address: data.address || "",
+      contactPerson: data.contact_person || "",
+      mobile: data.mobile || "",
+      email: data.email || ""
+    }));
+
+  } catch (err) {
+    console.error(err);
+    alert("Failed to fetch GST details");
+  }
+};
+
+  /* ================= gst-rowUI ================= */
   return (
     <div className="ledger-app">
       <div className={`main-content ${collapsed ? "collapsed" : ""}`}>
@@ -195,29 +222,73 @@ export default function LedgerCreate() {
 
           {/* TOP */}
           <div className="ledger-top">
+            <div className="ledger-left-top">
+              <div className="ledger-row">
+                <label>Name</label>
+                <input
+                  value={ledger.name}
+                  onChange={(e) =>
+                    setLedger(prev => ({ ...prev, name: e.target.value }))
+                  }
+                />
+              </div>
 
-            <div className="ledger-row">
-              <label>Name</label>
-              <input
-                value={ledger.name}
-                onChange={(e) =>
-                  setLedger(prev => ({ ...prev, name: e.target.value }))
-                }
-              />
+              <div className="add-ledger-row">
+                <label>Address</label>
+                <textarea
+                  className="ledger-textarea"
+                  value={ledger.address}
+                  onChange={(e) =>
+                    setLedger(prev => ({ ...prev, address: e.target.value }))
+                  }
+                  placeholder="Enter Address"
+                />
+              </div>
             </div>
+            <div className="ledger-right-top">
+               <div className="gst-row">
+                <label>GSTIN</label>
 
-            <div className="add-ledger-row">
-              <label>Address</label>
-              <textarea
-                className="ledger-textarea"
-                value={ledger.address}
-                onChange={(e) =>
-                  setLedger(prev => ({ ...prev, address: e.target.value }))
-                }
-                placeholder="Enter Address"
-              />
+                <input
+                  maxLength={15}
+                  value={ledger.gstin}
+                  onChange={(e) =>
+                    setLedger(prev => ({
+                      ...prev,
+                      gstin: e.target.value.toUpperCase()
+                    }))
+                  }
+                />
+
+                <button className ="gst-btn" onClick={handleGetGSTDetails}>
+                  Get Details
+                </button>
+
+                <label>Ledger Code</label>
+                <input />
+              </div>
+
+              {/* CUSTOMER INFO */}
+              <div className="customer-grid">
+
+                <div className="contact">
+                  <label>Customer</label>
+                  <input value={ledger.contactPerson} readOnly />
+                </div>
+
+                <div className="mobile">
+                  <label>Mobile</label>
+                  <input value={ledger.mobile} readOnly />
+                </div>
+
+                <div className="email">
+                  <label>Email</label>
+                  <input value={ledger.email} readOnly />
+                </div>
+
+              </div>
+
             </div>
-
           </div>
 
           <div className="ledger-divider"></div>
@@ -658,7 +729,7 @@ export default function LedgerCreate() {
 
                 <h3>Mailing Details</h3>
 
-                <div className="ledger-line">
+                {/* <div className="ledger-line">
                   <span>Name</span><span>:</span>
                   <input value={ledger.mailingName} readOnly />
                 </div>
@@ -666,7 +737,7 @@ export default function LedgerCreate() {
                 <div className="ledger-line">
                   <span>Address</span><span>:</span>
                   <input value={ledger.address} readOnly />
-                </div>
+                </div> */}
 
                 <div className="ledger-line">
                   <span>State</span><span>:</span>
@@ -677,22 +748,22 @@ export default function LedgerCreate() {
                   <span>Country</span><span>:</span>
                   <b>India</b>
                 </div>
-                <div className="ledger-line">
+                {/* <div className="ledger-line">
                  <span>Pincode</span>
                  <span>:</span>
                  <input className="tally-input" />
-               </div>
+               </div> */}
                {/* BANKING */}
-               <h4>Banking Details</h4>
+               {/* <h4>Banking Details</h4> */}
 
-               <div className="ledger-line">
+               {/* <div className="ledger-line">
                  <span>Provide bank details</span>
                  <span>:</span>
                  <select className="tally-select">
                    <option>No</option>
                    <option>Yes</option>
                  </select>
-               </div>
+               </div> */}
                {/* TAX */}
                <h4>Tax Registration Details</h4>
 
@@ -705,10 +776,22 @@ export default function LedgerCreate() {
                <div className="ledger-line">
                  <span>Registration type</span>
                  <span>:</span>
-                 <b>Regular</b>
+                 <select>
+                  <option>Regular</option>
+                  <option>Composition</option>
+                  <option>Unregistered / Consumer</option>
+                  <option>Government Entity / TDS</option>
+                  <option>Regular - SEZ</option>
+                  <option>Regular - Exports (EOU)</option>
+                  <option>E-Commerce Operator</option>
+                  <option>Input Service Distributor</option>
+                  <option>Embassy / UN Body</option>
+                  <option>Non Resident Taxpayer</option>
+                 </select>
+                 {/* <b>Regular</b> */}
                </div>
 
-               <div className="ledger-line">
+               {/* <div className="ledger-line">
                  <span>GSTIN/UIN</span>
                  <span>:</span>
                  <input className="tally-input" />
@@ -721,7 +804,7 @@ export default function LedgerCreate() {
                    <option>No</option>
                    <option>Yes</option>
                  </select>
-               </div>
+               </div> */}
 
               </div>
 

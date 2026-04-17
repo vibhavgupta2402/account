@@ -36,6 +36,10 @@ import Purchase from "./pages/purchasevoucher";
 import SaleSummary from "./pages/SaleSummary";
 import SaleReturnSummary from "./pages/SaleReturnSummary";
 import SecGroupList from "./pages/SecGroupList";
+import PurchaseSummary from "./pages/PurchaseSummary";
+import SaleOrderSummary from "./pages/SaleOrderSummary";
+import DeliveryChallanSummary from "./pages/DeliveryChallanSummary";
+import PurchaseReturnSummary from "./pages/PurchaseReturnSummary";
 
 
 // JournalEntries
@@ -80,6 +84,10 @@ export default function App() {
           <Route path="/SaleSummary" element={<SaleSummary/>} />
           <Route path="/SaleReturnSummary" element={<SaleReturnSummary/>} />
           <Route path="/SecGroupList" element={<SecGroupList/>} />
+          <Route path="/PurchaseSummary" element={<PurchaseSummary/>} />
+          <Route path="/SaleOrderSummary" element={<SaleOrderSummary/>} />
+          <Route path="/DeliveryChallanSummary" element={<DeliveryChallanSummary/>} />
+          <Route path="/PurchaseReturnSummary" element={<PurchaseReturnSummary/>} />
         
 
 
