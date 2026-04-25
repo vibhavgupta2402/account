@@ -145,7 +145,69 @@
   outline: none;
   transition: 0.2s;
 }
+.pur-section{
+  border: 1px solid #e5e7eb;
+    width: 100%;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.05);
+    background: white;
+    border-radius: 6px;
+    padding: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    
+}
+.purchase-section-card {
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 12px;
+  background: #fff;
+  margin-bottom: 10px;
+}
+.pur-header-grid{
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+}
+.pur-voucher-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
 
+.pur-header {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); /* 🔥 4 columns */
+  gap: 12px;
+  
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+.pur-form-group{
+  display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+.pur-form-group label{
+  font-size: 11px;
+    color: #6b7280;
+    
+}
+
+.form-group input,
+.form-group select {
+  height: 34px;
+  padding: 6px 8px;
+}
+.pur-row{
+  display: flex;
+    align-items: center;
+    gap: 10px;
+}
 .purchase-customer input:focus {
   border-color: #3b82f6;
   box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.15);

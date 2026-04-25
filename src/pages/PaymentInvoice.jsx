@@ -1,16 +1,17 @@
 import { useState } from "react";
-import { useOutletContext } from "react-router-dom";
+import { useOutletContext, useNavigate } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "../styles/PaymentInvoice.css";
 
 export default function Payment() {
   const { collapsed } = useOutletContext();
+  const navigate = useNavigate();
 
-  const [paymentDate, setPaymentDate] = useState("");
+  const [paymentDate, setPaymentDate] = useState(new Date());
   const [ledger, setLedger] = useState("");
   const [voucherNo] = useState("PAY-01");
-  const [invoiceDate, setInvoiceDate] = useState(new Date());
+  // const [payDate, setInvoiceDate] = useState(new Date());
 
   const [againstType, setAgainstType] = useState("invoice"); 
 // invoice | advance | on_account
@@ -46,28 +47,34 @@ export default function Payment() {
             <div className="payment-date">
               <label>Payment Date:</label>
               <DatePicker
-                selected={invoiceDate}
-                onChange={(date) => setInvoiceDate(date)}
+                selected={paymentDate}
+                onChange={(date) =>setPaymentDate(date)}
                 dateFormat="dd/MM/yyyy"
-                maxDate={new Date()}   // prevent future date
+                minDate={new Date(new Date().setFullYear(new Date().getFullYear() - 1))} // ✅ last 1 year
                 className="date-input"
-
                 onChangeRaw={(e) => {
-                  let value = e.target.value;
-
-                  // 🔥 limit total length (dd/MM/yyyy = 10 chars)
+                  if (!e || !e.target) return;
+                  let value = e.target.value || "";
+                  // allow only numbers + /
+                  value = value.replace(/[^0-9/]/g, "");
+                  // auto format DD/MM/YYYY
+                  if (value.length === 2 || value.length === 5) {
+                    if (!value.endsWith("/")) value += "/";
+                  }
+                  // restrict length
                   if (value.length > 10) {
                     value = value.slice(0, 10);
                   }
-
                   const parts = value.split("/");
-
-                  // 🔥 restrict year to max 4 digits
+                  // day check
+                  if (parts[0] && Number(parts[0]) > 31) parts[0] = "31";
+                  // month check
+                  if (parts[1] && Number(parts[1]) > 12) parts[1] = "12";
+                  // year limit (4 digit)
                   if (parts[2] && parts[2].length > 4) {
                     parts[2] = parts[2].slice(0, 4);
-                    value = parts.join("/");
                   }
-
+                  value = parts.join("/");
                   e.target.value = value;
                 }}
               />
@@ -85,6 +92,7 @@ export default function Payment() {
               <option value="cash">Cash</option>
               <option value="bank">Bank</option>
             </select>
+            <button className="payment-ledger-btn" onClick={() => navigate("/Ledger",{state: { defaultGroup: "Bank Accounts" } })} >New ledger</button> 
             <label>Against Type :</label>
             <select
               value={againstType}
@@ -106,7 +114,7 @@ export default function Payment() {
             </div>
               <div className="table-head">
                 <span></span>
-                {againstType === "invoice" && <span>Chq no / Ref. No</span>}
+                <span>Chq no / Ref. No</span>
                 {againstType === "invoice" && <span>Against to:</span>}
                 <span>Amount</span>
               </div>
@@ -114,17 +122,19 @@ export default function Payment() {
 
             {/* ROWS */}
             {rows.map((row, i) => (
-              <div key={i} className="customer-row">
-
+              <div
+                key={i}
+                className={`customer-row ${againstType !== "invoice" ? "no-against" : ""}`}
+              >
                 <div className="customer-name">{row.name}</div>
 
-                {againstType === "invoice" && (
-                  <input
-                    value={row.ref}
-                    onChange={(e) => handleChange(i, "ref", e.target.value)}
-                  />
-                )}
+                {/* ✅ Always visible */}
+                <input
+                  value={row.ref}
+                  onChange={(e) => handleChange(i, "ref", e.target.value)}
+                />
 
+                {/* ✅ Only for invoice */}
                 {againstType === "invoice" && (
                   <input
                     value={row.against}
@@ -136,7 +146,6 @@ export default function Payment() {
                   value={row.amount}
                   onChange={(e) => handleChange(i, "amount", e.target.value)}
                 />
-
               </div>
             ))}
 

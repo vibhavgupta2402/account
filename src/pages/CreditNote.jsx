@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState ,useEffect} from "react";
 import { useOutletContext } from "react-router-dom";
 import { FaTrash } from "react-icons/fa";
 import DatePicker from "react-datepicker";
@@ -37,6 +37,11 @@ export default function CreditNote() {
     amount: ""
   }]);
 };
+  const [voucherCount, setVoucherCount] = useState(1);
+  const generateVoucher = () => {
+    const number = String(voucherCount).padStart(2, "0");
+    return `CN-${number}`;
+  };
 
 const states = [
   "Andhra Pradesh","Arunachal Pradesh","Assam","Bihar","Chhattisgarh",
@@ -48,8 +53,13 @@ const states = [
 ];
 const [openStateDropdown, setOpenStateDropdown] = useState(false);
 const [selectedState, setSelectedState] = useState("");
+const [manualEntry, setManualEntry] = useState(false);
+const [crNo, setCrNo] = useState("");
   // ================= CUSTOMER =================
   const [editBilled, setEditBilled] = useState(false);
+  const [showInvoiceSettings, setShowInvoiceSettings] = useState(false);
+   const [currentCount, setCurrentCount] = useState(1);
+  
   const [editShipped, setEditShipped] = useState(false);
    const [customer,setCustomer] = useState({});
    const [showCustomerPopup, setShowCustomerPopup] = useState(false);
@@ -75,8 +85,35 @@ const [selectedState, setSelectedState] = useState("");
     gstin: "09ABMCS5888A12U",
     pos: "09-Uttar Pradesh"
   });
+  
 
  
+ const [crConfig, setCrConfig] = useState({
+     prefix: "Tax/2025-26",
+     zero: '',
+     start: '',
+     manual_pre: false
+   });
+   const generateInvoice = () => {
+  const { prefix, zero } = crConfig;
+  const zeroCount = Number(zero) || 0;
+  let number = String(currentCount);
+  // 🔥 final output ALWAYS 4 digit
+  const totalLength = zeroCount + number.length;
+  if (totalLength > 4) {
+    // trim number from left
+    number = number.slice(0, 4 - zeroCount);
+  }
+  // pad remaining
+  const finalNumber = "0".repeat(zeroCount) + number;
+  return `${prefix}/${finalNumber}`;
+};
+
+   useEffect(() => {
+   if (!manualEntry) {
+     setCrNo(generateInvoice());
+   }
+ }, [currentCount, crConfig, manualEntry]);
 
   // ================= ITEMS =================
   const [items, setItems] = useState([
@@ -111,51 +148,195 @@ const [selectedState, setSelectedState] = useState("");
                 value={creditNo}
                 onChange={(e) => setCreditNo(e.target.value)}
               /> */}
+              
               <div className="cr-section-card"> 
-              <div className="form-group">
-              <label>CR.Note Date</label>
-              <DatePicker
-                  selected={invoiceDate}
-                  onChange={(date) => setInvoiceDate(date)}
-                  dateFormat="dd/MM/yyyy"
-                  maxDate={new Date()}   // prevent future date
-                  className="date-input"
+                
+                    <div className="cr-voucher-row">
+                      <label>Voucher No:</label>
+                      <span className="voucher-value">{generateVoucher()}</span>
+                    </div>
+                  <div className="cr-header">
+                    <div className="cr-no-group">
+                      <label>Credit Note No.</label>
+                      <div className="cr-input-box">
+                        <input
+                          value={crNo}
+                          readOnly={!manualEntry}
+                          // placeholder="Tax/2025-26/0001"
+                          maxLength={16}
+                          onChange={(e) => {
+                          let value = e.target.value;
+                          // 🔥 MANUAL MODE → full freedom
+                          if (manualEntry) {
+                            setCrNo(value);
+                            return;
+                          }
+                          // 🔥 AUTO MODE → prefix lock
+                          const prefix = crConfig.prefix + "/";
+                          if (!value.startsWith(prefix)) {
+                            value = prefix;
+                          }
 
-                  onChangeRaw={(e) => {
-                    let value = e.target.value;
+                          let numberPart = value.replace(prefix, "");
+                          numberPart = numberPart.replace(/\D/g, "");
+                          numberPart = numberPart.slice(0, 4);
 
-                    // 🔥 limit total length (dd/MM/yyyy = 10 chars)
-                    if (value.length > 10) {
-                      value = value.slice(0, 10);
-                    }
+                          value = prefix + numberPart;
+                          setCrNo(value);
+                        }}
+                        />
 
-                    const parts = value.split("/");
+                        {/* ⚙️ SETTINGS ICON */}
+                        <button
+                          className="settings-btn"
+                          onClick={() => setShowInvoiceSettings(true)}
+                        >
+                          ⚙️
+                        </button>
+                        {showInvoiceSettings && (
+                          <div className="invoice-popup-overlay">
+                            <div className="invoice-popup">
+                              <h3>Invoice Settings</h3>
 
-                    // 🔥 restrict year to max 4 digits
-                    if (parts[2] && parts[2].length > 4) {
-                      parts[2] = parts[2].slice(0, 4);
-                      value = parts.join("/");
-                    }
+                              <div className="popup-group">
+                                <label>Manual:</label>
+                                <div className="popup-radio">
+                                  <label>
+                                    <input
+                                      type="radio"
+                                      checked={manualEntry}
+                                      onChange={() => {
+                                        setManualEntry(true);
+                                        setCrNo("");   // 🔥 CLEAR INPUT
+                                      }}
+                                    />
+                                    Yes
+                                  </label>
+                                  <label>
+                                    <input
+                                      type="radio"
+                                      checked={!manualEntry}
+                                      onChange={() => setManualEntry(false)}
+                                    />
+                                    No
+                                  </label>
+                                </div>
+                              </div>
+                              {/* 🔥 MAIN FIX: hide all when manual = true */}
+                              {!manualEntry && (
+                                <>
+                                <div className="popup-group full">
+                                  <label>Prefix</label>
+                                  <input
+                                    className="popup-input-box"
+                                    value={crConfig.prefix}
+                                    onChange={(e) => {
+                                      let value = e.target.value;
+                                      if (value.length > 11) value = value.slice(0, 11);
 
-                    e.target.value = value;
-                  }}
-                />
+                                      setCrConfig({ ...crConfig, prefix: value });
+                                    }}
+                                  />
+                                </div>
+
+                                <div className="popup-group">
+                                  <label>Zero Padding</label>
+                                  <input
+                                    type="number"
+                                    min="0"
+                                    max="4"
+                                    value={crConfig.zero}
+                                    onChange={(e) => {
+                                      let val = Number(e.target.value) || 0;
+                                      if (val > 4) val = 4;
+
+                                      setCrConfig({ ...crConfig, zero: val });
+                                    }}
+                                  />
+                                </div>
+
+                                <div className="popup-group">
+                                  <label>Start No</label>
+                                  <input
+                                    type="number"
+                                    value={crConfig.start}
+                                    onChange={(e) => {
+                                      let val = Math.max(0, Number(e.target.value) || 0);
+                                      setCrConfig({ ...crConfig, start: val });
+                                      setCurrentCount(val);
+                                    }}
+                                  />
+                                </div>
+                                </>
+                              )}
+
+                              <div className="popup-actions">
+                                <button onClick={() => setShowInvoiceSettings(false)}>Cancel</button>
+                                <button
+                                  onClick={() => {
+                                    if (
+                                      !manualEntry && 
+                                      (Number(crConfig.zero) || 0) + String(crConfig.start).length > 4
+                                    ) {
+                                      alert("Zero + Start digits cannot exceed 4");
+                                      return;
+                                    }
+                                    setShowInvoiceSettings(false);
+                                  }}
+                                >
+                                  Save
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  <div className="form-group">
+                  <label>CR.Note Date</label>
+                  <DatePicker
+                      selected={invoiceDate}
+                      onChange={(date) => setInvoiceDate(date)}
+                      dateFormat="dd/MM/yyyy"
+                      maxDate={new Date()}   // prevent future date
+                      className="date-input"
+
+                      onChangeRaw={(e) => {
+                        let value = e.target.value;
+
+                        // 🔥 limit total length (dd/MM/yyyy = 10 chars)
+                        if (value.length > 10) {
+                          value = value.slice(0, 10);
+                        }
+
+                        const parts = value.split("/");
+
+                        // 🔥 restrict year to max 4 digits
+                        if (parts[2] && parts[2].length > 4) {
+                          parts[2] = parts[2].slice(0, 4);
+                          value = parts.join("/");
+                        }
+
+                        e.target.value = value;
+                      }}
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label>Type of CR. Note</label>
+                    <select value={type} onChange={(e) => setType(e.target.value)}>
+                      <option value="">Select</option>
+                      <option value="sales_return">Sales Return</option>
+                      <option value="rate_diff">Rate Difference</option>
+                      <option value="discount">Discount</option>
+                      <option value="tax_adjustment">Tax Adjustment</option>
+                      <option value="amount">Interest</option>
+                      <option value="bank">Bank Charges</option>
+                    </select>
+                  </div>
+                  </div>
+                </div>
               </div>
-              <div className="form-group">
-                <label>Type of CR. Note</label>
-                <select value={type} onChange={(e) => setType(e.target.value)}>
-                  <option value="">Select</option>
-                  <option value="sales_return">Sales Return</option>
-                  <option value="rate_diff">Rate Difference</option>
-                  <option value="discount">Discount</option>
-                  <option value="tax_adjustment">Tax Adjustment</option>
-                  <option value="amount">Amount</option>
-                  <option value="bank">Bank Charges</option>
-                </select>
-              </div>
-               </div>
             </div>
-          </div>
 
           {/* DISPATCH */}
       

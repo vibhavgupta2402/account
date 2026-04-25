@@ -1,16 +1,15 @@
 import { useState } from "react";
-import { useOutletContext } from "react-router-dom";
+import { useOutletContext, useNavigate } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "../styles/ReceiptInvoice.css";
 
 export default function Receipt() {
   const { collapsed } = useOutletContext();
+  const navigate = useNavigate();
   const [voucherNo] = useState("REC-01");
   const [againstType, setAgainstType] = useState("invoice");
-   const [invoiceDate, setInvoiceDate] = useState(new Date());
-
-  const [date, setDate] = useState("");
+   const [reciptDate, setReciptDate] = useState(new Date());
   const [ledger, setLedger] = useState("");
 
   const [rows, setRows] = useState([
@@ -44,28 +43,34 @@ export default function Receipt() {
             <div className="receipt-date">
               <label>Receipt Date:</label>
               <DatePicker
-                selected={invoiceDate}
-                onChange={(date) => setInvoiceDate(date)}
+                selected={reciptDate}
+                onChange={(date) =>setReciptDate(date)}
                 dateFormat="dd/MM/yyyy"
-                maxDate={new Date()}   // prevent future date
+                minDate={new Date(new Date().setFullYear(new Date().getFullYear() - 1))} // ✅ last 1 year
                 className="date-input"
-
                 onChangeRaw={(e) => {
-                  let value = e.target.value;
-
-                  // 🔥 limit total length (dd/MM/yyyy = 10 chars)
+                  if (!e || !e.target) return;
+                  let value = e.target.value || "";
+                  // allow only numbers + /
+                  value = value.replace(/[^0-9/]/g, "");
+                  // auto format DD/MM/YYYY
+                  if (value.length === 2 || value.length === 5) {
+                    if (!value.endsWith("/")) value += "/";
+                  }
+                  // restrict length
                   if (value.length > 10) {
                     value = value.slice(0, 10);
                   }
-
                   const parts = value.split("/");
-
-                  // 🔥 restrict year to max 4 digits
+                  // day check
+                  if (parts[0] && Number(parts[0]) > 31) parts[0] = "31";
+                  // month check
+                  if (parts[1] && Number(parts[1]) > 12) parts[1] = "12";
+                  // year limit (4 digit)
                   if (parts[2] && parts[2].length > 4) {
                     parts[2] = parts[2].slice(0, 4);
-                    value = parts.join("/");
                   }
-
+                  value = parts.join("/");
                   e.target.value = value;
                 }}
               />
@@ -83,6 +88,8 @@ export default function Receipt() {
               <option value="cash">Cash</option>
               <option value="bank">Bank</option>
             </select>
+            <button className="payment-ledger-btn" onClick={() => navigate("/Ledger",{state: { defaultGroup: "Bank Accounts" } })} >New ledger</button> 
+
             <label>Against Type :</label>
             <select
               value={againstType}
@@ -105,29 +112,28 @@ export default function Receipt() {
           {/* TABLE HEADER */}
           <div className="R-table-head">
             <span></span>
-            {againstType === "invoice" && <span>Chq no / Ref. No</span>}
+            <span>Chq no / Ref. No</span>
             {againstType === "invoice" && <span>Invoice No</span>}
             <span>Amount</span>
           </div>
 
           {/* ROWS */}
           {rows.map((row, i) => (
-            <div key={i} className="R-customer-row">
+              <div
+                key={i}
+                className={`R-customer-row ${againstType !== "invoice" ? "no-against" : ""}`}
+              >
+                <div className="R-customer-name">{row.name}</div>
 
-              <div className="R-customer-name">{row.name}</div>
-
-              {/* Only for Invoice */}
-              {againstType === "invoice" && (
+                {/* ✅ Always visible */}
                 <input
                   value={row.ref}
-                  placeholder="Ref No"
                   onChange={(e) => handleChange(i, "ref", e.target.value)}
                 />
-              )}
 
-              {/* Invoice Selection */}
-              {againstType === "invoice" && (
-                <select
+                {/* ✅ Only for invoice */}
+                {againstType === "invoice" && (
+                  <select
                   value={row.against}
                   onChange={(e) => handleChange(i, "against", e.target.value)}
                 >
@@ -135,16 +141,14 @@ export default function Receipt() {
                   <option>INV-001</option>
                   <option>INV-002</option>
                 </select>
-              )}
+                )}
 
-              {/* Amount always visible */}
-              <input
-                value={row.amount}
-                onChange={(e) => handleChange(i, "amount", e.target.value)}
-              />
-
-            </div>
-          ))}
+                <input
+                  value={row.amount}
+                  onChange={(e) => handleChange(i, "amount", e.target.value)}
+                />
+              </div>
+            ))}
 
           <hr />
 

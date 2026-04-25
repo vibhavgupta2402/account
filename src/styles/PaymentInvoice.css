@@ -33,11 +33,26 @@
   width: 100px;
   height: 26px;
 }
+.payment-ledger-btn{
+      padding: 0 10px;
+    height: 24px;
+    line-height: 24px;
+    border-radius: 6px;
+    border: none;
+    background: linear-gradient(135deg, var(--ledger-success), #059669);
+    color: white;
+    cursor: pointer;
+    white-space: nowrap;
+    text-align: center;
+}
 .payment-date input {
   height: 26px;
-  width: 85px;
+  width: 88px;
 }
-
+.total-section span{
+      text-align: right;
+    padding-right: 10px;
+}
 /* ================= PAYMENT BY ================= */
 .payment-by {
   margin: 10px 0;

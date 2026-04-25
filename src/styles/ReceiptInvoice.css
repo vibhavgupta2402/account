@@ -20,9 +20,14 @@
 
 .receipt-date input {
   height: 26px;
-  width: 85px;
+  width: 88px;
 }
-
+.R-total-section span{
+    text-align: right;
+    font-weight: bold;
+    padding-right: 10px;
+    margin-top: 5px;
+}
 /* ================= LEDGER ================= */
 .receipt-ledger {
   margin: 10px 0;

@@ -11,6 +11,33 @@
   padding: 15px;
   transition: 0.3s;
 }
+.eway-btn {
+  position: relative;
+  padding: 3px 7px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-bottom: 5px;
+
+  /* Gradient background */
+  background: linear-gradient(135deg, #4f46e5, #2563eb);
+
+  /* Soft shadow */
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+
+  /* Smooth animation */
+  transition: all 0.25s ease;
+}
+
+/* Hover effect */
+.eway-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(37, 99, 235, 0.35);
+  background: linear-gradient(135deg, #4338ca, #1e40af);
+}
 
 .dc-main-content.collapsed {
   margin-left: 80px;
@@ -61,8 +88,78 @@
 
 .dc-grid-3 {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
   gap: 6px;
+}
+/* Main wrapper */
+.eway-wrapper {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+/* Left section (E-way bill) */
+.eway-left {
+  flex: 2;
+}
+
+/* Right section (Summary) */
+.eway-right {
+  flex: 1;
+}
+
+/* Keep your existing styles */
+.eway-container {
+  background: #fff;
+  padding: 16px;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+}
+
+/* Form layout */
+.eway-form {
+  display: flex;
+  gap: 20px;
+}
+
+.eway-field {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+/* Summary box */
+.dc-summary-box {
+  background: #f9fafb;
+  padding: 16px;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  margin-bottom: 16px;
+}
+
+.dc-total {
+  font-weight: bold;
+  font-size: 16px;
+  margin-top: 8px;
+}
+
+/* Buttons */
+.dc-footer-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.dc-footer-actions button {
+  padding: 8px 14px;
+  border: none;
+  background: #2563eb;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.dc-footer-actions button:hover {
+  background: #1e4ed8;
 }
 
 .dc-full {

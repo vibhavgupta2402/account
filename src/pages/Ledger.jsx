@@ -1,5 +1,6 @@
 import { useOutletContext, useNavigate, } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import GroupSecondary from "../pages/SecGroupList";
 import "../styles/ledger.css";
 
@@ -65,6 +66,7 @@ const flattenGroups = (tree, depth = 0) => {
   return result;
 };
 
+
 const GROUP_LIST = flattenGroups(GROUP_TREE);
 
 
@@ -85,9 +87,19 @@ const getGroupType = (group) => {
 export default function LedgerCreate() {
   const { collapsed } = useOutletContext();
   const navigate = useNavigate();
+  const location = useLocation();
+  const defaultGroup = location.state?.defaultGroup;
   const [showGroupModal, setShowGroupModal] = useState(false);
 
   const [groupList, setGroupList] = useState(GROUP_LIST);
+  useEffect(() => {
+  if (defaultGroup) {
+    setLedger(prev => ({
+      ...prev,
+      group: defaultGroup
+    }));
+  }
+}, [defaultGroup]);
 
   /* ================= STATE ================= */
   const [ledger, setLedger] = useState({
@@ -272,17 +284,17 @@ export default function LedgerCreate() {
               <div className="customer-grid">
 
                 <div className="contact">
-                  <label>Customer</label>
+                  <label>Contact Person</label>
                   <input value={ledger.contactPerson} readOnly />
                 </div>
 
                 <div className="mobile">
-                  <label>Mobile</label>
+                  <label>Mobile No.</label>
                   <input value={ledger.mobile} readOnly />
                 </div>
 
                 <div className="email">
-                  <label>Email</label>
+                  <label>Email ID</label>
                   <input value={ledger.email} readOnly />
                 </div>
 

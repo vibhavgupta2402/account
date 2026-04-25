@@ -283,166 +283,159 @@ const handleGSTChange = (e) => {
             {/* ================= SALE SECTION ================= */}
             <div className="section-card">
               <div className="sale-header">
-              <div className="voucher-row">
+                  <div className="voucher-row">
                     <label>Voucher No:</label>
                     <span className="voucher-value">{generateVoucher()}</span>
                   </div>
                 {/* ================= HEADER ================= */}
-                <div className="invoice-header-section">
-                  
-                  <div className="invoice-row">
-                  {/* Invoice No */}
-                  <div className="invoice-no-group">
-                    <label>Invoice No</label>
-
-                    <div className="invoice-input-box">
-                      {/* <input
-                        value={invoiceNo}
-                        onChange={(e) => setInvoiceNo(e.target.value)}
-                        placeholder="Tax/2025-26/001"
-                        readOnly={!manualEntry}
-                      /> */}
-                      <input
-                        value={invoiceNo}
-                        readOnly={!manualEntry}
-                        // placeholder="Tax/2025-26/0001"
-                        maxLength={16}
-                        onChange={(e) => {
-                        let value = e.target.value;
-                        // 🔥 MANUAL MODE → full freedom
-                        if (manualEntry) {
-                          setInvoiceNo(value);
-                          return;
-                        }
-                        // 🔥 AUTO MODE → prefix lock
-                        const prefix = invoiceConfig.prefix + "/";
-                        if (!value.startsWith(prefix)) {
-                          value = prefix;
-                        }
-
-                        let numberPart = value.replace(prefix, "");
-                        numberPart = numberPart.replace(/\D/g, "");
-                        numberPart = numberPart.slice(0, 4);
-
-                        value = prefix + numberPart;
-                        setInvoiceNo(value);
-                      }}
-                      />
-
-                      {/* ⚙️ SETTINGS ICON */}
-                      <button
-                        className="settings-btn"
-                        onClick={() => setShowInvoiceSettings(true)}
-                      >
-                        ⚙️
-                      </button>
-                    </div>
-                  </div>
-
-                  {/* Manual */}
-                  
-                </div>
-                  {showInvoiceSettings && (
-                  <div className="invoice-popup-overlay">
-                    <div className="invoice-popup">
-                      <h3>Invoice Settings</h3>
-
-                      <div className="popup-group">
-                        <label>Manual:</label>
-                        <div className="popup-radio">
-                          <label>
-                            <input
-                              type="radio"
-                              checked={manualEntry}
-                              onChange={() => {
-                                setManualEntry(true);
-                                setInvoiceNo("");   // 🔥 CLEAR INPUT
-                              }}
-                            />
-                            Yes
-                          </label>
-
-                          <label>
-                            <input
-                              type="radio"
-                              checked={!manualEntry}
-                              onChange={() => setManualEntry(false)}
-                            />
-                            No
-                          </label>
-                        </div>
-                      </div>
-
-                      {/* 🔥 MAIN FIX: hide all when manual = true */}
-                      {!manualEntry && (
-                        <>
-                          <div className="popup-group full">
-                            <label>Prefix</label>
-                            <input
-                              className="popup-input-box"
-                              value={invoiceConfig.prefix}
-                              onChange={(e) => {
-                                let value = e.target.value;
-                                if (value.length > 11) value = value.slice(0, 11);
-
-                                setInvoiceConfig({ ...invoiceConfig, prefix: value });
-                              }}
-                            />
-                          </div>
-
-                          <div className="popup-group">
-                            <label>Zero Padding</label>
-                            <input
-                              type="number"
-                              min="0"
-                              max="4"
-                              value={invoiceConfig.zero}
-                              onChange={(e) => {
-                                let val = Number(e.target.value) || 0;
-                                if (val > 4) val = 4;
-
-                                setInvoiceConfig({ ...invoiceConfig, zero: val });
-                              }}
-                            />
-                          </div>
-
-                          <div className="popup-group">
-                            <label>Start No</label>
-                            <input
-                              type="number"
-                              value={invoiceConfig.start}
-                              onChange={(e) => {
-                                let val = Math.max(0, Number(e.target.value) || 0);
-                                setInvoiceConfig({ ...invoiceConfig, start: val });
-                                setCurrentCount(val);
-                              }}
-                            />
-                          </div>
-                        </>
-                      )}
-
-                      <div className="popup-actions">
-                        <button onClick={() => setShowInvoiceSettings(false)}>Cancel</button>
-                        <button
-                          onClick={() => {
-                            if (
-                              !manualEntry && 
-                              (Number(invoiceConfig.zero) || 0) + String(invoiceConfig.start).length > 4
-                            ) {
-                              alert("Zero + Start digits cannot exceed 4");
+                  <div className="invoice-header-section">     
+                    <div className="invoice-row">
+                      {/* Invoice No */}
+                      <div className="invoice-no-group">
+                        <label>Invoice No</label>
+                        <div className="invoice-input-box">
+                          {/* <input
+                            value={invoiceNo}
+                            onChange={(e) => setInvoiceNo(e.target.value)}
+                            placeholder="Tax/2025-26/001"
+                            readOnly={!manualEntry}
+                          /> */}
+                          <input
+                            value={invoiceNo}
+                            readOnly={!manualEntry}
+                            // placeholder="Tax/2025-26/0001"
+                            maxLength={16}
+                            onChange={(e) => {
+                            let value = e.target.value;
+                            // 🔥 MANUAL MODE → full freedom
+                            if (manualEntry) {
+                              setInvoiceNo(value);
                               return;
                             }
-                            setShowInvoiceSettings(false);
-                          }}
-                        >
-                          Save
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                )}
+                            // 🔥 AUTO MODE → prefix lock
+                            const prefix = invoiceConfig.prefix + "/";
+                            if (!value.startsWith(prefix)) {
+                              value = prefix;
+                            }
 
-                </div>
+                            let numberPart = value.replace(prefix, "");
+                            numberPart = numberPart.replace(/\D/g, "");
+                            numberPart = numberPart.slice(0, 4);
+
+                            value = prefix + numberPart;
+                            setInvoiceNo(value);
+                          }}
+                          />
+
+                          {/* ⚙️ SETTINGS ICON */}
+                          <button
+                            className="settings-btn"
+                            onClick={() => setShowInvoiceSettings(true)}
+                          >
+                            ⚙️
+                          </button>
+                        </div>
+                      </div>
+                      {/* Manual */}
+                    </div>
+                    {showInvoiceSettings && (
+                      <div className="invoice-popup-overlay">
+                        <div className="invoice-popup">
+                          <h3>Invoice Settings</h3>
+
+                          <div className="popup-group">
+                            <label>Manual:</label>
+                            <div className="popup-radio">
+                              <label>
+                                <input
+                                  type="radio"
+                                  checked={manualEntry}
+                                  onChange={() => {
+                                    setManualEntry(true);
+                                    setInvoiceNo("");   // 🔥 CLEAR INPUT
+                                  }}
+                                />
+                                Yes
+                              </label>
+                              <label>
+                                <input
+                                  type="radio"
+                                  checked={!manualEntry}
+                                  onChange={() => setManualEntry(false)}
+                                />
+                                No
+                              </label>
+                            </div>
+                          </div>
+                          {/* 🔥 MAIN FIX: hide all when manual = true */}
+                          {!manualEntry && (
+                            <>
+                            <div className="popup-group full">
+                              <label>Prefix</label>
+                              <input
+                                className="popup-input-box"
+                                value={invoiceConfig.prefix}
+                                onChange={(e) => {
+                                  let value = e.target.value;
+                                  if (value.length > 11) value = value.slice(0, 11);
+
+                                  setInvoiceConfig({ ...invoiceConfig, prefix: value });
+                                }}
+                              />
+                            </div>
+
+                            <div className="popup-group">
+                              <label>Zero Padding</label>
+                              <input
+                                type="number"
+                                min="0"
+                                max="4"
+                                value={invoiceConfig.zero}
+                                onChange={(e) => {
+                                  let val = Number(e.target.value) || 0;
+                                  if (val > 4) val = 4;
+
+                                  setInvoiceConfig({ ...invoiceConfig, zero: val });
+                                }}
+                              />
+                            </div>
+
+                            <div className="popup-group">
+                              <label>Start No</label>
+                              <input
+                                type="number"
+                                value={invoiceConfig.start}
+                                onChange={(e) => {
+                                  let val = Math.max(0, Number(e.target.value) || 0);
+                                  setInvoiceConfig({ ...invoiceConfig, start: val });
+                                  setCurrentCount(val);
+                                }}
+                              />
+                            </div>
+                            </>
+                          )}
+
+                          <div className="popup-actions">
+                            <button onClick={() => setShowInvoiceSettings(false)}>Cancel</button>
+                            <button
+                              onClick={() => {
+                                if (
+                                  !manualEntry && 
+                                  (Number(invoiceConfig.zero) || 0) + String(invoiceConfig.start).length > 4
+                                ) {
+                                  alert("Zero + Start digits cannot exceed 4");
+                                  return;
+                                }
+                                setShowInvoiceSettings(false);
+                              }}
+                            >
+                              Save
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 <div className="type-supply-container">
                   <div className="form-group">
                     <label>Voucher Mode</label>
@@ -492,7 +485,7 @@ const handleGSTChange = (e) => {
                         className="eco-edit-btn"
                         onClick={() => setShowEcoEditor(!showEcoEditor)}
                       >
-                        ✏️
+                        New ECO
                       </button>
 
                     </div>
@@ -742,9 +735,17 @@ const handleGSTChange = (e) => {
                 </div>
                 <div className="form-group">
                   <label>Salesman/Agent</label>
+                  <div className="eco-inline">
                   <select>
                     <option>Select</option>
                   </select>
+                  <button
+                      className="salesman-create-btn"
+                      onClick={() => navigate("/Ledger",{state: { defaultGroup: "Sundry Creditors" } })}
+                    >
+                      New Salesman
+                    </button>
+                    </div>
                 </div>
 
               </div>

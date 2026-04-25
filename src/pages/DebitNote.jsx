@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useOutletContext } from "react-router-dom";
 import { FaTrash } from "react-icons/fa";
 import DatePicker from "react-datepicker";
@@ -28,14 +28,18 @@ export default function CreditNote() {
 const [openStateDropdown, setOpenStateDropdown] = useState(false);
 const [selectedState, setSelectedState] = useState("");
 const [invoiceDate, setInvoiceDate] = useState(new Date());
-
+const [oriDate, setOriDate] = useState(new Date()); 
+const [disDate, setDisDate] = useState(new Date());
+const [ewayDate, setEwayDate] = useState(new Date());
   // ================= DISPATCH =================
   const [dispatch, setDispatch] = useState({
     docNo: "",
     gstin: "",
     lr: "",
     vehicle: "",
-    date: ""
+    date: "",
+    e_way: "",
+    e_date: ""
   });
 
   // ================= CUSTOMER =================
@@ -75,7 +79,47 @@ const [invoiceDate, setInvoiceDate] = useState(new Date());
     amount: ""
   }]);
 };
- 
+  const [manualEntry, setManualEntry] = useState(false);
+  const [dnNo, setDnNo] = useState("");
+  const [currentCount, setCurrentCount] = useState(1);
+ const [voucherCount, setVoucherCount] = useState(1);
+ const [showInvoiceSettings, setShowInvoiceSettings] = useState(false);
+  const generateVoucher = () => {
+    const number = String(voucherCount).padStart(2, "0");
+    return `DN-${number}`;
+  };
+  const handleSave = () => {
+    setCurrentCount(prev => prev + 1);
+    setVoucherCount(prev => prev + 1);
+  };
+
+  const [dnConfig, setDnConfig] = useState({
+       prefix: "Tax/2025-26",
+       zero: '',
+       start: '',
+       manual_pre: false
+     });
+     const generateInvoice = () => {
+    const { prefix, zero } = dnConfig;
+    const zeroCount = Number(zero) || 0;
+    let number = String(currentCount);
+    // 🔥 final output ALWAYS 4 digit
+    const totalLength = zeroCount + number.length;
+    if (totalLength > 4) {
+      // trim number from left
+      number = number.slice(0, 4 - zeroCount);
+    }
+    // pad remaining
+    const finalNumber = "0".repeat(zeroCount) + number;
+    return `${prefix}/${finalNumber}`;
+  };
+  
+     useEffect(() => {
+     if (!manualEntry) {
+       setDnNo(generateInvoice());
+     }
+   }, [currentCount, dnConfig, manualEntry]);
+  
 
   // ================= ITEMS =================
   const [items, setItems] = useState([
@@ -106,130 +150,361 @@ const [invoiceDate, setInvoiceDate] = useState(new Date());
             <h2>Debit Note</h2>
             <div className="header-grid">
               <div className="debit-section-card">
-              <div className="form-group">
-                <label>Dr.Note Number</label>
-              <input 
-                // placeholder="Dr.Note Number"
-                value={creditNo}
-                onChange={(e) => setCreditNo(e.target.value)}
-              />
+                <div className="dn-voucher-row">
+                  <label>Voucher No:</label>
+                  <span className="voucher-value">{generateVoucher()}</span>
+                </div>
+                <div className="dn-header">
+                  <div className="dn-no-group">
+                    <label>Dr.Note Number</label>
+                    <div className="dn-input-box">
+                        <input
+                          value={dnNo}
+                          readOnly={!manualEntry}
+                          // placeholder="Tax/2025-26/0001"
+                          maxLength={16}
+                          onChange={(e) => {
+                          let value = e.target.value;
+                          // 🔥 MANUAL MODE → full freedom
+                          if (manualEntry) {
+                            setDnNo(value);
+                            return;
+                          }
+                          // 🔥 AUTO MODE → prefix lock
+                          const prefix = dnConfig.prefix + "/";
+                          if (!value.startsWith(prefix)) {
+                            value = prefix;
+                          }
+
+                          let numberPart = value.replace(prefix, "");
+                          numberPart = numberPart.replace(/\D/g, "");
+                          numberPart = numberPart.slice(0, 4);
+
+                          value = prefix + numberPart;
+                          setDnNo(value);
+                        }}
+                        />
+
+                        {/* ⚙️ SETTINGS ICON */}
+                        <button
+                          className="settings-btn"
+                          onClick={() => setShowInvoiceSettings(true)}
+                        >
+                          ⚙️
+                        </button>
+                        {showInvoiceSettings && (
+                          <div className="invoice-popup-overlay">
+                            <div className="invoice-popup">
+                              <h3>Invoice Settings</h3>
+
+                              <div className="popup-group">
+                                <label>Manual:</label>
+                                <div className="popup-radio">
+                                  <label>
+                                    <input
+                                      type="radio"
+                                      checked={manualEntry}
+                                      onChange={() => {
+                                        setManualEntry(true);
+                                        setDnNo("");   // 🔥 CLEAR INPUT
+                                      }}
+                                    />
+                                    Yes
+                                  </label>
+                                  <label>
+                                    <input
+                                      type="radio"
+                                      checked={!manualEntry}
+                                      onChange={() => setManualEntry(false)}
+                                    />
+                                    No
+                                  </label>
+                                </div>
+                              </div>
+                              {/* 🔥 MAIN FIX: hide all when manual = true */}
+                              {!manualEntry && (
+                                <>
+                                <div className="popup-group full">
+                                  <label>Prefix</label>
+                                  <input
+                                    className="popup-input-box"
+                                    value={dnConfig.prefix}
+                                    onChange={(e) => {
+                                      let value = e.target.value;
+                                      if (value.length > 11) value = value.slice(0, 11);
+
+                                      setDnConfig({ ...dnConfig, prefix: value });
+                                    }}
+                                  />
+                                </div>
+
+                                <div className="popup-group">
+                                  <label>Zero Padding</label>
+                                  <input
+                                    type="number"
+                                    min="0"
+                                    max="4"
+                                    value={dnConfig.zero}
+                                    onChange={(e) => {
+                                      let val = Number(e.target.value) || 0;
+                                      if (val > 4) val = 4;
+
+                                      setDnConfig({ ...dnConfig, zero: val });
+                                    }}
+                                  />
+                                </div>
+
+                                <div className="popup-group">
+                                  <label>Start No</label>
+                                  <input
+                                    type="number"
+                                    value={dnConfig.start}
+                                    onChange={(e) => {
+                                      let val = Math.max(0, Number(e.target.value) || 0);
+                                      setDnConfig({ ...dnConfig, start: val });
+                                      setCurrentCount(val);
+                                    }}
+                                  />
+                                </div>
+                                </>
+                              )}
+
+                              <div className="popup-actions">
+                                <button onClick={() => setShowInvoiceSettings(false)}>Cancel</button>
+                                <button
+                                  onClick={() => {
+                                    if (
+                                      !manualEntry && 
+                                      (Number(dnConfig.zero) || 0) + String(dnConfig.start).length > 4
+                                    ) {
+                                      alert("Zero + Start digits cannot exceed 4");
+                                      return;
+                                    }
+                                    setShowInvoiceSettings(false);
+                                  }}
+                                >
+                                  Save
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                  </div>
+                  <div className="form-group">
+                    <label>Dr.Note Date</label>
+                    <DatePicker
+                      selected={invoiceDate}
+                      onChange={(date) => setInvoiceDate(date)}
+                      dateFormat="dd/MM/yyyy"
+                      minDate={new Date(new Date().setFullYear(new Date().getFullYear() - 1))} // ✅ last 1 year
+                      className="date-input"
+                      onChangeRaw={(e) => {
+                        if (!e || !e.target) return;
+                        let value = e.target.value || "";
+                        // allow only numbers + /
+                        value = value.replace(/[^0-9/]/g, "");
+                        // auto format DD/MM/YYYY
+                        if (value.length === 2 || value.length === 5) {
+                          if (!value.endsWith("/")) value += "/";
+                        }
+                        // restrict length
+                        if (value.length > 10) {
+                          value = value.slice(0, 10);
+                        }
+                        const parts = value.split("/");
+                        // day check
+                        if (parts[0] && Number(parts[0]) > 31) parts[0] = "31";
+                        // month check
+                        if (parts[1] && Number(parts[1]) > 12) parts[1] = "12";
+                        // year limit (4 digit)
+                        if (parts[2] && parts[2].length > 4) {
+                          parts[2] = parts[2].slice(0, 4);
+                        }
+                        value = parts.join("/");
+                        e.target.value = value;
+                      }}
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label>Original Credit Note No</label>
+                    <input 
+                      // placeholder="Original Invoice No"
+                      value={originalInvoice}
+                      onChange={(e) => setOriginalInvoice(e.target.value)}
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label>Original Credit Note Date</label>
+                    <DatePicker
+                      selected={oriDate}
+                      onChange={(date) => setOriDate(date)}
+                      dateFormat="dd/MM/yyyy"
+                      minDate={new Date(new Date().setFullYear(new Date().getFullYear() - 1))} // ✅ last 1 year
+                      className="date-input"
+                      onChangeRaw={(e) => {
+                        if (!e || !e.target) return;
+                        let value = e.target.value || "";
+                        // allow only numbers + /
+                        value = value.replace(/[^0-9/]/g, "");
+                        // auto format DD/MM/YYYY
+                        if (value.length === 2 || value.length === 5) {
+                          if (!value.endsWith("/")) value += "/";
+                        }
+                        // restrict length
+                        if (value.length > 10) {
+                          value = value.slice(0, 10);
+                        }
+                        const parts = value.split("/");
+                        // day check
+                        if (parts[0] && Number(parts[0]) > 31) parts[0] = "31";
+                        // month check
+                        if (parts[1] && Number(parts[1]) > 12) parts[1] = "12";
+                        // year limit (4 digit)
+                        if (parts[2] && parts[2].length > 4) {
+                          parts[2] = parts[2].slice(0, 4);
+                        }
+                        value = parts.join("/");
+                        e.target.value = value;
+                      }}
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label>Type of Dr. Note</label>
+                    <select value={type} onChange={(e) => setType(e.target.value)}>
+                      <option value="">Select</option>
+                      <option value="purchase_return">Purchase Return</option>
+                      <option value="rate_diff">Rate Difference</option>
+                      <option value="discount">Discount</option>
+                      <option value="tax_adjustment">Tax Adjustment</option>
+                      <option value="intrest">Interest</option>
+                      <option value="bank">Bank Charges</option>
+                    </select>
+                  </div>
+                </div>
               </div>
-              <div className="form-group">
-                <label>Dr.Note Date</label>
-              <DatePicker
-                selected={invoiceDate}
-                onChange={(date) => setInvoiceDate(date)}
-                dateFormat="dd/MM/yyyy"
-                maxDate={new Date()}   // prevent future date
-                className="date-input"
-
-                onChangeRaw={(e) => {
-                  let value = e.target.value;
-
-                  // 🔥 limit total length (dd/MM/yyyy = 10 chars)
-                  if (value.length > 10) {
-                    value = value.slice(0, 10);
-                  }
-
-                  const parts = value.split("/");
-
-                  // 🔥 restrict year to max 4 digits
-                  if (parts[2] && parts[2].length > 4) {
-                    parts[2] = parts[2].slice(0, 4);
-                    value = parts.join("/");
-                  }
-
-                  e.target.value = value;
-                }}
-              />
-              </div>
-              {/* <input 
-                placeholder="Original Invoice No"
-                value={originalInvoice}
-                onChange={(e) => setOriginalInvoice(e.target.value)}
-              />
-              <input 
-                type="date"
-                placeholder="Original Invoice Date"
-                value={originalDate}
-                onChange={(e) => setOriginalDate(e.target.value)}
-              /> */}
-              {/* <div></div>
-              <input 
-                placeholder="Type of Dr.Note"
-                value={type}
-                onChange={(e) => setType(e.target.value)}
-              /> */}
-              <div className="form-group">
-                <label>Type of Dr. Note</label>
-                <select value={type} onChange={(e) => setType(e.target.value)}>
-                  <option value="">Select</option>
-                  <option value="sales_return">Purchase Return</option>
-                  <option value="rate_diff">Rate Difference</option>
-                  <option value="discount">Discount</option>
-                  <option value="tax_adjustment">Tax Adjustment</option>
-                  <option value="amount">Interest</option>
-                  <option value="bank">Bank Charges</option>
-                </select>
-              </div>
-            </div>
             </div>
           </div>
 
           {/* DISPATCH */}
-          <div className="debit-dispatch-section">
-          <div className="dispatch-section">
-            <h3>Dispatch Details</h3>
-            <div className="grid">
-              <input 
-                placeholder="Dispatch Doc No"
-                value={dispatch.docNo}
-                onChange={(e) => setDispatch({ ...dispatch, docNo: e.target.value })}
-              />
-              <input 
-                placeholder="Bill of Lading / LR"
-                value={dispatch.lr}
-                onChange={(e) => setDispatch({ ...dispatch, lr: e.target.value })}
-              />
-              <input 
-                placeholder="Vehicle No"
-                value={dispatch.vehicle}
-                onChange={(e) => setDispatch({ ...dispatch, vehicle: e.target.value })}
-              />
-              <input 
-                placeholder="Transport GSTIN"
-                value={dispatch.gstin}
-                onChange={(e) => setDispatch({ ...dispatch, gstin: e.target.value })}
-              />
-              <DatePicker
-                selected={invoiceDate}
-                onChange={(date) => setInvoiceDate(date)}
-                dateFormat="dd/MM/yyyy"
-                maxDate={new Date()}   // prevent future date
-                className="date-input"
-
-                onChangeRaw={(e) => {
-                  let value = e.target.value;
-
-                  // 🔥 limit total length (dd/MM/yyyy = 10 chars)
-                  if (value.length > 10) {
-                    value = value.slice(0, 10);
-                  }
-
-                  const parts = value.split("/");
-
-                  // 🔥 restrict year to max 4 digits
-                  if (parts[2] && parts[2].length > 4) {
-                    parts[2] = parts[2].slice(0, 4);
-                    value = parts.join("/");
-                  }
-
-                  e.target.value = value;
-                }}
-              />
+          {type === "purchase_return" &&(
+            <div className="debit-dispatch-section">
+              <div className="dispatch-section">
+                <h3>Dispatch Details</h3>
+                <div className="grid">
+                  <div className="dis-no">
+                    <label>Dispatch Doc No</label>
+                    <input 
+                      placeholder="Dispatch Doc No"
+                      value={dispatch.docNo}
+                      onChange={(e) => setDispatch({ ...dispatch, docNo: e.target.value })}
+                    />
+                  </div>
+                  <div className="Bill">
+                    <label>Bill of Lading / LR</label>
+                    <input 
+                      placeholder="Bill of Lading / LR"
+                      value={dispatch.lr}
+                      onChange={(e) => setDispatch({ ...dispatch, lr: e.target.value })}
+                    />
+                  </div>
+                  <div className="Vec">
+                    <label>Vehical No</label>
+                    <input 
+                      placeholder="Vehicle No"
+                      value={dispatch.vehicle}
+                      onChange={(e) => setDispatch({ ...dispatch, vehicle: e.target.value })}
+                    />
+                  </div>
+                  <div className="Trans-gs">
+                    <label>Transport GSTIN No</label>
+                    <input 
+                      placeholder="Transport GSTIN"
+                      value={dispatch.gstin}
+                      onChange={(e) => setDispatch({ ...dispatch, gstin: e.target.value })}
+                    />
+                  </div>
+                  <div className="dis-date">
+                    <label>Dispatch Date</label>
+                    <DatePicker
+                      selected={disDate}
+                      onChange={(date) =>setDisDate(date)}
+                      dateFormat="dd/MM/yyyy"
+                      minDate={new Date(new Date().setFullYear(new Date().getFullYear() - 1))} // ✅ last 1 year
+                      className="date-input"
+                      onChangeRaw={(e) => {
+                        if (!e || !e.target) return;
+                        let value = e.target.value || "";
+                        // allow only numbers + /
+                        value = value.replace(/[^0-9/]/g, "");
+                        // auto format DD/MM/YYYY
+                        if (value.length === 2 || value.length === 5) {
+                          if (!value.endsWith("/")) value += "/";
+                        }
+                        // restrict length
+                        if (value.length > 10) {
+                          value = value.slice(0, 10);
+                        }
+                        const parts = value.split("/");
+                        // day check
+                        if (parts[0] && Number(parts[0]) > 31) parts[0] = "31";
+                        // month check
+                        if (parts[1] && Number(parts[1]) > 12) parts[1] = "12";
+                        // year limit (4 digit)
+                        if (parts[2] && parts[2].length > 4) {
+                          parts[2] = parts[2].slice(0, 4);
+                        }
+                        value = parts.join("/");
+                        e.target.value = value;
+                      }}
+                    />
+                  </div>
+                  <div className="e-way">
+                    <label>E-way Bill No </label>
+                    <input 
+                      value={dispatch.e_way}
+                      onChange={(e) => setDispatch({ ...dispatch, e_way: e.target.value })}>
+                    </input>
+                  </div>
+                  <div className="e-date">
+                    <label>E-Way Bill Date</label>
+                    <DatePicker
+                      selected={ewayDate}
+                      onChange={(date) => setEwayDate(date)}
+                      dateFormat="dd/MM/yyyy"
+                      minDate={new Date(new Date().setFullYear(new Date().getFullYear() - 1))} // ✅ last 1 year
+                      className="date-input"
+                      onChangeRaw={(e) => {
+                        if (!e || !e.target) return;
+                        let value = e.target.value || "";
+                        // allow only numbers + /
+                        value = value.replace(/[^0-9/]/g, "");
+                        // auto format DD/MM/YYYY
+                        if (value.length === 2 || value.length === 5) {
+                          if (!value.endsWith("/")) value += "/";
+                        }
+                        // restrict length
+                        if (value.length > 10) {
+                          value = value.slice(0, 10);
+                        }
+                        const parts = value.split("/");
+                        // day check
+                        if (parts[0] && Number(parts[0]) > 31) parts[0] = "31";
+                        // month check
+                        if (parts[1] && Number(parts[1]) > 12) parts[1] = "12";
+                        // year limit (4 digit)
+                        if (parts[2] && parts[2].length > 4) {
+                          parts[2] = parts[2].slice(0, 4);
+                        }
+                        value = parts.join("/");
+                        e.target.value = value;
+                      }}
+                    />
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
-          </div>
+          )}
 
           {/* ================= CUSTOMER ================= */}
           <div className="section-card">

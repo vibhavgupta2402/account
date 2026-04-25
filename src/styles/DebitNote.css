@@ -2,9 +2,14 @@
   padding: 15px;
 }
 
-.header-grid, .grid {
+.header-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+.grid{
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
   gap: 8px;
 }
 .debit-section-card{
@@ -16,6 +21,7 @@
   padding: 10px;
   margin-bottom: 10px;
   display: flex;
+  flex-direction: column;
   gap: 12px;
 }
 .debit-section-card input,
@@ -40,11 +46,118 @@
   gap: 12px;
 
 }
+.dispatch-section{
+  width: 100%;
+}
+.dn-header{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;  /* Invoice bigger */
+  gap: 12px;
+  align-items: end;
+}
+.dn-input-box{
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  margin-bottom: 14px;
+}
+.dn-voucher-row{
+  display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.dn-no-group{
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+ 
+}
+.dn-no-group label{
+    font-size: 11px;
+    color: #6b7280;
+    /* gap: 6px;
+    margin-bottom: 6px; */
+}
 .customer-box {
   display: flex;
   gap: 10px;
 }
+.dis-no{
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.dis-no label{
+      font-size: 11px;
+    color: #6b7280;
+}
+.Bill{
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.Bill label{
+  font-size: 11px;
+    color: #6b7280;
+}
+.Vec{
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.Vec label{
+   font-size: 11px;
+    color: #6b7280;
+}
+.Trans-gs{
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.e-way{
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.e-way label{
+font-size: 11px;
+    color: #6b7280;
+}
+.e-date{
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.e-date label{
+font-size: 11px;
+    color: #6b7280;
+}
+.e-date input{
+  width: 55%;
+    padding: 5px;
+    border-radius: 8px;
+    border: 1px solid #E5E7EB;
+}
+.dis-date{
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.dis-date label{
+  font-size: 11px;
+    color: #6b7280;
+}
+.dis-date input{
+  width: 55%;
+    padding: 5px;
+    border-radius: 8px;
+    border: 1px solid #E5E7EB;
 
+}
+.Trans-gs label{
+   font-size: 11px;
+    color: #6b7280;
+}
 .card {
   border: 1px solid #ddd;
   padding: 10px;

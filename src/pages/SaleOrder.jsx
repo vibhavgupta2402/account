@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useOutletContext } from "react-router-dom";
+import { useState,useEffect } from "react";
+import { useOutletContext,useNavigate } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "../styles/SaleOrder.css";
@@ -8,10 +8,11 @@ export default function SaleOrder() {
   const { collapsed } = useOutletContext();
 
   /* ================= HEADER ================= */
-  const [soNo, setSoNo] = useState("SO-01");
-  const [invoiceDate, setInvoiceDate] = useState(new Date());
-  const [soDate, setSoDate] = useState("");
+
+  const [sodisDate, setSodisDate] = useState(new Date());
+  const [soDate, setSoDate] = useState(new Date());
   const [soRef, setSoRef] = useState("");
+  const navigate = useNavigate();
   const [soType, setSoType] = useState("");
   const [buyer, setBuyer] = useState("");
 
@@ -59,26 +60,272 @@ export default function SaleOrder() {
   const sgst = totalGST / 2;
 
   const total = subtotal + totalGST;
+  const [soNo, setSoNo] = useState("");
+    const [manualEntry, setManualEntry] = useState(false);
+    const [showInvoiceSettings, setShowInvoiceSettings] = useState(false);
+    const [currentCount, setCurrentCount] = useState(1);
+    const [crConfig, setCrConfig] = useState({
+       prefix: "Tax/2025-26",
+       zero: '',
+       start: '',
+       manual_pre: false
+     });
+     const generateInvoice = () => {
+    const { prefix, zero } = crConfig;
+    const zeroCount = Number(zero) || 0;
+    let number = String(currentCount);
+    // 🔥 final output ALWAYS 4 digit
+    const totalLength = zeroCount + number.length;
+    if (totalLength > 4) {
+      // trim number from left
+      number = number.slice(0, 4 - zeroCount);
+    }
+    // pad remaining
+    const finalNumber = "0".repeat(zeroCount) + number;
+    return `${prefix}/${finalNumber}`;
+  };
+  useEffect(() => {
+     if (!manualEntry) {
+       setSoNo(generateInvoice());
+     }
+   }, [currentCount, crConfig, manualEntry]);
+  const [voucherCount, setVoucherCount] = useState(1);
+  const generateVoucher = () => {
+    const number = String(voucherCount).padStart(2, "0");
+    return `SO-${number}`;
+  };
+  /* ============= Dispatch ======================= */
+  const [shippingDate, setshippingDate] = useState(new Date());
+  const [gstin, setGstin] = useState("");
+  const [gstData, setGstData] = useState(null);
+  const [gstLoading, setGstLoading] = useState(false);
+  const [gstError, setGstError] = useState("");
+  const validateGST = async (value) => {
+    if (value.length !== 15) return;
+  
+    try {
+      setGstLoading(true);
+      setGstError("");
+      setGstData(null);
+  
+      const res = await fetch(`/api/gst/${value}`); // 🔥 your backend
+  
+      if (res.status === 200) {
+        const data = await res.json();
+        setGstData(data);
+      } else {
+        setGstError("Invalid GSTIN");
+      }
+    } catch (err) {
+      setGstError("Error validating GSTIN");
+    } finally {
+      setGstLoading(false);
+    }
+  };
+  const handleGSTChange = (e) => {
+    const value = e.target.value.toUpperCase();
+  
+    setGstin(value);
+  
+    if (value.length === 15) {
+      validateGST(value);
+    } else {
+      setGstData(null);
+      setGstError("");
+    }
+  };
+  
 
   return (
     <div className="sale-order-app">
       <div className={`so-main-content ${collapsed ? "collapsed" : ""}`}>
         <div className="so-wrapper">
+           <h2>Sale Order</h2>
 
           {/* ================= HEADER ================= */}
           <div className="so-card">
-
             <div className="so-header-row">
-              <h2>Sale Order</h2>
+              <div className="pur-voucher-row">
+                <label>Voucher No:</label>
+                <span className="voucher-value">{generateVoucher()}</span>
+              </div>
+              <div className="so-header-date">
+                <label>Date :</label>
+                <DatePicker
+                  selected={soDate}
+                  onChange={(date) => setSoDate(date)}
+                  dateFormat="dd/MM/yyyy"
+                  minDate={new Date(new Date().setFullYear(new Date().getFullYear() - 1))} // ✅ last 1 year
+                  className="date-input"
+                  onChangeRaw={(e) => {
+                    if (!e || !e.target) return;
+                    let value = e.target.value || "";
+                    // allow only numbers + /
+                    value = value.replace(/[^0-9/]/g, "");
+                    // auto format DD/MM/YYYY
+                    if (value.length === 2 || value.length === 5) {
+                      if (!value.endsWith("/")) value += "/";
+                    }
+                    // restrict length
+                    if (value.length > 10) {
+                      value = value.slice(0, 10);
+                    }
+                    const parts = value.split("/");
+                    // day check
+                    if (parts[0] && Number(parts[0]) > 31) parts[0] = "31";
+                    // month check
+                    if (parts[1] && Number(parts[1]) > 12) parts[1] = "12";
+                    // year limit (4 digit)
+                    if (parts[2] && parts[2].length > 4) {
+                      parts[2] = parts[2].slice(0, 4);
+                    }
+                    value = parts.join("/");
+                    e.target.value = value;
+                  }}
+                />
+              </div>
+             
             </div>
             <div className="so-grid-3">
 
                 <div className="so-form-group">
                     <label>SO No</label>
-                    <input className="so-input" value={soNo} />
+                    <div className="cr-input-box">
+                        <input
+                          value={soNo}
+                          readOnly={!manualEntry}
+                          // placeholder="Tax/2025-26/0001"
+                          maxLength={16}
+                          onChange={(e) => {
+                          let value = e.target.value;
+                          // 🔥 MANUAL MODE → full freedom
+                          if (manualEntry) {
+                            setSoNo(value);
+                            return;
+                          }
+                          // 🔥 AUTO MODE → prefix lock
+                          const prefix = crConfig.prefix + "/";
+                          if (!value.startsWith(prefix)) {
+                            value = prefix;
+                          }
+
+                          let numberPart = value.replace(prefix, "");
+                          numberPart = numberPart.replace(/\D/g, "");
+                          numberPart = numberPart.slice(0, 4);
+
+                          value = prefix + numberPart;
+                          setSoNo(value);
+                        }}
+                        />
+
+                        {/* ⚙️ SETTINGS ICON */}
+                        <button
+                          className="settings-btn"
+                          onClick={() => setShowInvoiceSettings(true)}
+                        >
+                          ⚙️
+                        </button>
+                        {showInvoiceSettings && (
+                          <div className="invoice-popup-overlay">
+                            <div className="invoice-popup">
+                              <h3>Invoice Settings</h3>
+
+                              <div className="popup-group">
+                                <label>Manual:</label>
+                                <div className="popup-radio">
+                                  <label>
+                                    <input
+                                      type="radio"
+                                      checked={manualEntry}
+                                      onChange={() => {
+                                        setManualEntry(true);
+                                        setSoNo("");   // 🔥 CLEAR INPUT
+                                      }}
+                                    />
+                                    Yes
+                                  </label>
+                                  <label>
+                                    <input
+                                      type="radio"
+                                      checked={!manualEntry}
+                                      onChange={() => setManualEntry(false)}
+                                    />
+                                    No
+                                  </label>
+                                </div>
+                              </div>
+                              {/* 🔥 MAIN FIX: hide all when manual = true */}
+                              {!manualEntry && (
+                                <>
+                                <div className="popup-group full">
+                                  <label>Prefix</label>
+                                  <input
+                                    className="popup-input-box"
+                                    value={crConfig.prefix}
+                                    onChange={(e) => {
+                                      let value = e.target.value;
+                                      if (value.length > 11) value = value.slice(0, 11);
+
+                                      setCrConfig({ ...crConfig, prefix: value });
+                                    }}
+                                  />
+                                </div>
+
+                                <div className="popup-group">
+                                  <label>Zero Padding</label>
+                                  <input
+                                    type="number"
+                                    min="0"
+                                    max="4"
+                                    value={crConfig.zero}
+                                    onChange={(e) => {
+                                      let val = Number(e.target.value) || 0;
+                                      if (val > 4) val = 4;
+
+                                      setCrConfig({ ...crConfig, zero: val });
+                                    }}
+                                  />
+                                </div>
+
+                                <div className="popup-group">
+                                  <label>Start No</label>
+                                  <input
+                                    type="number"
+                                    value={crConfig.start}
+                                    onChange={(e) => {
+                                      let val = Math.max(0, Number(e.target.value) || 0);
+                                      setCrConfig({ ...crConfig, start: val });
+                                      setCurrentCount(val);
+                                    }}
+                                  />
+                                </div>
+                                </>
+                              )}
+
+                              <div className="popup-actions">
+                                <button onClick={() => setShowInvoiceSettings(false)}>Cancel</button>
+                                <button
+                                  onClick={() => {
+                                    if (
+                                      !manualEntry && 
+                                      (Number(crConfig.zero) || 0) + String(crConfig.start).length > 4
+                                    ) {
+                                      alert("Zero + Start digits cannot exceed 4");
+                                      return;
+                                    }
+                                    setShowInvoiceSettings(false);
+                                  }}
+                                >
+                                  Save
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                      </div>
                 </div>
 
-                <div className="so-form-group">
+                {/* <div className="so-form-group">
                     <label>SO Date</label>
                     <DatePicker
                   selected={invoiceDate}
@@ -106,12 +353,12 @@ export default function SaleOrder() {
                     e.target.value = value;
                   }}
                 />
-                </div>
+                </div> */}
 
-                <div className="so-form-group">
+                {/* <div className="so-form-group">
                     <label>SO Ref No</label>
                     <input className="so-input" onChange={(e) => setSoRef(e.target.value)} />
-                </div>
+                </div> */}
 
                 <div className="so-form-group">
                     <label>Type of SO</label>
@@ -135,6 +382,155 @@ export default function SaleOrder() {
 
             </div>
            
+          </div>
+          <div className="section-card">
+            <div className="dispatch-header">
+            <h2>Dispatch Details</h2>
+              <div className="transporter-box">
+                <label>Transporter Name</label>
+                <div className="transporter-row"> 
+                  <select>
+                    <option>Select</option>
+                  </select>
+                  <button
+                    className="transporter-create-btn"
+                    onClick={() => navigate("/Ledger")}
+                  >
+                    Create
+                  </button>
+                </div>
+              </div>
+              <div className="gstin-container">
+                <label>Transport GSTIN</label>
+                <input 
+                  value={gstin}
+                  onChange={handleGSTChange}
+                  placeholder="Transport GSTIN"
+                />
+
+                {/* LOADING */}
+                {gstLoading && <div className="gst-status">Validating...</div>}
+
+                {/* ERROR */}
+                {gstError && <div className="gst-error">{gstError}</div>}
+
+                {/* SUCCESS */}
+                {gstData && (
+                  <div className="gst-result-box">
+                    <p><strong>{gstData.name}</strong></p>
+                    <p>{gstData.state}</p>
+                    <p>Status: {gstData.status}</p>
+                  </div>
+                )}
+              </div>
+            </div>
+            <div className="dispatch-grid">
+              <div className="dis-container">
+                <label>Dispatch Doc No</label>
+                <input placeholder="Dispatch Doc No" />
+              </div>
+              <div className="veh-container">
+                <label>Vehical No</label>
+                <input placeholder="Vehicle No" />
+              </div>
+              {/* <input placeholder="Transport GSTIN" /> */}
+              {/* <input placeholder="Agent Name" /> */}
+              <div className="LR">
+                <label>LR-RR No</label>
+                <input placeholder="LR-RR No" />
+              </div>
+              <div className="date-container">
+                <label>Date</label>
+                <DatePicker
+                  selected={sodisDate}
+                  onChange={(date) => setSodisDate(date)}
+                  dateFormat="dd/MM/yyyy"
+                  minDate={new Date(new Date().setFullYear(new Date().getFullYear() - 1))} // ✅ last 1 year
+                  className="date-input"
+                  onChangeRaw={(e) => {
+                    if (!e || !e.target) return;
+                    let value = e.target.value || "";
+                    // allow only numbers + /
+                    value = value.replace(/[^0-9/]/g, "");
+                    // auto format DD/MM/YYYY
+                    if (value.length === 2 || value.length === 5) {
+                      if (!value.endsWith("/")) value += "/";
+                    }
+                    // restrict length
+                    if (value.length > 10) {
+                      value = value.slice(0, 10);
+                    }
+                    const parts = value.split("/");
+                    // day check
+                    if (parts[0] && Number(parts[0]) > 31) parts[0] = "31";
+                    // month check
+                    if (parts[1] && Number(parts[1]) > 12) parts[1] = "12";
+                    // year limit (4 digit)
+                    if (parts[2] && parts[2].length > 4) {
+                      parts[2] = parts[2].slice(0, 4);
+                    }
+                    value = parts.join("/");
+                    e.target.value = value;
+                  }}
+                  />
+                </div>      
+                  <>
+                  <div className="port">
+                    <label>Port of Export</label>
+                    <select>
+                      <option>Select</option>
+                      <option>INDEA6 - AACHIVS SEZ/NOIDA </option>
+                    </select>
+                    {/* <input placeholder="Port No." /> */}
+                  </div>
+                  {/* <div className="country">
+                    <label>Country Name</label>
+                    <input placeholder="Country" />
+                  </div> */}
+                  <div className="ship-bill">
+                    <label>Shipping Bill No</label>
+                    <input placeholder="Shipping Bill No" />
+                  </div>
+                  <div className="ship-bill">
+                    <label>Shipping date</label>
+                      <DatePicker
+                  selected={shippingDate}
+                  onChange={(date) => setshippingDate(date)}
+                  dateFormat="dd/MM/yyyy"
+                  minDate={new Date(new Date().setFullYear(new Date().getFullYear() - 1))} // ✅ last 1 year
+                  className="date-input"
+                  onChangeRaw={(e) => {
+                    if (!e || !e.target) return;
+                    let value = e.target.value || "";
+                    // allow only numbers + /
+                    value = value.replace(/[^0-9/]/g, "");
+                    // auto format DD/MM/YYYY
+                    if (value.length === 2 || value.length === 5) {
+                      if (!value.endsWith("/")) value += "/";
+                    }
+                    // restrict length
+                    if (value.length > 10) {
+                      value = value.slice(0, 10);
+                    }
+                    const parts = value.split("/");
+                    // day check
+                    if (parts[0] && Number(parts[0]) > 31) parts[0] = "31";
+                    // month check
+                    if (parts[1] && Number(parts[1]) > 12) parts[1] = "12";
+                    // year limit (4 digit)
+                    if (parts[2] && parts[2].length > 4) {
+                      parts[2] = parts[2].slice(0, 4);
+                    }
+                    value = parts.join("/");
+                    e.target.value = value;
+                  }}
+                  />
+                  </div>
+                    
+                    
+                  </>
+              
+            </div>
           </div>
 
           {/* ================= Supplier ================= */}

@@ -96,7 +96,8 @@ export default function Contra() {
           <div className="contra-ledger">
 
             <div className="contra-row">
-              <label>From (Dr)</label>
+              {/* <label>From (Dr)</label> */}
+              <label>From</label>
               <input
                 value={ledgerFrom}
                 onChange={(e) => setLedgerFrom(e.target.value)}
@@ -105,7 +106,8 @@ export default function Contra() {
             </div>
 
             <div className="contra-row">
-              <label>To (Cr)</label>
+              {/* <label>To (Cr)</label> */}
+              <label>To</label>
               <input
                 value={ledgerTo}
                 onChange={(e) => setLedgerTo(e.target.value)}
@@ -117,15 +119,13 @@ export default function Contra() {
 
           {/* CHEQUE DETAILS */}
           <div className="contra-extra">
-
             <div className="contra-row">
-              <label>Chq No</label>
+              <label>Chq No/Transcation No/URR No</label>
               <input
                 value={chequeNo}
                 onChange={(e) => setChequeNo(e.target.value)}
               />
             </div>
-
             <div className="contra-row">
               <label>Chq Date</label>
               <DatePicker
