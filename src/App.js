@@ -40,6 +40,15 @@ import PurchaseSummary from "./pages/PurchaseSummary";
 import SaleOrderSummary from "./pages/SaleOrderSummary";
 import DeliveryChallanSummary from "./pages/DeliveryChallanSummary";
 import PurchaseReturnSummary from "./pages/PurchaseReturnSummary";
+import StockSummary from "./pages/StockSummary";
+import HSNSAC from "./pages/HSNSAC";
+import CustomerVendorSummary from "./pages/CustomerVendorSummary";
+import GSTR1Report from "./pages/GSTR1Report";
+import GSTR2Report from "./pages/GSTR2Report";
+import GSTR3BReport from "./pages/GSTR3BReport";
+import GSTR7Report from "./pages/GSTR7Report";
+import TDSReport from "./pages/TDSReport";
+import TCSReport from "./pages/TCSreports";
 
 
 // JournalEntries
@@ -88,6 +97,15 @@ export default function App() {
           <Route path="/SaleOrderSummary" element={<SaleOrderSummary/>} />
           <Route path="/DeliveryChallanSummary" element={<DeliveryChallanSummary/>} />
           <Route path="/PurchaseReturnSummary" element={<PurchaseReturnSummary/>} />
+          <Route path="/StockSummary" element={<StockSummary/>} />
+          <Route path="/HSNSAC" element={<HSNSAC/>} />
+          <Route path="/CustomerVendorSummary" element={<CustomerVendorSummary/>} />
+          <Route path="/GSTR1Report" element={<GSTR1Report/>} />
+          <Route path="/GSTR2Report" element={<GSTR2Report/>} />
+          <Route path="/GSTR3BReport" element={<GSTR3BReport/>} />
+          <Route path="/GSTR7Report" element={<GSTR7Report/>} />
+          <Route path="/TDSReport" element={<TDSReport/>} />
+          <Route path="/TCSReport" element={<TCSReport/>} />
         
 
 

@@ -1,0 +1,96 @@
+.pl-header {
+  margin-bottom: 16px;
+}
+
+.pl-header h2 {
+  font-size: 22px;
+}
+
+.pl-filter-card {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 16px;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  margin-bottom: 16px;
+  background: #fff;
+}
+
+.pl-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.pl-right {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.pl-table-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 16px;
+  border: 1px solid #e5e7eb;
+}
+
+.pl-grid {
+  display: flex;
+  gap: 40px;
+}
+
+.pl-column {
+  flex: 1;
+}
+
+.pl-column h4 {
+  margin-bottom: 10px;
+}
+
+.pl-row {
+  padding: 6px 0;
+}
+
+.pl-highlight {
+  font-weight: 600;
+  margin-top: 10px;
+  color: #2563eb;
+}
+
+.pl-total {
+  font-weight: bold;
+  margin-top: 12px;
+  font-size: 16px;
+  color: #16a34a;
+}
+
+.pl-config {
+  position: relative;
+}
+
+.pl-config button {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background: #fff;
+  cursor: pointer;
+}
+
+.pl-config-dropdown {
+  position: absolute;
+  top: 40px;
+  right: 0;
+  background: #fff;
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 8px;
+  width: 200px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+}
+
+.pl-config-dropdown label {
+  display: block;
+  margin-bottom: 6px;
+}

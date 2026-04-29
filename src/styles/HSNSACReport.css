@@ -1,0 +1,104 @@
+.hsn-page {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.hsn-title {
+  margin-bottom: 15px;
+}
+
+/* FILTERS */
+.hsn-filters {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 15px;
+}
+
+.hsn-field {
+  display: flex;
+  flex-direction: column;
+}
+
+.hsn-field label {
+  font-size: 13px;
+  margin-bottom: 5px;
+}
+
+.hsn-field select,
+.hsn-field input {
+  height: 34px;
+  padding: 5px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+/* DATE */
+.hsn-date-wrap {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+/* HEADER */
+.hsn-table-header {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.hsn-title-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.hsn-count {
+  background: #eee;
+  padding: 2px 8px;
+  border-radius: 20px;
+  font-size: 12px;
+}
+
+/* SEARCH BELOW */
+.hsn-search {
+  position: relative;
+  width: 320px;
+}
+
+.hsn-search input {
+  width: 100%;
+  height: 36px;
+  padding: 0 30px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.hsn-search .icon {
+  position: absolute;
+  left: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* TABLE */
+.hsn-table-box {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
+  font-size: 13px;
+}
+
+thead {
+  background: #f3f4f6;
+}

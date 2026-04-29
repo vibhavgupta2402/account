@@ -183,7 +183,7 @@ export default function Sidebar({ collapsed }) {
         </li>
 
         {/* Transactions */}
-        <li className={`dropdown ${openDropdown === "transactions" ? "active-dropdown" : ""}`}>
+        {/* <li className={`dropdown ${openDropdown === "transactions" ? "active-dropdown" : ""}`}>
           <a href="#" onClick={(e) => handleDropdown("transactions", e)}>
             <i className="fa-sharp fa-solid fa-money-bill-transfer"></i>
             <span>Transactions</span>
@@ -196,7 +196,7 @@ export default function Sidebar({ collapsed }) {
             <NavLink to="/Payments" className={({ isActive }) => isActive ? "active-link" : ""}>Payments</NavLink>
             <NavLink to="/JournalEntries" className={({ isActive }) => isActive ? "active-link" : ""}>Journal Entries</NavLink>
           </div>
-        </li>
+        </li> */}
 
         {/* Banking */}
         <li className={`dropdown ${openDropdown === "banking" ? "active-dropdown" : ""}`}>
@@ -219,11 +219,8 @@ export default function Sidebar({ collapsed }) {
             <i className="fa-solid fa-chevron-down" style={{ marginLeft: "auto" }}></i>
           </a>
           <div className="submenu" style={{ display: openDropdown === "reports" ? "block" : "none" }}>
-            <NavLink to="/Ledger" className={({ isActive }) => isActive ? "active-link" : ""}>Ledger</NavLink>
-            <NavLink to="/TrialBalance" className={({ isActive }) => isActive ? "active-link" : ""}>Trial Balance</NavLink>
-            <NavLink to="/ProfitLoss" className={({ isActive }) => isActive ? "active-link" : ""}>Profit & Loss</NavLink>
-            <NavLink to="/BalanceSheet" className={({ isActive }) => isActive ? "active-link" : ""}>Balance Sheet</NavLink>
-            <NavLink to="/CashFlow" className={({ isActive }) => isActive ? "active-link" : ""}>Cash Flow</NavLink>
+            {/* <NavLink to="/Ledger" className={({ isActive }) => isActive ? "active-link" : ""}>Ledger</NavLink> */}
+           
             <div className={`dropdown ${openDropdown === "generalReport" ? "active-dropdown" : ""}`}>
       
               <a href="#" onClick={(e) => handleSubDropdown("generalReport", e)}>
@@ -253,9 +250,66 @@ export default function Sidebar({ collapsed }) {
                 </NavLink>
               </div>
             </div>
-            <NavLink to="/StockReports" className={({ isActive }) => isActive ? "active-link" : ""}>Stock Reports</NavLink>
-            <NavLink to="/TaxReports" className={({ isActive }) => isActive ? "active-link" : ""}>Tax Reports</NavLink>
-            <NavLink to="/FinancialReports" className={({ isActive }) => isActive ? "active-link" : ""}>Financial Reports</NavLink>
+            {/* <NavLink to="/StockReports" className={({ isActive }) => isActive ? "active-link" : ""}>Stock Reports</NavLink> */}
+            <div className={`dropdown ${openDropdown === "stockReport" ? "active-dropdown" : ""}`}>
+      
+              <a href="#" onClick={(e) => handleSubDropdown("stockReport", e)}>
+                Stock Reports
+                <i className="fa-solid fa-chevron-down" style={{ marginLeft: "auto" }}></i>
+              </a>
+
+              <div className="submenu nested" style={{ display: openSubDropdown  === "stockReport" ? "block" : "none" }}>
+                <NavLink to="/StockSummary" className={({ isActive }) => isActive ? "active-link" : ""}>
+                  Stock Summary
+                </NavLink>
+
+                <NavLink to="/HSNSAC" className={({ isActive }) => isActive ? "active-link" : ""}>
+                  HSNSAC Summary
+                </NavLink>
+                <NavLink to="/CustomerVendorSummary" className={({ isActive }) => isActive ? "active-link" : ""}>
+                  Customer Vendor Summary
+                </NavLink>
+              </div>
+            </div>
+            {/* <NavLink to="/TaxReports" className={({ isActive }) => isActive ? "active-link" : ""}>Tax Reports</NavLink> */}
+            <div className={`dropdown ${openDropdown === "taxReport" ? "active-dropdown" : ""}`}>
+      
+              <a href="#" onClick={(e) => handleSubDropdown("taxReport", e)}>
+                Tax Reports
+                <i className="fa-solid fa-chevron-down" style={{ marginLeft: "auto" }}></i>
+              </a>
+
+              <div className="submenu nested" style={{ display: openSubDropdown  === "taxReport" ? "block" : "none" }}>
+                <NavLink to="/GSTR1Report" className={({ isActive }) => isActive ? "active-link" : ""}>
+                  GSTR-1 Report
+                </NavLink>
+
+                <NavLink to="/GSTR2Report" className={({ isActive }) => isActive ? "active-link" : ""}>
+                  GSTR-2 Report
+                </NavLink>
+                <NavLink to="/GSTR3BReport" className={({ isActive }) => isActive ? "active-link" : ""}>
+                  GSTR-3B Report
+                </NavLink>
+                <NavLink to="/GSTR7Report" className={({ isActive }) => isActive ? "active-link" : ""}>GSTR-7   Report</NavLink>
+                <NavLink to="/TDSReport" className={({ isActive }) => isActive ? "active-link" : ""}>TDS   Report</NavLink>
+                <NavLink to="/TCSReport" className={({ isActive }) => isActive ? "active-link" : ""}>TCS   Report</NavLink>
+              </div>
+            </div>
+            <div className={`dropdown ${openDropdown === "finacialreport" ? "active-dropdown" : ""}`}>
+      
+              <a href="#" onClick={(e) => handleSubDropdown("finacialreport", e)}>
+                Finacial Reports
+                <i className="fa-solid fa-chevron-down" style={{ marginLeft: "auto" }}></i>
+              </a>
+
+              <div className="submenu nested" style={{ display: openSubDropdown  === "finacialreport" ? "block" : "none" }}>
+                 <NavLink to="/TrialBalance" className={({ isActive }) => isActive ? "active-link" : ""}>Trial Balance</NavLink>
+            <NavLink to="/ProfitLoss" className={({ isActive }) => isActive ? "active-link" : ""}>Profit & Loss</NavLink>
+            <NavLink to="/BalanceSheet" className={({ isActive }) => isActive ? "active-link" : ""}>Balance Sheet</NavLink>
+            <NavLink to="/CashFlow" className={({ isActive }) => isActive ? "active-link" : ""}>Cash Flow</NavLink>
+              </div>
+            </div>
+            
           </div>
         </li>
 
