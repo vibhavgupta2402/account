@@ -1,5 +1,5 @@
 :root {
-  --primary: #0f172a;
+  --primarys: #0f172a;
   --accent: #3b82f6;
   --success: #10b981;
   --danger: #ef4444;
@@ -22,7 +22,7 @@
   margin-bottom: 2rem;
 }
 
-.cf-header h1 { font-size: 1.75rem; font-weight: 800; color: var(--primary); margin: 0; }
+.cf-header h1 { font-size: 1.75rem; font-weight: 800; color: black; margin: 0; }
 .cf-header p { color: #64748b; margin-top: 4px; }
 
 .btn-primary, .btn-secondary {
@@ -36,8 +36,8 @@
   transition: 0.2s;
 }
 
-.btn-primary { background: var(--primary); color: white; border: none; }
-.btn-secondary { background: white; border: 1px solid var(--border); color: var(--primary); }
+.btn-primary { background: var(--primarys); color: white; border: none; }
+.btn-secondary { background: white; border: 1px solid var(--border); color: var(--primarys); }
 
 /* KPI Cards */
 .cf-kpi-grid {
@@ -56,7 +56,7 @@
 }
 
 .kpi-card label { font-size: 0.8rem; font-weight: 600; text-transform: uppercase; color: #64748b; display: flex; align-items: center; gap: 6px; }
-.kpi-card h3 { font-size: 1.5rem; margin-top: 0.5rem; color: var(--primary); }
+.kpi-card h3 { font-size: 1.5rem; margin-top: 0.5rem; color: var(--primarys); }
 
 /* Filter Bar */
 .cf-filters {
