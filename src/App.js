@@ -49,6 +49,7 @@ import GSTR3BReport from "./pages/GSTR3BReport";
 import GSTR7Report from "./pages/GSTR7Report";
 import TDSReport from "./pages/TDSReport";
 import TCSReport from "./pages/TCSreports";
+import Daybook from "./pages/daybook";
 
 
 // JournalEntries
@@ -106,6 +107,7 @@ export default function App() {
           <Route path="/GSTR7Report" element={<GSTR7Report/>} />
           <Route path="/TDSReport" element={<TDSReport/>} />
           <Route path="/TCSReport" element={<TCSReport/>} />
+          <Route path="/Daybook" element={<Daybook/>} />
         
 
 

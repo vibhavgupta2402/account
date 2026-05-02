@@ -1,0 +1,104 @@
+.db-container {
+  padding: 20px;
+  background: #fff;
+}
+
+/* HEADER */
+.db-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.db-header h2 span {
+  color: #d97706;
+}
+
+/* DOWNLOAD BUTTONS */
+.db-download {
+  margin-left: 10px;
+  padding: 6px 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background: white;
+  cursor: pointer;
+}
+
+/* FILTER */
+.db-filter {
+  display: flex;
+  gap: 30px;
+  margin-top: 20px;
+}
+
+.db-field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.db-field label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #6b7280;
+}
+
+/* DATE */
+.db-date {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* TABLE */
+.db-table-wrapper {
+  margin-top: 20px;
+}
+
+.db-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.db-table th {
+  border-bottom: 2px solid #000;
+  padding: 8px;
+  text-align: left;
+}
+
+.db-table td {
+  padding: 8px;
+  border-bottom: 1px solid #eee;
+}
+
+/* AMOUNT COLORS */
+.dr {
+  color: #1d4ed8;
+  text-align: right;
+}
+
+.cr {
+  color: #059669;
+  text-align: right;
+}
+
+.db-pagination {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.db-pagination button {
+  padding: 6px 10px;
+  border: 1px solid #ddd;
+  background: white;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.db-pagination button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

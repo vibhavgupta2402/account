@@ -181,6 +181,12 @@ export default function Sidebar({ collapsed }) {
             <span>Ledger Book</span>
           </NavLink>
         </li>
+        <li>
+          <NavLink to="/Daybook" className={({ isActive }) => isActive ? "active-link" : ""}>
+            <i className="fa-solid fa-file-invoice"></i>
+            <span>DayBook</span>
+          </NavLink>
+        </li>
 
         {/* Transactions */}
         {/* <li className={`dropdown ${openDropdown === "transactions" ? "active-dropdown" : ""}`}>
