@@ -187,6 +187,12 @@ export default function Sidebar({ collapsed }) {
             <span>DayBook</span>
           </NavLink>
         </li>
+        <li>
+          <NavLink to="/BankAccounts" className={({ isActive }) => isActive ? "active-link" : ""}>
+            <i className="fa-solid fa-building-columns"></i>
+            <span>Bank/Cash Book</span>
+          </NavLink>
+        </li>
 
         {/* Transactions */}
         {/* <li className={`dropdown ${openDropdown === "transactions" ? "active-dropdown" : ""}`}>
@@ -205,7 +211,7 @@ export default function Sidebar({ collapsed }) {
         </li> */}
 
         {/* Banking */}
-        <li className={`dropdown ${openDropdown === "banking" ? "active-dropdown" : ""}`}>
+        {/* <li className={`dropdown ${openDropdown === "banking" ? "active-dropdown" : ""}`}>
           <a href="#" onClick={(e) => handleDropdown("banking", e)}>
             <i className="fa-solid fa-building-columns"></i>
             <span>Bank/Cash Book</span>
@@ -215,7 +221,7 @@ export default function Sidebar({ collapsed }) {
             <NavLink to="/BankAccounts" className={({ isActive }) => isActive ? "active-link" : ""}>Bank Accounts</NavLink>
             <NavLink to="/BankReconciliation" className={({ isActive }) => isActive ? "active-link" : ""}>Bank Reconciliation</NavLink>
           </div>
-        </li>
+        </li> */}
 
         {/* Reports */}
         <li className={`dropdown ${openDropdown === "reports" ? "active-dropdown" : ""}`}>
