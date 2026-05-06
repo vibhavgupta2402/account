@@ -339,12 +339,12 @@ export default function Sidebar({ collapsed }) {
           </div>
         </li>
 
-        <li>
+        {/* <li>
           <NavLink to="/Documents" className={({ isActive }) => isActive ? "active-link" : ""}>
             <i className="fa-solid fa-file-invoice"></i>
             <span>Documents</span>
           </NavLink>
-        </li>
+        </li> */}
 
         <li>
           <NavLink to="/Settings" className={({ isActive }) => isActive ? "active-link" : ""}>
