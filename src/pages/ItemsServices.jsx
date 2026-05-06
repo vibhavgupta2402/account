@@ -1,5 +1,5 @@
 import { useOutletContext } from "react-router-dom";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useRef, useEffect } from "react";
 // import "./ItemsServices.css";
 
 export default function ItemsServices() {
@@ -11,6 +11,7 @@ export default function ItemsServices() {
   const [productPage, setProductPage] = useState(1);
   const [txnPage, setTxnPage] = useState(1);
   const [showModal, setShowModal] = useState(false);
+  const [selectedService, setSelectedService] = useState(null);
 
   /* ================= PRODUCTS ================= */
 
@@ -27,6 +28,67 @@ export default function ItemsServices() {
     "Prime Store","Modern Sales","National Mart","Perfect Traders",
     "Metro Sales","Sunrise Traders","Global Mart","Future Traders"
   ];
+  const servicesData = [
+  {
+    id: 1,
+    name: "Installation Services",
+    qty: 10,
+    avgRate: 10000,
+    closingBalance: 100000,
+
+    transactions: [
+      {
+        id: 1,
+        type: "Service Invoice",
+        name: "Bismi Enterprises",
+        date: "05-04-2026",
+        qty: 2,
+        price: 10000,
+        status: "Paid"
+      }
+    ]
+  },
+
+  {
+    id: 2,
+    name: "Office Maintenance",
+    qty: 25,
+    avgRate: 15200,
+    closingBalance: 380000,
+
+    transactions: [
+      {
+        id: 1,
+        type: "AMC",
+        name: "National Traders",
+        date: "08-04-2026",
+        qty: 5,
+        price: 15200,
+        status: "Received"
+      }
+    ]
+  },
+
+  {
+    id: 3,
+    name: "Repair",
+    qty: 3,
+    avgRate: 5000,
+    closingBalance: 15000,
+
+    transactions: [
+      {
+        id: 1,
+        type: "Repair",
+        name: "Metro Sales",
+        date: "11-04-2026",
+        qty: 1,
+        price: 5000,
+        status: "Paid"
+      }
+    ]
+  }
+];
 
   const generateTransactions = () =>
     Array.from({ length: 5 }, (_, i) => ({
@@ -101,6 +163,66 @@ export default function ItemsServices() {
     setProducts([...products, newObj]);
     setShowModal(false);
   };
+  const units = [
+  { code: "BAG", name: "Bags" },
+  { code: "BAL", name: "Bale" },
+  { code: "BDL", name: "Bundles" },
+  { code: "BKL", name: "Buckles" },
+  { code: "BOX", name: "Box" },
+  { code: "BTL", name: "Bottles" },
+  { code: "BUN", name: "Bunches" },
+  { code: "CAN", name: "Cans" },
+  { code: "CBM", name: "Cubic Meter" },
+  { code: "CTN", name: "Cartons" },
+  { code: "DOZ", name: "Dozen" },
+  { code: "DRM", name: "Drum" },
+  { code: "GMS", name: "Grams" },
+  { code: "KGS", name: "Kilograms" },
+  { code: "LTR", name: "Litre" },
+  { code: "MLT", name: "Millilitre" },
+  { code: "MTR", name: "Meters" },
+  { code: "NOS", name: "Numbers" },
+  { code: "PAC", name: "Packs" },
+  { code: "PCS", name: "Pieces" },
+  { code: "PRS", name: "Pairs" },
+  { code: "QTL", name: "Quintal" },
+  { code: "ROL", name: "Rolls" },
+  { code: "SET", name: "Sets" },
+  { code: "SQF", name: "Square Feet" },
+  { code: "SQM", name: "Square Meters" },
+  { code: "TON", name: "Tonnes" },
+  { code: "UNT", name: "Units" },
+  { code: "OTH", name: "Others" }
+];
+const [unitSearch, setUnitSearch] = useState("");
+const [showUnitDropdown, setShowUnitDropdown] = useState(false);
+const unitRef = useRef(null);
+
+useEffect(() => {
+  const handleClickOutside = (e) => {
+    if (unitRef.current && !unitRef.current.contains(e.target)) {
+      setShowUnitDropdown(false);
+    }
+  };
+
+  document.addEventListener("mousedown", handleClickOutside);
+  return () => document.removeEventListener("mousedown", handleClickOutside);
+}, []);
+
+const [godownList, setGodownList] = useState(["Main Store"]);
+const [selectedGodown, setSelectedGodown] = useState("");
+
+const [showGodownModal, setShowGodownModal] = useState(false);
+const [newGodown, setNewGodown] = useState({
+  name: "",
+  address: ""
+});
+
+// Opening balance
+const [openingQty, setOpeningQty] = useState("");
+const [openingRate, setOpeningRate] = useState("");
+const [openingAmount, setOpeningAmount] = useState("");
+
 
   return (
     <div className={`main ${collapsed?"collapsed":""}`}>
@@ -108,7 +230,8 @@ export default function ItemsServices() {
 
         {/* TABS */}
         <div className="tabs">
-          {["products","services","category","units"].map(tab=>(
+          {/* {["products","services","category","units"].map(tab=>( */}
+          {["products","services"].map(tab=>(
             <div key={tab}
               className={`tab ${activeTab===tab?"active":""}`}
               onClick={()=>setActiveTab(tab)}>
@@ -120,7 +243,7 @@ export default function ItemsServices() {
         {/* ================= PRODUCTS ================= */}
         {activeTab==="products" && (
           <>
-            <div className="top-bar">
+            {/* <div className="top-bar">
 
               <div className="left-tools">
                 <div className="search-box">
@@ -146,12 +269,73 @@ export default function ItemsServices() {
                 + Add Item
               </button>
 
-            </div>
+            </div> */}
+            <div className="toolbar-modern-v2">
+              {/* TOP ROW */}
+              <div className="toolbar-top-row">
+                {/* LEFT FILTERS */}
+                <div className="toolbar-filters">
+                  {/* DATE RANGE */}
+                  <div className="toolbar-group">
+                    <label>Date Range</label>
+                    <div className="date-range">
+                      <input type="date" />
+                      <span>-</span>
+                      <input type="date" />
+                    </div>
+                  </div>
+                  {/* DATE PERIOD */}
+                  <div className="toolbar-group">
+                    <label>Date Period</label>
+                    <select className="toolbar-select">
+                      <option>Yearly</option>
+                      <option>Quarterly</option>
+                      <option>Monthly</option>
+                      <option>Custom</option>
+                    </select>
+                  </div>
+                  {/* CONFIGURATION */}
+                  <div className="toolbar-group">
+                    <label>Configuration</label>
+                    <select className="toolbar-select">
+                      <option>Item + Godown</option>
+                      <option>Item Wise</option>
+                      <option>Godown Wise</option>
+                    </select>
+                  </div>
+                </div>
+                {/* RIGHT BUTTON */}
+                <div className="toolbar-action">
+                  <button
+                    className="btn-primary"
+                    onClick={()=>setShowModal(true)}
+                  >
+                    + Add Item
+                  </button>
+                </div>
 
-            <div className="layout">
+              </div>
+
+              {/* SEARCH ROW */}
+              <div className="toolbar-search-row">
+
+                <div className="search-field">
+                  <i className="fa fa-search"></i>
+
+                  <input
+                    placeholder="Search items..."
+                    value={search}
+                    onChange={(e)=>setSearch(e.target.value)}
+                  />
+                </div>
+
+              </div>
+
+            </div>
+            {/* <div className="layout"> */}
 
               {/* PRODUCT LIST */}
-              <div className="product-list">
+              {/* <div className="product-list">
                 {paginatedProducts.map(p=>(
                   <div key={p.id}
                     className={`product-card ${selectedProduct?.id===p.id?"active":""}`}
@@ -170,10 +354,10 @@ export default function ItemsServices() {
                     </button>
                   ))}
                 </div>
-              </div>
+              </div> */}
 
               {/* DETAILS */}
-              {selectedProduct && (
+              {/* {selectedProduct && (
                 <div className="details">
 
                   <div className="summary">
@@ -236,29 +420,280 @@ export default function ItemsServices() {
                   </div>
 
                 </div>
-              )}
+              )} */}
+            {/* </div> */}
+            <div className="inventory-wrapper">
+
+              {/* TABLE HEADER */}
+              <div className="inventory-header">
+
+                <span>Goods Description</span>
+                <span>Godown</span>
+                <span>Qty</span>
+                <span>Stock Avg Rate</span>
+                <span>Cl. Balance</span>
+                <span>Action</span>
+
+              </div>
+
+              {/* ROWS */}
+              {filteredProducts.map((item) => (
+
+                <div key={item.id}>
+
+                  {/* MAIN ROW */}
+                  <div className="inventory-row">
+
+                    <span>{item.name}</span>
+
+                    <span>
+                      {item.godown || "Main Store"}
+                    </span>
+
+                    <span>
+                      {item.stockQty || 0} {item.unit}
+                    </span>
+
+                    <span>
+                      ₹ {item.purchasePrice}
+                    </span>
+
+                    <span>
+                      ₹ {
+                        (
+                          item.purchasePrice *
+                          item.stockQty
+                        ).toLocaleString()
+                      }
+                    </span>
+
+                    <button
+                      className="details-btn"
+                      onClick={() =>
+                        setSelectedProduct(
+                          selectedProduct?.id === item.id
+                            ? null
+                            : item
+                        )
+                      }
+                    >
+                      {selectedProduct?.id === item.id
+                        ? "Hide"
+                        : "Details"}
+                    </button>
+
+                  </div>
+
+                  {/* DETAILS TABLE */}
+                  {selectedProduct?.id === item.id && (
+
+                    <div className="details-box">
+
+                      {/* TOP */}
+                      <div className="details-toolbar">
+
+                        <div>
+                          <h4>
+                            {item.name} Details Report
+                          </h4>
+
+                          <p>
+                            Unit : {item.unit}
+                          </p>
+                        </div>
+
+                        <div className="date-filter">
+                          <input type="date" />
+                          <span>to</span>
+                          <input type="date" />
+                        </div>
+
+                      </div>
+
+                      {/* HEADER */}
+                      <div className="details-header">
+
+                        <span>Voucher Type</span>
+                        <span>Party</span>
+                        <span>Date</span>
+                        <span>Qty</span>
+                        <span>Rate</span>
+                        <span>Status</span>
+
+                      </div>
+
+                      {/* ROWS */}
+                      {item.transactions.map((t) => (
+
+                        <div
+                          className="details-row"
+                          key={t.id}
+                        >
+
+                          <span>{t.type}</span>
+                          <span>{t.name}</span>
+                          <span>{t.date}</span>
+                          <span>{t.qty}</span>
+                          <span>₹ {t.price}</span>
+                          <span>{t.status}</span>
+
+                        </div>
+
+                      ))}
+
+                      {/* FOOTER */}
+                      <div className="details-actions">
+                        <button className="print-btn">
+                          Print
+                        </button>
+
+                        <button className="pdf-btn">
+                          PDF
+                        </button>
+                      </div>
+
+                    </div>
+
+                  )}
+
+                </div>
+
+              ))}
+
             </div>
           </>
         )}
+        
 
         {/* ================= DARK SECTIONS ================= */}
 
         {activeTab==="services" && (
-          <div className="dark">
-            <h2>SERVICES</h2>
-            <table>
-              <tbody>
-                <tr><th>Service</th><th>Rate</th><th>Status</th></tr>
-                <tr><td>Installation</td><td>500</td><td>Active</td></tr>
-                <tr><td>Maintenance</td><td>300</td><td>Active</td></tr>
-                <tr><td>Repair</td><td>700</td><td>Active</td></tr>
-                <tr><td>Consulting</td><td>1000</td><td>Active</td></tr>
-              </tbody>
-            </table>
+          <div className="services-wrapper">
+            {/* TOOLBAR */}
+            <div className="toolbar-modern-v2">
+              {/* TOP */}
+              <div className="toolbar-top-row">
+                <div className="toolbar-filters">
+                  {/* DATE PERIOD */}
+                  <div className="toolbar-group">
+                    <label>Date Period</label>
+                    <select className="toolbar-select">
+                      <option>Yearly</option>
+                      <option>Quarterly</option>
+                      <option>Monthly</option>
+                      <option>Custom</option>
+                    </select>
+                  </div>
+                </div>
+                {/* BUTTON */}
+                <div className="toolbar-action">
+                  <button
+                    className="btn-primary"
+                    onClick={()=>setShowModal(true)}
+                  >
+                    + Add Item
+                  </button>
+                </div>
+              </div>
+              {/* SEARCH */}
+              <div className="toolbar-search-row">
+                <div className="search-field">
+                  <i className="fa fa-search"></i>
+                  <input
+                    placeholder="Search services..."
+                    value={search}
+                    onChange={(e)=>setSearch(e.target.value)}
+                  />
+                </div>
+              </div>
+            </div>
+            {/* TABLE */}
+            <div className="inventory-wrapper">
+              {/* HEADER */}
+              <div className="inventory-header services-grid">
+                <span>Goods Description</span>
+                <span>Qty</span>
+                <span>Stock Avg Rate</span>
+                <span>Cl. Balance</span>
+                <span>Action</span>
+              </div>
+              {/* ROWS */}
+              {servicesData
+                .filter(s =>
+                  s.name.toLowerCase()
+                  .includes(search.toLowerCase())
+                )
+                .map((item)=>(
+                <div key={item.id}>
+                  {/* MAIN ROW */}
+                  <div className="inventory-row services-grid">
+                    <span>{item.name}</span>
+                    <span>{item.qty}</span>
+                    <span>₹ {item.avgRate}</span>
+                    <span>
+                      ₹ {item.closingBalance.toLocaleString()}
+                    </span>
+                    <button
+                      className="details-btn"
+                      onClick={() =>
+                        setSelectedService(
+                          selectedService?.id === item.id
+                            ? null
+                            : item
+                        )
+                      }
+                    >
+                      {selectedService?.id === item.id
+                        ? "Hide"
+                        : "Details"}
+                    </button>
+                  </div>
+                  {/* DETAILS */}
+                  {selectedService?.id === item.id && (
+                    <div className="details-box">
+                      {/* TOP */}
+                      <div className="details-toolbar">
+                        <h4>
+                          {item.name} Report
+                        </h4>
+                        <div className="date-filter">
+                          <input type="date" />
+                          <span>to</span>
+                          <input type="date" />
+                        </div>
+                      </div>
+                      {/* HEADER */}
+                      <div className="details-header">
+                        <span>Voucher Type</span>
+                        <span>Party</span>
+                        <span>Date</span>
+                        <span>Qty</span>
+                        <span>Rate</span>
+                        <span>Status</span>
+                      </div>
+                      {/* ROWS */}
+                      {item.transactions.map((t)=>(
+                        <div
+                          className="details-row"
+                          key={t.id}
+                        >
+                          <span>{t.type}</span>
+                          <span>{t.name}</span>
+                          <span>{t.date}</span>
+                          <span>{t.qty}</span>
+                          <span>₹ {t.price}</span>
+                          <span>{t.status}</span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
           </div>
         )}
 
-        {activeTab==="category" && (
+        {/* {activeTab==="category" && (
           <div className="dark">
             <h2>CATEGORY</h2>
             <table>
@@ -272,7 +707,7 @@ export default function ItemsServices() {
               </tbody>
             </table>
           </div>
-        )}
+        )} */}
 
         {/* {activeTab==="units" && (
           <div className="dark">
@@ -289,7 +724,7 @@ export default function ItemsServices() {
             </table>
           </div>
         )} */}
-        {activeTab === "units" && (
+        {/* {activeTab === "units" && (
       <div className="dark">
         <h2>Unit Quantity Code (UQC) in GST</h2>
 
@@ -333,7 +768,7 @@ export default function ItemsServices() {
           </tbody>
         </table>
       </div>
-)}
+)} */}
 
         {/* ================= MODAL ================= */}
         {/* {showModal && (
@@ -356,79 +791,225 @@ export default function ItemsServices() {
           </div>
         )} */}
       {showModal && (
-  <div className="Item_modal">
-    <div className="modal-box">
-      <h2>Add New Product</h2>
+        <div className="Item_modal">
+          <div className="modal-box">
+            <h2>Add New Product</h2>
 
-      <input
-        placeholder="Name"
-        onChange={(e)=>
-          setNewProduct({...newProduct,name:e.target.value})
-        }
-      />
+            <input
+              placeholder="Name"
+              onChange={(e)=>
+                setNewProduct({...newProduct,name:e.target.value})
+              }
+            />
 
-      <input
-        placeholder="HSN"
-        onChange={(e)=>
-          setNewProduct({...newProduct,hsn:e.target.value})
-        }
-      />
+            <input
+              placeholder="HSN"
+              onChange={(e)=>
+                setNewProduct({...newProduct,hsn:e.target.value})
+              }
+            />
+            <input
+              placeholder="Description of items"
+              onChange={(e)=>
+                setNewProduct({...newProduct,hsn:e.target.value})
+              }
+            />
+            <div className="unit-dropdown" ref={unitRef}>
+              <input
+                placeholder="Select Unit (e.g. KGS)"
+                value={unitSearch}
+                onChange={(e) => {
+                  setUnitSearch(e.target.value.toUpperCase());
+                  setShowUnitDropdown(true);
+                }}
+                onClick={() => setShowUnitDropdown(true)}
+              />
 
-      <div className="row">
-        <select
-          onChange={(e)=>
-            setNewProduct({...newProduct,category:e.target.value})
-          }
-        >
-          <option>Select Category</option>
-          <option>Electronics</option>
-          <option>Accessories</option>
-        </select>
+              {showUnitDropdown && (
+                <div className="unit-list">
+                  {units
+                    .filter(
+                      (u) =>
+                        u.code.toLowerCase().includes(unitSearch.toLowerCase()) ||
+                        u.name.toLowerCase().includes(unitSearch.toLowerCase()) // optional search
+                    )
+                    .map((u, i) => (
+                      <div
+                        key={i}
+                        className="unit-item"
+                        onClick={() => {
+                          setUnitSearch(u.code); // ✅ ONLY CODE SHOWN
+                          setNewProduct({ ...newProduct, unit: u.code });
+                          setShowUnitDropdown(false);
+                        }}
+                      >
+                        {u.code} {/* ✅ ONLY CODE DISPLAY */}
+                      </div>
+                    ))}
 
-        <button className="create-btn">Create</button>
-      </div>
+                  {units.filter(
+                    (u) =>
+                      u.code.toLowerCase().includes(unitSearch.toLowerCase()) ||
+                      u.name.toLowerCase().includes(unitSearch.toLowerCase())
+                  ).length === 0 && (
+                    <div className="unit-item no-data">No unit found</div>
+                  )}
+                </div>
+              )}
+            </div>
+            {/* ================= GODOWN ================= */}
+            <div className="row">
+              <select
+                value={selectedGodown}
+                onChange={(e) => {
+                  setSelectedGodown(e.target.value);
+                  setNewProduct({ ...newProduct, godown: e.target.value });
+                }}
+              >
+                <option>Select Godown</option>
+                {godownList.map((g, i) => (
+                  <option key={i}>{g}</option>
+                ))}
+              </select>
 
-      <select
-        onChange={(e)=>
-          setNewProduct({...newProduct,type:e.target.value})
-        }
-      >
-        <option>Select Type of Supply</option>
-        <option>Goods</option>
-        <option>Service</option>
-        <option>Capital Goods</option>
-      </select>
+              <button
+                className="gd-add-btn"
+                onClick={() => setShowGodownModal(true)}
+              >
+                + Add New
+              </button>
+</div>
 
-      <div className="row">
-        <input
-          type="number"
-          placeholder="Rate"
-          onChange={(e)=>
-            setNewProduct({...newProduct,rate:e.target.value})
-          }
-        />
-        <span className="percent">%</span>
-      </div>
 
-      <select
-        onChange={(e)=>
-          setNewProduct({...newProduct,taxability:e.target.value})
-        }
-      >
-        <option>Select Taxability Type</option>
-        <option>Taxable</option>
-        <option>Non-GST</option>
-        <option>Nil Rated</option>
-        <option>Exempt</option>
-      </select>
 
-      <div className="modal-actions">
-        <button className="cancel" onClick={()=>setShowModal(false)}>Cancel</button>
-        <button className="save" onClick={handleAdd}>Save</button>
-      </div>
-    </div>
-  </div>
-)}
+            <div className="row">
+              <select
+                onChange={(e)=>
+                  setNewProduct({...newProduct,category:e.target.value})
+                }
+              >
+                <option>Select Category</option>
+                <option>Electronics</option>
+                <option>Accessories</option>
+              </select>
+
+              <button className="item-create-btn">Create</button>
+            </div>
+
+            <select
+              onChange={(e)=>
+                setNewProduct({...newProduct,type:e.target.value})
+              }
+            >
+              <option>Select Type of Supply</option>
+              <option>Goods</option>
+              <option>Service</option>
+              <option>Capital Goods</option>
+            </select>
+
+            <div className="row">
+              <input
+                type="number"
+                placeholder="Rate"
+                onChange={(e)=>
+                  setNewProduct({...newProduct,rate:e.target.value})
+                }
+              />
+              <span className="percent">%</span>
+            </div>
+
+            <select
+              onChange={(e)=>
+                setNewProduct({...newProduct,taxability:e.target.value})
+              }
+            >
+              <option>Select Taxability Type</option>
+              <option>Taxable</option>
+              <option>Non-GST</option>
+              <option>Nil Rated</option>
+              <option>Exempt</option>
+            </select>
+            {/* ================= OPENING BALANCE ================= */}
+            <div className="opening-balance">
+              <label>Opening Balance</label>
+
+              <div className="row">
+                <input
+                  type="number"
+                  placeholder="Qty"
+                  value={openingQty}
+                  onChange={(e) => setOpeningQty(e.target.value)}
+                />
+
+                <input
+                  type="number"
+                  placeholder="Rate"
+                  value={openingRate}
+                  onChange={(e) => setOpeningRate(e.target.value)}
+                />
+
+                <input
+                  type="number"
+                  placeholder="Amount"
+                  value={openingAmount}
+                  onChange={(e) => setOpeningAmount(e.target.value)}
+                />
+              </div>
+            </div>
+            {showGodownModal && (
+              <div className="mini-modal-overlay">
+                <div className="mini-modal">
+                  <h3>Add New Godown</h3>
+
+                  <input
+                    placeholder="Name"
+                    value={newGodown.name}
+                    onChange={(e) =>
+                      setNewGodown({ ...newGodown, name: e.target.value })
+                    }
+                  />
+
+                  <textarea
+                    placeholder="Address"
+                    value={newGodown.address}
+                    onChange={(e) =>
+                      setNewGodown({ ...newGodown, address: e.target.value })
+                    }
+                  />
+
+                  <div className="modal-actions">
+                    <button
+                      className="cancel"
+                      onClick={() => setShowGodownModal(false)}
+                    >
+                      Cancel
+                    </button>
+
+                    <button
+                      className="save"
+                      onClick={() => {
+                        if (newGodown.name.trim()) {
+                          setGodownList([...godownList, newGodown.name]);
+                          setSelectedGodown(newGodown.name);
+                          setShowGodownModal(false);
+                          setNewGodown({ name: "", address: "" });
+                        }
+                      }}
+                    >
+                      Save
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            <div className="modal-actions">
+              <button className="cancel" onClick={()=>setShowModal(false)}>Cancel</button>
+              <button className="save" onClick={handleAdd}>Save</button>
+            </div>
+          </div>
+        </div>
+      )}
       </div>
     </div>
   );

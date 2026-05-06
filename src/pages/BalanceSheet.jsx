@@ -425,7 +425,7 @@ const BalanceSheet = () => {
           (01-04-2024 to 31-03-2025)
         </div>
         {/* FILTER */}
-      <div className="bs-filter">
+        <div className="bs-filter">
 
           {/* TYPE */}
           <div className="bs-filter-left">

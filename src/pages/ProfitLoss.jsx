@@ -1167,6 +1167,9 @@ const renderGroup = (title, groupData) => {
 
   const indirectLeftTotal = sum(indirectExpenses);
   const indirectRightTotal = sum(indirectIncome);
+  const [company, setCompany] = useState({
+    name: "TaxMate Technology Pvt Ltd",
+  });
 
   const netProfit = Math.abs(
     tradingRightTotal +
@@ -1176,16 +1179,114 @@ const renderGroup = (title, groupData) => {
 
   return (
     <div className={`main ${collapsed ? "collapsed" : ""}`}>
-      {/* HEADER */}
+      <div className="bs-header">
+              <div className="bs-top">
+                <div className="bs-title">
+                  <FileText size={24} />
+                  <span>Profit & Loss Report</span>
+                </div>
+                <div className="bs-date">
+                  <Calendar size={16} />
+                  <input type="date" defaultValue="2024-04-01" />
+                  <span>to</span>
+                  <input type="date" defaultValue="2025-03-31" />
+                </div>
+              </div>
+      
+              {/* COMPANY NAME */}
+              <div className="bs-company">
+                {company.name}
+              </div>
+      
+              {/* SUB TITLE */}
+              <div className="bs-subtitle">
+                (01-04-2024 to 31-03-2025)
+              </div>
+              {/* FILTER */}
+              <div className="bs-filter">
+      
+                {/* TYPE */}
+                <div className="bs-filter-left">
+                  <label>Type</label>
+      
+                  <select value={type} onChange={(e) => setType(e.target.value)}>
+                    <option value="both">Both </option>
+                    <option value="ledger">Ledgers Only</option>
+                    <option value="group">Groups Only</option>
+                  </select>
+                </div>
+      
+                {/* CONFIG */}
+                <div className="bs-filter-right">
+                  <label>Cofiguration</label>
+                  <div className="bs-config">
+                    <button onClick={() => setConfigOpen(!configOpen)}>
+                      <Settings2 size={16} />
+                      Configuration
+                      <ChevronDown size={16} />
+                    </button>
+                    {configOpen && (
+                      <div className="bs-config-dropdown">
+                        {/* PERCENT */}
+                        <label>
+                          <input
+                            type="checkbox"
+                            checked={config.showGross}
+                            onChange={() =>
+                              setConfig({
+                                ...config,
+                                showGross: !config.showGross,
+                              })
+                            }
+                          />
+                          Show Gross profit
+                        </label>
+      
+                        {/* VERTICAL */}
+                        <label>
+                          <input
+                            type="checkbox"
+                            checked={config.showVertical}
+                            onChange={() =>
+                              setConfig({
+                                ...config,
+                                showVertical: !config.showVertical,
+                              })
+                            }
+                          />
+                          Show Vertical
+                        </label>
+                        <label>
+                          <input
+                            type="checkbox"
+                            checked={config.showPercent}
+                            onChange={() =>
+                              setConfig({
+                                ...config,
+                                showPercent: !config.showPercent,
+                              })
+                            }
+                          />
+                          Show Percentage
+                        </label>
+      
+                      </div>
+                    )}
+                  </div>
+                  </div>
+              </div>
+      
+            </div>
+      {/* HEADER
       <div className="pl-header">
         <div className="pl-title">
           <FileText size={26} />
           <h2>Profit & Loss Report</h2>
         </div>
-      </div>
+      </div> */}
 
       {/* FILTER */}
-      <div className="pl-filter">
+      {/* <div className="pl-filter">
         <div className="pl-grid">
           <div className="pl-date">
             <Calendar size={20} />
@@ -1239,7 +1340,7 @@ const renderGroup = (title, groupData) => {
             )}
           </div>
         </div>
-      </div>
+      </div> */}
         <div className="pl-toggle">
           <span className={view === "horizontal" ? "active" : ""}>
             Horizontal

@@ -240,7 +240,7 @@
   border-radius: var(--bs-radius-sm);
   box-shadow: var(--bs-shadow-lg);
   padding: 12px;
-  min-width: 200px;
+  min-width: 169px;
   z-index: 100;
   animation: slideDown 0.2s ease;
 }
