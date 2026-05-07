@@ -346,11 +346,24 @@ export default function Sidebar({ collapsed }) {
           </NavLink>
         </li> */}
 
-        <li>
+        {/* <li>
           <NavLink to="/Settings" className={({ isActive }) => isActive ? "active-link" : ""}>
             <i className="fa-solid fa-gear"></i>
             <span>Settings</span>
           </NavLink>
+        </li> */}
+        <li className={`dropdown ${openDropdown === "Settings" ? "active-dropdown" : ""}`}>
+          <a href="#" onClick={(e) => handleDropdown("Settings", e)}>
+            <i className="fa-solid fa-gear"></i>
+            <span>Settings</span>
+            <i className="fa-solid fa-chevron-down" style={{ marginLeft: "auto" }}></i>
+          </a>
+          <div className="submenu" style={{ display: openDropdown === "Settings" ? "block" : "none" }}>
+            <NavLink to="/CompanySettings" className={({ isActive }) => isActive ? "active-link" : ""}>Company Setting</NavLink>
+            <NavLink to="/Automation" className={({ isActive }) => isActive ? "active-link" : ""}>Invoice Setting</NavLink>
+            <NavLink to="/Automation" className={({ isActive }) => isActive ? "active-link" : ""}>User Setting</NavLink>
+            <NavLink to="/Automation" className={({ isActive }) => isActive ? "active-link" : ""}>Backup Setting</NavLink>
+          </div>
         </li>
 
       </ul>
