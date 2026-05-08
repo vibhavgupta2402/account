@@ -842,12 +842,13 @@ const handleGetGST = async () => {
         <div className="twofa-methods">
           <h4>Available Methods</h4>
           <div className="method-list">
-            <div className="method-item">
+            {/* <div className="method-item">
               <span>📱 Authenticator App</span>
               <span className="method-recommended">Recommended</span>
-            </div>
+            </div> */}
             <div className="method-item">
               <span>📧 Email Verification</span>
+              <span className="method-recommended">Recommended</span>
             </div>
             <div className="method-item">
               <span>📞 SMS Verification</span>
