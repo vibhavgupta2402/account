@@ -724,40 +724,250 @@ const handleGetGST = async () => {
 
           {/* SECURITY */}
           {activeTab === "security" && (
-            <div className="settings-content-card">
+  <div className="settings-content-card">
+    <div className="content-header">
+      <div>
+        <h2>Security Settings</h2>
+        <p>Manage your account security and authentication methods</p>
+      </div>
+    </div>
 
-              <div className="content-header">
-                <div>
-                  <h2>Security Settings</h2>
-                  <p>Manage login and security</p>
-                </div>
-              </div>
+    <div className="security-settings-container">
+      {/* =========================================
+          SECTION 1: CHANGE PASSWORD
+      ========================================= */}
+      <div className="security-section">
+        <div className="security-section-header">
+          <span className="security-section-icon">🔐</span>
+          <div>
+            <h3>Change Password</h3>
+            <p>Update your password regularly to keep your account secure</p>
+          </div>
+        </div>
 
-              <div className="settings-form-grid">
+        <div className="security-form-group">
+          <label>Current Password</label>
+          <div className="password-input-wrapper">
+            <input 
+              type="password" 
+              id="currentPassword"
+              placeholder="Enter current password" 
+            />
+            <button 
+              type="button" 
+              className="password-toggle-btn"
+              onClick={(e) => {
+                const input = document.getElementById('currentPassword');
+                input.type = input.type === 'password' ? 'text' : 'password';
+              }}
+            >
+              👁️
+            </button>
+          </div>
+        </div>
 
-                <div className="company-setting-form-group">
-                  <label>Username</label>
-                  <input type="text" />
-                </div>
+        <div className="security-form-group">
+          <label>New Password</label>
+          <div className="password-input-wrapper">
+            <input 
+              type="password" 
+              id="newPassword"
+              placeholder="Enter new password" 
+            />
+            <button 
+              type="button" 
+              className="password-toggle-btn"
+              onClick={(e) => {
+                const input = document.getElementById('newPassword');
+                input.type = input.type === 'password' ? 'text' : 'password';
+              }}
+            >
+              👁️
+            </button>
+          </div>
+          <div className="password-strength">
+            <div className="strength-bar"></div>
+            <span className="strength-text">Use 8+ characters with letters, numbers & symbols</span>
+          </div>
+        </div>
 
-                <div className="company-setting-form-group">
-                  <label>Password</label>
-                  <input type="password" />
-                </div>
+        <div className="security-form-group">
+          <label>Confirm New Password</label>
+          <div className="password-input-wrapper">
+            <input 
+              type="password" 
+              id="confirmPassword"
+              placeholder="Confirm new password" 
+            />
+            <button 
+              type="button" 
+              className="password-toggle-btn"
+              onClick={(e) => {
+                const input = document.getElementById('confirmPassword');
+                input.type = input.type === 'password' ? 'text' : 'password';
+              }}
+            >
+              👁️
+            </button>
+          </div>
+        </div>
 
-                <div className="company-setting-form-group">
-                  <label>2FA Authentication</label>
+        <button className="security-action-btn update-password-btn">
+          Update Password
+        </button>
+      </div>
 
-                  <select>
-                    <option>Enabled</option>
-                    <option>Disabled</option>
-                  </select>
-                </div>
+      {/* =========================================
+          SECTION 2: TWO-FACTOR AUTHENTICATION (2FA)
+      ========================================= */}
+      <div className="security-section">
+        <div className="security-section-header">
+          <span className="security-section-icon">📱</span>
+          <div>
+            <h3>Two-Factor Authentication (2FA)</h3>
+            <p>Add an extra layer of security to your account</p>
+          </div>
+        </div>
 
-              </div>
+        <div className="twofa-status">
+          <div className="status-info">
+            <span className="status-badge disabled">Disabled</span>
+            <p>Protect your account with 2FA. When enabled, you'll need a verification code from your authenticator app to sign in.</p>
+          </div>
+          <button className="security-action-btn setup-2fa-btn">
+            Set Up 2FA
+          </button>
+        </div>
 
+        <div className="twofa-methods">
+          <h4>Available Methods</h4>
+          <div className="method-list">
+            <div className="method-item">
+              <span>📱 Authenticator App</span>
+              <span className="method-recommended">Recommended</span>
             </div>
-          )}
+            <div className="method-item">
+              <span>📧 Email Verification</span>
+            </div>
+            <div className="method-item">
+              <span>📞 SMS Verification</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* =========================================
+          SECTION 3: ACTIVE SESSIONS
+      ========================================= */}
+      <div className="security-section">
+        <div className="security-section-header">
+          <span className="security-section-icon">💻</span>
+          <div>
+            <h3>Active Sessions</h3>
+            <p>Manage devices where you're logged in</p>
+          </div>
+        </div>
+
+        <div className="sessions-list">
+          <div className="session-item current-session">
+            <div className="session-device">
+              <span className="device-icon">🖥️</span>
+              <div>
+                <h4>Current Session</h4>
+                <p>Chrome on Windows • Meerut, India</p>
+              </div>
+            </div>
+            <span className="session-badge current">Current</span>
+          </div>
+
+          <div className="session-item">
+            <div className="session-device">
+              <span className="device-icon">📱</span>
+              <div>
+                <h4>Samsung Galaxy S21</h4>
+                <p>Last active: 2 days ago • Chrome Mobile</p>
+              </div>
+            </div>
+            <button className="revoke-btn">Revoke</button>
+          </div>
+
+          <div className="session-item">
+            <div className="session-device">
+              <span className="device-icon">🖥️</span>
+              <div>
+                <h4>MacBook Pro</h4>
+                <p>Last active: 5 days ago • Safari</p>
+              </div>
+            </div>
+            <button className="revoke-btn">Revoke</button>
+          </div>
+        </div>
+
+        <button className="revoke-all-btn">Revoke All Other Sessions</button>
+      </div>
+
+      {/* =========================================
+          SECTION 4: LOGIN ACTIVITY
+      ========================================= */}
+      <div className="security-section">
+        <div className="security-section-header">
+          <span className="security-section-icon">📋</span>
+          <div>
+            <h3>Recent Login Activity</h3>
+            <p>Monitor access to your account</p>
+          </div>
+        </div>
+
+        <div className="activity-list">
+          <div className="activity-item">
+            <div>
+              <span className="activity-location">Meerut, India</span>
+              <span className="activity-time">Today, 10:30 AM</span>
+            </div>
+            <span className="activity-status success">Successful</span>
+          </div>
+          <div className="activity-item">
+            <div>
+              <span className="activity-location">Delhi, India</span>
+              <span className="activity-time">Yesterday, 8:15 PM</span>
+            </div>
+            <span className="activity-status success">Successful</span>
+          </div>
+          <div className="activity-item">
+            <div>
+              <span className="activity-location">Unknown Location</span>
+              <span className="activity-time">3 days ago, 2:00 AM</span>
+            </div>
+            <span className="activity-status warning">Failed Attempt</span>
+          </div>
+        </div>
+      </div>
+
+      {/* =========================================
+          SECTION 5: DANGER ZONE
+      ========================================= */}
+      <div className="security-section danger-zone">
+        <div className="security-section-header">
+          <span className="security-section-icon">⚠️</span>
+          <div>
+            <h3>Danger Zone</h3>
+            <p>Irreversible account actions</p>
+          </div>
+        </div>
+
+        <div className="danger-actions">
+          <div className="danger-action-item">
+            <div>
+              <h4>Delete Account</h4>
+              <p>Permanently delete your account and all associated data</p>
+            </div>
+            <button className="delete-account-btn">Delete Account</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+)}
 
           {/* BACKUP */}
           {activeTab === "backup" && (
