@@ -52,6 +52,7 @@ import TCSReport from "./pages/TCSreports";
 import Daybook from "./pages/daybook";
 import CompanySettings from "./pages/CompanySettings";
 import InvoiceSetting from "./pages/InvoiceSetting";
+import Itemgroup from "./pages/itemgroup";
 
 
 // JournalEntries
@@ -112,6 +113,7 @@ export default function App() {
           <Route path="/Daybook" element={<Daybook/>} />
           <Route path="/CompanySettings" element={<CompanySettings/>} />
           <Route path="/InvoiceSetting" element={<InvoiceSetting/>} />
+          <Route path="/Itemgroup" element={<Itemgroup/>} />
         
 
 

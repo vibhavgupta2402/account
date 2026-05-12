@@ -170,7 +170,7 @@ export default function Sidebar({ collapsed }) {
             <NavLink to="/ItemsServices" className={({ isActive }) => isActive ? "active-link" : ""}>Products</NavLink>
             <NavLink to="/customers" className={({ isActive }) => isActive ? "active-link" : ""}>Customers</NavLink>
             <NavLink to="/vendors" className={({ isActive }) => isActive ? "active-link" : ""}>Vendors</NavLink>
-            <NavLink to="/ItemGroup" className={({ isActive }) => isActive ? "active-link" : ""}>Item Group</NavLink>
+            <NavLink to="/Itemgroup" className={({ isActive }) => isActive ? "active-link" : ""}>Item Group</NavLink>
             <NavLink to="/Godown" className={({ isActive }) => isActive ? "active-link" : ""}>Godown</NavLink>
           </div>
         </li>
