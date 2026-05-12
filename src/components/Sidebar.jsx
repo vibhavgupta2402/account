@@ -360,7 +360,7 @@ export default function Sidebar({ collapsed }) {
           </a>
           <div className="submenu" style={{ display: openDropdown === "Settings" ? "block" : "none" }}>
             <NavLink to="/CompanySettings" className={({ isActive }) => isActive ? "active-link" : ""}>Company Setting</NavLink>
-            <NavLink to="/Automation" className={({ isActive }) => isActive ? "active-link" : ""}>Invoice Setting</NavLink>
+            <NavLink to="/InvoiceSetting" className={({ isActive }) => isActive ? "active-link" : ""}>Invoice Setting</NavLink>
             <NavLink to="/Automation" className={({ isActive }) => isActive ? "active-link" : ""}>User Setting</NavLink>
             <NavLink to="/Automation" className={({ isActive }) => isActive ? "active-link" : ""}>Backup Setting</NavLink>
           </div>
