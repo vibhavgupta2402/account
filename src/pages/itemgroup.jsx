@@ -227,7 +227,7 @@ const InventoryMaster = () => {
                 </div>
                 <div className="inventory-actions">
                     <button
-                    className="inventory-save-btn"
+                    className="unit-inventory-save-btn"
                     onClick={saveUnit}
                     >
                     Save
@@ -267,7 +267,7 @@ const InventoryMaster = () => {
                 </div>
                 <div className="inventory-actions">
                     <button
-                    className="inventory-save-btn"
+                    className="stock-inventory-save-btn"
                     onClick={saveCategory}
                     >
                     Save

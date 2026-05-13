@@ -196,7 +196,7 @@
   display: grid;
 
   grid-template-columns:
-    repeat(3, 1fr);
+    repeat(6, 1fr);
 
   gap: 12px;
 }
@@ -236,6 +236,30 @@
 
 .inventory-save-btn:hover {
   transform: translateY(-1px);
+}
+.stock-inventory-save-btn{
+        border: none;
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    color: white;
+    margin-top: 40px;
+    padding: 10px 16px;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+.unit-inventory-save-btn{
+        border: none;
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    color: white;
+    margin-top: 10px;
+    padding: 10px 16px;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s ease;
 }
 
 /* RESPONSIVE */
