@@ -610,7 +610,7 @@ const [showPrinting, setShowPrinting] =
 
         <div className="vendor-header-badge">
 
-          Dynamic ERP Ledger
+          Business Ledger Hub
 
         </div>
 
