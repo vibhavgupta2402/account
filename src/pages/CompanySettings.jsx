@@ -983,7 +983,7 @@ const handleGetGST = async () => {
 
               <div className="backup-actions">
 
-                <button className="backup-btn">
+                <button className="company-backup-btn">
                   Create Backup
                 </button>
 

@@ -53,6 +53,7 @@ import Daybook from "./pages/daybook";
 import CompanySettings from "./pages/CompanySettings";
 import InvoiceSetting from "./pages/InvoiceSetting";
 import Itemgroup from "./pages/itemgroup";
+import  ReportsDashboard from "./pages/ReportsDashboard";
 
 
 // JournalEntries
@@ -114,6 +115,7 @@ export default function App() {
           <Route path="/CompanySettings" element={<CompanySettings/>} />
           <Route path="/InvoiceSetting" element={<InvoiceSetting/>} />
           <Route path="/Itemgroup" element={<Itemgroup/>} />
+          <Route path="/ReportsDashboard" element={<ReportsDashboard/>} />
         
 
 

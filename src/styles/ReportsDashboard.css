@@ -1,0 +1,562 @@
+/* ReportsDashboard.css - Premium Corporate 3D Glassmorphism Design (Static) */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.reports-dashboard {
+  padding: 1.5rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  background: radial-gradient(circle at 0% 0%, rgba(99, 102, 241, 0.03) 0%, transparent 50%);
+}
+
+/* Premium Glassmorphism Header - Static */
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding: 1rem 1.5rem;
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(20px);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.08),
+    0 2px 4px rgba(0, 0, 0, 0.02),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  position: relative;
+  overflow: hidden;
+  transform-style: preserve-3d;
+  transform: translateZ(10px);
+}
+
+/* Static Header Glow Border */
+.dashboard-header::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, 
+    transparent, 
+    #6366f1, 
+    #8b5cf6, 
+    #6366f1, 
+    transparent);
+  opacity: 0.6;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  position: relative;
+  z-index: 1;
+}
+
+/* 3D Glass Icon - Static */
+.header-icon {
+  width: 48px;
+  height: 48px;
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  box-shadow: 
+    0 8px 20px rgba(99, 102, 241, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  position: relative;
+  overflow: hidden;
+  transform-style: preserve-3d;
+  transform: translateZ(15px);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.header-icon:hover {
+  transform: translateZ(18px);
+  box-shadow: 0 12px 24px rgba(99, 102, 241, 0.3);
+}
+
+/* Static Icon Shine Overlay */
+.header-icon::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(255, 255, 255, 0.2), 
+    transparent);
+}
+
+/* 3D Title Text - Static Premium */
+.header-left h1 {
+  font-size: 1.75rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, 
+    #1e293b 0%, 
+   
+    #1e293b 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin: 0;
+  line-height: 1.2;
+  transform-style: preserve-3d;
+  transform: translateZ(20px);
+  text-shadow: 
+    0 2px 10px rgba(99, 102, 241, 0.15),
+    0 0 20px rgba(99, 102, 241, 0.08);
+  letter-spacing: -0.3px;
+}
+
+/* 3D Subtitle - Static */
+.header-left p {
+  font-size: 0.8125rem;
+  background: linear-gradient(135deg, #64748b 0%, #94a3b8 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin: 0;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  transform-style: preserve-3d;
+  transform: translateZ(12px);
+}
+
+.header-stats {
+  display: flex;
+  gap: 0.75rem;
+}
+
+/* 3D Glass Stat Chip - Static */
+.stat-chip {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.7) 0%, 
+    rgba(241, 245, 249, 0.5) 100%);
+  color: #475569;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 
+    0 4px 12px rgba(0, 0, 0, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  transform-style: preserve-3d;
+  transform: translateZ(8px);
+  transition: all 0.2s ease;
+}
+
+.stat-chip:hover {
+  transform: translateZ(12px);
+  background: linear-gradient(135deg, 
+    rgba(99, 102, 241, 0.08) 0%, 
+    rgba(139, 92, 246, 0.08) 100%);
+  border-color: rgba(99, 102, 241, 0.3);
+  color: #6366f1;
+  box-shadow: 0 8px 16px rgba(99, 102, 241, 0.1);
+}
+
+/* Compact Grid */
+.reports-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.25rem;
+  align-items: start;
+  perspective: 1000px;
+}
+
+/* Premium 3D Glassmorphism Report Card - Static */
+.report-card {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.1),
+    0 2px 4px rgba(0, 0, 0, 0.02),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  position: relative;
+  transform-style: preserve-3d;
+  transform: translateZ(0);
+}
+
+/* Card Depth Effect */
+.report-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 16px;
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.4) 0%, 
+    rgba(255, 255, 255, 0.1) 100%);
+  pointer-events: none;
+}
+
+.report-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  background: linear-gradient(180deg, 
+    rgba(255, 255, 255, 0.3) 0%, 
+    rgba(255, 255, 255, 0) 100%);
+  pointer-events: none;
+}
+
+.report-card:hover {
+  transform: translateY(-4px) translateZ(5px);
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.12),
+    0 4px 12px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.95);
+  border-color: rgba(99, 102, 241, 0.25);
+}
+
+/* Subtle 3D Hover Effect for Individual Cards */
+.report-card:nth-child(odd):hover {
+  transform: translateY(-4px) translateZ(5px) rotateY(-0.5deg);
+}
+
+.report-card:nth-child(even):hover {
+  transform: translateY(-4px) translateZ(5px) rotateY(0.5deg);
+}
+
+/* Card Header with 3D Elements */
+.report-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.875rem 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  border-left: 3px solid transparent;
+  position: relative;
+  z-index: 1;
+}
+
+.report-card-header:hover {
+  background: rgba(248, 250, 252, 0.5);
+}
+
+.card-header-left {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+}
+
+/* 3D Icon with Glass Effect - Static */
+.card-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, rgba(248, 250, 252, 0.9) 0%, rgba(241, 245, 249, 0.8) 100%);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
+}
+
+.report-card:hover .card-icon {
+  transform: scale(1.02);
+  box-shadow: 0 4px 8px rgba(99, 102, 241, 0.15);
+}
+
+.card-title {
+  font-size: 0.875rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #1e293b 0%, #475569 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  letter-spacing: -0.2px;
+}
+
+/* 3D Badge - Static */
+.report-badge {
+  background: linear-gradient(135deg, rgba(241, 245, 249, 0.9) 0%, rgba(226, 232, 240, 0.8) 100%);
+  backdrop-filter: blur(4px);
+  color: #6366f1;
+  font-size: 0.625rem;
+  font-weight: 700;
+  padding: 0.125rem 0.375rem;
+  border-radius: 6px;
+  min-width: 20px;
+  text-align: center;
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.chevron {
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  color: #94a3b8;
+  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.05));
+}
+
+.chevron.rotate {
+  transform: rotate(180deg);
+}
+
+/* Reports List with Glass Effect */
+.reports-list {
+  padding: 0.5rem 0.75rem 0.75rem 0.75rem;
+  border-top: 1px solid rgba(241, 245, 249, 0.8);
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(4px);
+}
+
+/* Premium 3D Report Item - Static */
+.report-item {
+  display: flex;
+  align-items: center;
+  justify-content:flex-start;
+  padding: 0.5rem 0.75rem;
+  margin-bottom: 0.25rem;
+  border-radius: 10px;
+  text-decoration: none;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: #475569;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  transform: translateZ(0);
+}
+
+.report-item:last-child {
+  margin-bottom: 0;
+}
+
+.report-item:hover {
+  background: linear-gradient(135deg, 
+    rgba(99, 102, 241, 0.08) 0%, 
+    rgba(139, 92, 246, 0.08) 100%);
+  backdrop-filter: blur(8px);
+  color: #6366f1;
+  transform: translateX(3px) translateZ(2px);
+  border-color: rgba(99, 102, 241, 0.25);
+  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.08);
+}
+
+.report-item.active {
+  background: linear-gradient(135deg, 
+    rgba(99, 102, 241, 0.12) 0%, 
+    rgba(139, 92, 246, 0.12) 100%);
+  backdrop-filter: blur(8px);
+  color: #6366f1;
+  font-weight: 600;
+  border-color: rgba(99, 102, 241, 0.35);
+  box-shadow: 0 2px 6px rgba(99, 102, 241, 0.08);
+}
+
+.report-item.active::before {
+  content: '';
+  position: absolute;
+  left: -0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 20px;
+  background: linear-gradient(180deg, #6366f1 0%, #8b5cf6 100%);
+  border-radius: 3px;
+  box-shadow: 0 0 4px rgba(99, 102, 241, 0.3);
+}
+
+.report-left {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+}
+
+.report-icon {
+  color: #94a3b8;
+  transition: all 0.2s ease;
+  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.03));
+}
+
+.report-item:hover .report-icon,
+.report-item.active .report-icon {
+  color: #6366f1;
+  transform: scale(1.05);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .reports-dashboard {
+    padding: 1rem;
+  }
+
+  .dashboard-header {
+    margin-bottom: 1rem;
+    padding: 0.75rem 1rem;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .header-left h1 {
+    font-size: 1.25rem;
+  }
+  
+  .header-icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .reports-grid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .report-card-header {
+    padding: 0.75rem;
+  }
+
+  .reports-list {
+    padding: 0.5rem;
+  }
+
+  .report-item {
+    padding: 0.5rem;
+    font-size: 0.75rem;
+  }
+  
+  .report-card:hover {
+    transform: translateY(-2px);
+  }
+}
+
+/* Smooth Scrolling with Glass Effect */
+.reports-list {
+  max-height: 400px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+.reports-list::-webkit-scrollbar {
+  width: 4px;
+}
+
+.reports-list::-webkit-scrollbar-track {
+  background: rgba(241, 245, 249, 0.5);
+  border-radius: 4px;
+  backdrop-filter: blur(4px);
+}
+
+.reports-list::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  border-radius: 4px;
+}
+
+.reports-list::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%);
+}
+
+/* Loading State Skeleton with Glass Effect */
+.report-card.skeleton {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(12px);
+}
+
+/* Compact Mode for Sidebar Collapsed */
+.main-content.collapsed .reports-grid {
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
+
+/* Focus States for Accessibility */
+.report-item:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.4), 0 0 0 1px #6366f1;
+  border-radius: 10px;
+}
+
+.report-card-header:focus-visible {
+  outline: none;
+  background: rgba(248, 250, 252, 0.6);
+  backdrop-filter: blur(4px);
+}
+
+/* Premium Background Effect - Static */
+.reports-dashboard {
+  position: relative;
+  overflow: hidden;
+}
+
+.reports-dashboard::before {
+  content: '';
+  position: fixed;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle at 30% 40%, 
+    rgba(99, 102, 241, 0.02) 0%, 
+    rgba(139, 92, 246, 0.02) 50%,
+    transparent 80%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Optional: Add subtle gradient borders for each card type */
+.report-card[data-type="general"] .report-card-header {
+  border-left-color: #6366f1;
+}
+
+.report-card[data-type="stock"] .report-card-header {
+  border-left-color: #f59e0b;
+}
+
+.report-card[data-type="tax"] .report-card-header {
+  border-left-color: #10b981;
+}
+
+.report-card[data-type="financial"] .report-card-header {
+  border-left-color: #8b5cf6;
+}
+
+/* Professional 3D Text Effect for Card Titles */
+.card-title {
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+/* Subtle 3D Depth for Header Text */
+.header-left h1 {
+  letter-spacing: -0.5px;
+  position: relative;
+  display: inline-block;
+}
+
+/* Glass Reflection Effect - Static */
+.dashboard-header,
+.report-card,
+.stat-chip {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}

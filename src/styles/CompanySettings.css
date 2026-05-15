@@ -18,7 +18,7 @@
   display: flex;
   gap: 28px;
   padding: 24px;
-  height: calc(100vh - 69px);
+  height: calc(100vh - 22px);
   background: linear-gradient(135deg, #eef2ff 0%, #e2e8f0 100%);
   overflow: hidden; /* THIS PREVENTS MAIN PAGE SCROLLING */
   position: relative;
@@ -113,7 +113,7 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 10px 16px;
+  padding: 12px 16px;
   width: 100%;
   background: transparent;
   border: none;
@@ -493,7 +493,7 @@
   flex-wrap: wrap;
 }
 
-.backup-btn,
+
 .restore-btn {
   padding: 14px 32px;
   border: none;
@@ -503,13 +503,24 @@
   transition: all 0.25s ease;
   box-shadow: 3px 4px 8px -3px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.3);
 }
+.company-backup-btn{
+  padding: 9px 14px;
+  margin-top: 18px;
+  height: 35px;
+  border: none;
+  border-radius: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 3px 4px 8px -3px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
 
-.backup-btn {
+.company-backup-btn {
   background: linear-gradient(135deg, #6d28d9, #8b5cf6);
   color: white;
 }
 
-.backup-btn:hover {
+.company-backup-btn:hover {
   transform: translateY(-2px);
   box-shadow: 5px 8px 14px -5px rgba(109, 40, 217, 0.4);
 }
@@ -987,10 +998,24 @@
    SECURITY SETTINGS - REDUCED INPUT WIDTH
 ================================ */
 
-.security-settings-container {
+/* .security-settings-container {
   display: flex;
   flex-direction: column;
   gap: 28px;
+} */
+
+.security-settings-container {
+  display: grid;
+  grid-template-columns:
+    1.fr 1.fr;
+  gap: 22px;
+  align-items: start;
+}
+
+/* FULL WIDTH ONLY DANGER ZONE */
+
+.security-section:nth-child(5) {
+  grid-column: span 2;
 }
 
 /* Security Section */
@@ -1014,7 +1039,7 @@
   display: flex;
   align-items: center;
   gap: 14px;
-  margin-bottom: 24px;
+  margin-bottom: 12px;
   padding-bottom: 16px;
   border-bottom: 2px solid rgba(59, 130, 246, 0.15);
 }
@@ -1223,7 +1248,7 @@
   display: flex;
   flex-direction: column;
   gap: 14px;
-  margin-bottom: 20px;
+  margin-bottom: 12px;
 }
 
 .session-item {

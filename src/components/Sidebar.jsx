@@ -107,7 +107,7 @@
 
 
 
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import logo from "../assets/Logo.jpeg";
 import userImg from "../assets/Logo.jpeg";
@@ -120,6 +120,7 @@ export default function Sidebar({ collapsed }) {
   const [openSubDropdown, setOpenSubDropdown] = useState(null);
   const [settingsOpen, setSettingsOpen] = useState(false);
   const settingsRef = useRef(null);
+  const navigate = useNavigate();
 
   const handleDropdown = (name, e) => {
     e.preventDefault();
@@ -225,10 +226,36 @@ export default function Sidebar({ collapsed }) {
 
         {/* Reports */}
         <li className={`dropdown ${openDropdown === "reports" ? "active-dropdown" : ""}`}>
-          <a href="#" onClick={(e) => handleDropdown("reports", e)}>
+          {/* <a href="#" onClick={(e) => handleDropdown("reports", e)}>
             <i className="fa-solid fa-file-lines"></i>
             <span>Reports</span>
             <i className="fa-solid fa-chevron-down" style={{ marginLeft: "auto" }}></i>
+          </a> */}
+          {/* <NavLink to="/ReportsDashboard" className={({ isActive }) => isActive ? "active-link" : ""}>
+            <i className="fa-solid fa-file-lines"></i>
+            <span>Reports</span>
+            <i
+              className="fa-solid fa-chevron-down"
+              style={{ marginLeft: "auto" }}
+            ></i>
+          </NavLink> */}
+          <a href="#" className={`sidebar-link ${openDropdown === "reports"? "active-link": ""}`}
+            onClick={(e) => {
+              e.preventDefault();
+              handleDropdown("reports", e);
+              navigate("/ReportsDashboard");
+            }}
+          >
+            <i className="fa-solid fa-file-lines"></i>
+            <span>Reports</span>
+            <i
+              className={`fa-solid fa-chevron-down ${
+                openDropdown === "reports"
+                  ? "rotate"
+                  : ""
+              }`}
+              style={{ marginLeft: "auto" }}
+            ></i>
           </a>
           <div className="submenu" style={{ display: openDropdown === "reports" ? "block" : "none" }}>
             {/* <NavLink to="/Ledger" className={({ isActive }) => isActive ? "active-link" : ""}>Ledger</NavLink> */}
