@@ -460,7 +460,8 @@
 }
 
 .connect-box input {
-  flex: 1;
+  flex: 0;
+  width: 200px;
   padding: 14px 18px;
   border: 1px solid #e2e8f0;
   border-radius: 16px;
@@ -588,7 +589,7 @@
 }
 
 .split-company-box input {
-  flex: 1;
+  flex: 0;
   padding: 14px 18px;
   border: 1px solid #e2e8f0;
   border-radius: 16px;
@@ -738,13 +739,15 @@
 /* Main Grid Container */
 .company-create-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  align-items: start;
 }
 
 /* Full width fields (spans both columns) */
 .company-create-full-width {
-  grid-column: span 2;
+  grid-column: span 4;
 }
 
 /* Form Group */
@@ -763,12 +766,18 @@
 }
 
 /* Section Headers */
-.company-create-section {
+/* .company-create-section {
   grid-column: span 2;
   margin-top: 8px;
   margin-bottom: 4px;
   padding-bottom: 10px;
   border-bottom: 2px solid rgba(59, 130, 246, 0.15);
+} */
+ .company-create-section {
+  grid-column: span 4;
+  margin-top: 4px;
+  margin-bottom: 2px;
+  padding-bottom: 8px;
 }
 
 .company-create-section h4 {
@@ -790,10 +799,11 @@
 .company-create-form-group input,
 .company-create-form-group textarea,
 .company-create-form-group select {
-  padding: 5px 14px;
+  padding: 4px 10px;
   border: 1px solid #e2e8f0;
   border-radius: 12px;
-  font-size: 13px;
+  font-size: 12px;
+  height: 38px;
   font-family: inherit;
   transition: all 0.2s ease;
   background: #ffffff;
@@ -823,8 +833,11 @@
 
 /* GST Row with Button */
 .company-create-gst-row {
-  display: flex;
-  gap: 10px;
+  display: grid;
+
+  grid-template-columns: 1fr auto;
+
+  gap: 8px;
 }
 
 .company-create-gst-row input {
@@ -1123,7 +1136,7 @@
 
 /* Password Strength Meter - REDUCED WIDTH */
 .password-strength {
-  margin-top: 4px;
+  margin-top: -24px;
   max-width: 400px;
 }
 

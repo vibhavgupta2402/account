@@ -407,7 +407,7 @@
 // }
 
 import { useMemo, useState } from "react";
-import { useOutletContext } from "react-router-dom";
+import { useOutletContext, useNavigate}from"react-router-dom";                
 import {
   Search,
   CalendarDays,
@@ -509,7 +509,7 @@ const VendorLedger = () => {
 
   const [search, setSearch] = useState("");
   const { collapsed } = useOutletContext();
-
+  const navigate = useNavigate();
   const [selectedParty, setSelectedParty] =
     useState(dummyParties[0]);
 
@@ -596,7 +596,7 @@ const [showPrinting, setShowPrinting] =
           <div>
 
             <h1>
-              Vendor / Customer Ledger
+              Vendor Ledger
             </h1>
 
             <p>
@@ -608,10 +608,8 @@ const [showPrinting, setShowPrinting] =
 
         </div>
 
-        <div className="vendor-header-badge">
-
-          Business Ledger Hub
-
+        <div>
+         <button className="vendor-btn" onClick={() => navigate("/Ledger",{state: { defaultGroup: "Sundry Creditors" } })}> Create Vendor</button>
         </div>
 
       </div>

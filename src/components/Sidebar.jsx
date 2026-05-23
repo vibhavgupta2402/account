@@ -172,7 +172,7 @@ export default function Sidebar({ collapsed }) {
             <NavLink to="/customers" className={({ isActive }) => isActive ? "active-link" : ""}>Customers</NavLink>
             <NavLink to="/vendors" className={({ isActive }) => isActive ? "active-link" : ""}>Vendors</NavLink>
             <NavLink to="/Itemgroup" className={({ isActive }) => isActive ? "active-link" : ""}>Item Group</NavLink>
-            <NavLink to="/Godown" className={({ isActive }) => isActive ? "active-link" : ""}>Godown</NavLink>
+            {/* <NavLink to="/Godown" className={({ isActive }) => isActive ? "active-link" : ""}>Godown</NavLink> */}
           </div>
         </li>
         {/* Ledger book */}
@@ -388,8 +388,8 @@ export default function Sidebar({ collapsed }) {
           <div className="submenu" style={{ display: openDropdown === "Settings" ? "block" : "none" }}>
             <NavLink to="/CompanySettings" className={({ isActive }) => isActive ? "active-link" : ""}>Company Setting</NavLink>
             <NavLink to="/InvoiceSetting" className={({ isActive }) => isActive ? "active-link" : ""}>Invoice Setting</NavLink>
-            <NavLink to="/Automation" className={({ isActive }) => isActive ? "active-link" : ""}>User Setting</NavLink>
-            <NavLink to="/Automation" className={({ isActive }) => isActive ? "active-link" : ""}>Backup Setting</NavLink>
+            {/* <NavLink to="/Automation" className={({ isActive }) => isActive ? "active-link" : ""}>User Setting</NavLink> */}
+            {/* <NavLink to="/Automation" className={({ isActive }) => isActive ? "active-link" : ""}>Backup Setting</NavLink> */}
           </div>
         </li>
 

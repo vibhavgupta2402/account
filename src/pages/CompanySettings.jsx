@@ -94,6 +94,31 @@ const CompanySettings = ({onSave}) => {
   const [selectedState, setSelectedState] = useState("");
   const [useInventory, setUseInventory] = useState("No");
   const dropdownRef = useRef(null);
+  // const [savedCompany, setSavedCompany] = useState(null);
+  const [savedCompany, setSavedCompany] = useState({
+
+  companyName: "TaxMate GST Pvt Ltd",
+  gstin: "09ABCDE1234F1Z5",
+  registeredAddress:
+    "Meerut, Uttar Pradesh, India",
+  branchAddress:
+    "Noida Sector 62, Uttar Pradesh",
+  state: "Uttar Pradesh",
+  country: "India",
+  email: "support@taxmategst.com",
+  website: "https://taxmategst.com",
+  contactPerson: "Raj",
+  contactNo: "+91 9876543210",
+  financialYear: "2024-25",
+  returnType: "Monthly",
+  registrationType: "Regular",
+  useInventory: "Yes",
+  ewayBill: "Yes",
+  threshold: "50000",
+  eInvoice: "Yes",
+  ewbLoginId: "taxmate_eway",
+  ewbPassword: "123456"
+});
    const [showStateList, setShowStateList] = useState(false);
     const handleSave = () => {
     const companyData = {
@@ -119,6 +144,7 @@ const CompanySettings = ({onSave}) => {
       ewbPassword,
     };
     
+    setSavedCompany(companyData);
     if (onSave) onSave(companyData);
   };
    const states = [
@@ -182,6 +208,7 @@ const handleGetGST = async () => {
     alert("Server error");
   }
 };
+
 
   return (
     <div className={`main ${collapsed ? "collapsed" : ""}`}>
@@ -651,49 +678,139 @@ const handleGetGST = async () => {
           {/* ALTER COMPANY */}
           {activeTab === "alter" && (
             <div className="settings-content-card">
-
               <div className="content-header">
                 <div>
                   <h2>Alter Company</h2>
-                  <p>Update company information</p>
+                  <p>Update editable company information</p>
                 </div>
-
-                <button className="save-btn">
-                  Update
+                <button
+                  className="company-save-btn"
+                  onClick={handleSave}
+                >
+                  Update Company
                 </button>
               </div>
-
-              <div className="settings-detail-list">
-
-                <div className="detail-item">
-                  <div>
-                    <h4>Company Name</h4>
-                    <p>TaxMate GST Pvt Ltd</p>
+              {!savedCompany ? (
+                <div className="no-company-data">
+                  <p>
+                    No company created yet.
+                    Please create company first.
+                  </p>
+                </div>
+              ) : (
+                <div className="company-create-grid">
+                  {/* IMMUTABLE SECTION */}
+                  <div className="company-create-section">
+                    <h4>
+                      <span>🔒</span> Locked Information
+                    </h4>
+                  </div>
+                  {/* GSTIN */}
+                  <div className="company-create-form-group">
+                    <label>GSTIN</label>
+                    <input
+                      value={savedCompany.gstin}
+                      readOnly
+                      className="readonly-field"
+                    />
+                  </div>
+                  {/* COMPANY NAME */}
+                  <div className="company-create-form-group">
+                    <label>Company Name</label>
+                    <input
+                      value={savedCompany.companyName}
+                      readOnly
+                      className="readonly-field"
+                    />
+                  </div>
+                  {/* REGISTERED ADDRESS */}
+                  <div className="company-create-form-group company-create-full-width">
+                    <label>Registered Address</label>
+                    <textarea
+                      rows="2"
+                      value={savedCompany.registeredAddress}
+                      readOnly
+                      className="readonly-field"
+                    />
+                  </div>
+                  {/* STATE */}
+                  <div className="company-create-form-group">
+                    <label>State</label>
+                    <input
+                      value={savedCompany.state}
+                      readOnly
+                      className="readonly-field"
+                    />
+                  </div>
+                  {/* COUNTRY */}
+                  <div className="company-create-form-group">
+                    <label>Country</label>
+                    <input
+                      value="India"
+                      readOnly
+                      className="readonly-field"
+                    />
+                  </div>
+                  {/* ========================================= */}
+                  <div className="company-create-section">
+                    <h4>
+                      <span>✏️</span> Editable Information
+                    </h4>
                   </div>
 
-                  <button>Edit</button>
-                </div>
-
-                <div className="detail-item">
-                  <div>
-                    <h4>GST Details</h4>
-                    <p>09ABCDE1234F1Z5</p>
+                  {/* BRANCH ADDRESS */}
+                  <div className="company-create-form-group company-create-full-width">
+                    <label>Branch Address</label>
+                    <textarea
+                      rows="2"
+                      value={branchAddress}
+                      onChange={(e) =>
+                        setBranchAddress(e.target.value)
+                      }
+                    />
                   </div>
-
-                  <button>Edit</button>
-                </div>
-
-                <div className="detail-item">
-                  <div>
-                    <h4>Company Address</h4>
-                    <p>Meerut, Uttar Pradesh</p>
+                  {/* EMAIL */}
+                  <div className="company-create-form-group">
+                    <label>Email</label>
+                    <input
+                      value={email}
+                      onChange={(e) =>
+                        setEmail(e.target.value)
+                      }
+                    />
                   </div>
-
-                  <button>Edit</button>
+                  {/* WEBSITE */}
+                  <div className="company-create-form-group">
+                    <label>Website</label>
+                    <input
+                      value={website}
+                      onChange={(e) =>
+                        setWebsite(e.target.value)
+                      }
+                    />
+                  </div>
+                  {/* CONTACT PERSON */}
+                  <div className="company-create-form-group">
+                    <label>Contact Person</label>
+                    <input
+                      value={contactPerson}
+                      onChange={(e) =>
+                        setContactPerson(e.target.value)
+                      }
+                    />
+                  </div>
+                  {/* CONTACT */}
+                  <div className="company-create-form-group">
+                    <label>Contact No</label>
+                    <input
+                      value={contactNo}
+                      onChange={(e) =>
+                        setContactNo(e.target.value)
+                      }
+                    />
+                  </div>
                 </div>
-
-              </div>
-
+              )}
             </div>
           )}
 
@@ -724,251 +841,251 @@ const handleGetGST = async () => {
 
           {/* SECURITY */}
           {activeTab === "security" && (
-  <div className="settings-content-card">
-    <div className="content-header">
-      <div>
-        <h2>Security Settings</h2>
-        <p>Manage your account security and authentication methods</p>
-      </div>
-    </div>
+            <div className="settings-content-card">
+              <div className="content-header">
+                <div>
+                  <h2>Security Settings</h2>
+                  <p>Manage your account security and authentication methods</p>
+                </div>
+              </div>
 
-    <div className="security-settings-container">
-      {/* =========================================
-          SECTION 1: CHANGE PASSWORD
-      ========================================= */}
-      <div className="security-section">
-        <div className="security-section-header">
-          <span className="security-section-icon">🔐</span>
-          <div>
-            <h3>Change Password</h3>
-            <p>Update your password regularly to keep your account secure</p>
-          </div>
-        </div>
+              <div className="security-settings-container">
+                {/* =========================================
+                    SECTION 1: CHANGE PASSWORD
+                ========================================= */}
+                <div className="security-section">
+                  <div className="security-section-header">
+                    <span className="security-section-icon">🔐</span>
+                    <div>
+                      <h3>Change Password</h3>
+                      <p>Update your password regularly to keep your account secure</p>
+                    </div>
+                  </div>
 
-        <div className="security-form-group">
-          <label>Current Password</label>
-          <div className="password-input-wrapper">
-            <input 
-              type="password" 
-              id="currentPassword"
-              placeholder="Enter current password" 
-            />
-            <button 
-              type="button" 
-              className="password-toggle-btn"
-              onClick={(e) => {
-                const input = document.getElementById('currentPassword');
-                input.type = input.type === 'password' ? 'text' : 'password';
-              }}
-            >
-              👁️
-            </button>
-          </div>
-        </div>
+                  <div className="security-form-group">
+                    <label>Current Password</label>
+                    <div className="password-input-wrapper">
+                      <input 
+                        type="password" 
+                        id="currentPassword"
+                        placeholder="Enter current password" 
+                      />
+                      <button 
+                        type="button" 
+                        className="password-toggle-btn"
+                        onClick={(e) => {
+                          const input = document.getElementById('currentPassword');
+                          input.type = input.type === 'password' ? 'text' : 'password';
+                        }}
+                      >
+                        👁️
+                      </button>
+                    </div>
+                  </div>
+                   <div className="password-strength">
+                      <div className="strength-bar"></div>
+                      <span className="strength-text">Use 8+ characters with letters, numbers & symbols</span>
+                    </div>
 
-        <div className="security-form-group">
-          <label>New Password</label>
-          <div className="password-input-wrapper">
-            <input 
-              type="password" 
-              id="newPassword"
-              placeholder="Enter new password" 
-            />
-            <button 
-              type="button" 
-              className="password-toggle-btn"
-              onClick={(e) => {
-                const input = document.getElementById('newPassword');
-                input.type = input.type === 'password' ? 'text' : 'password';
-              }}
-            >
-              👁️
-            </button>
-          </div>
-          <div className="password-strength">
-            <div className="strength-bar"></div>
-            <span className="strength-text">Use 8+ characters with letters, numbers & symbols</span>
-          </div>
-        </div>
+                  <div className="security-form-group">
+                    <label>New Password</label>
+                    <div className="password-input-wrapper">
+                      <input 
+                        type="password" 
+                        id="newPassword"
+                        placeholder="Enter new password" 
+                      />
+                      <button 
+                        type="button" 
+                        className="password-toggle-btn"
+                        onClick={(e) => {
+                          const input = document.getElementById('newPassword');
+                          input.type = input.type === 'password' ? 'text' : 'password';
+                        }}
+                      >
+                        👁️
+                      </button>
+                    </div>
+                  </div>
 
-        <div className="security-form-group">
-          <label>Confirm New Password</label>
-          <div className="password-input-wrapper">
-            <input 
-              type="password" 
-              id="confirmPassword"
-              placeholder="Confirm new password" 
-            />
-            <button 
-              type="button" 
-              className="password-toggle-btn"
-              onClick={(e) => {
-                const input = document.getElementById('confirmPassword');
-                input.type = input.type === 'password' ? 'text' : 'password';
-              }}
-            >
-              👁️
-            </button>
-          </div>
-        </div>
+                  <div className="security-form-group">
+                    <label>Confirm New Password</label>
+                    <div className="password-input-wrapper">
+                      <input 
+                        type="password" 
+                        id="confirmPassword"
+                        placeholder="Confirm new password" 
+                      />
+                      <button 
+                        type="button" 
+                        className="password-toggle-btn"
+                        onClick={(e) => {
+                          const input = document.getElementById('confirmPassword');
+                          input.type = input.type === 'password' ? 'text' : 'password';
+                        }}
+                      >
+                        👁️
+                      </button>
+                    </div>
+                  </div>
 
-        <button className="security-action-btn update-password-btn">
-          Update Password
-        </button>
-      </div>
+                  <button className="security-action-btn update-password-btn">
+                    Update Password
+                  </button>
+                </div>
 
-      {/* =========================================
-          SECTION 2: TWO-FACTOR AUTHENTICATION (2FA)
-      ========================================= */}
-      <div className="security-section">
-        <div className="security-section-header">
-          <span className="security-section-icon">📱</span>
-          <div>
-            <h3>Two-Factor Authentication (2FA)</h3>
-            <p>Add an extra layer of security to your account</p>
-          </div>
-        </div>
+                {/* =========================================
+                    SECTION 2: TWO-FACTOR AUTHENTICATION (2FA)
+                ========================================= */}
+                <div className="security-section">
+                  <div className="security-section-header">
+                    <span className="security-section-icon">📱</span>
+                    <div>
+                      <h3>Two-Factor Authentication (2FA)</h3>
+                      <p>Add an extra layer of security to your account</p>
+                    </div>
+                  </div>
 
-        <div className="twofa-status">
-          <div className="status-info">
-            <span className="status-badge disabled">Disabled</span>
-            <p>Protect your account with 2FA. When enabled, you'll need a verification code from your authenticator app to sign in.</p>
-          </div>
-          <button className="security-action-btn setup-2fa-btn">
-            Set Up 2FA
-          </button>
-        </div>
+                  <div className="twofa-status">
+                    <div className="status-info">
+                      <span className="status-badge disabled">Disabled</span>
+                      <p>Protect your account with 2FA. When enabled, you'll need a verification code from your authenticator app to sign in.</p>
+                    </div>
+                    <button className="security-action-btn setup-2fa-btn">
+                      Set Up 2FA
+                    </button>
+                  </div>
 
-        <div className="twofa-methods">
-          <h4>Available Methods</h4>
-          <div className="method-list">
-            {/* <div className="method-item">
-              <span>📱 Authenticator App</span>
-              <span className="method-recommended">Recommended</span>
-            </div> */}
-            <div className="method-item">
-              <span>📧 Email Verification</span>
-              <span className="method-recommended">Recommended</span>
-            </div>
-            <div className="method-item">
-              <span>📞 SMS Verification</span>
-            </div>
-          </div>
-        </div>
-      </div>
+                  <div className="twofa-methods">
+                    <h4>Available Methods</h4>
+                    <div className="method-list">
+                      {/* <div className="method-item">
+                        <span>📱 Authenticator App</span>
+                        <span className="method-recommended">Recommended</span>
+                      </div> */}
+                      <div className="method-item">
+                        <span>📧 Email Verification</span>
+                        <span className="method-recommended">Recommended</span>
+                      </div>
+                      <div className="method-item">
+                        <span>📞 SMS Verification</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
 
-      {/* =========================================
-          SECTION 3: ACTIVE SESSIONS
-      ========================================= */}
-      <div className="security-section">
-        <div className="security-section-header">
-          <span className="security-section-icon">💻</span>
-          <div>
-            <h3>Active Sessions</h3>
-            <p>Manage devices where you're logged in</p>
-          </div>
-        </div>
+                {/* =========================================
+                    SECTION 3: ACTIVE SESSIONS
+                ========================================= */}
+                <div className="security-section">
+                  <div className="security-section-header">
+                    <span className="security-section-icon">💻</span>
+                    <div>
+                      <h3>Active Sessions</h3>
+                      <p>Manage devices where you're logged in</p>
+                    </div>
+                  </div>
 
-        <div className="sessions-list">
-          <div className="session-item current-session">
-            <div className="session-device">
-              <span className="device-icon">🖥️</span>
-              <div>
-                <h4>Current Session</h4>
-                <p>Chrome on Windows • Meerut, India</p>
+                  <div className="sessions-list">
+                    <div className="session-item current-session">
+                      <div className="session-device">
+                        <span className="device-icon">🖥️</span>
+                        <div>
+                          <h4>Current Session</h4>
+                          <p>Chrome on Windows • Meerut, India</p>
+                        </div>
+                      </div>
+                      <span className="session-badge current">Current</span>
+                    </div>
+
+                    <div className="session-item">
+                      <div className="session-device">
+                        <span className="device-icon">📱</span>
+                        <div>
+                          <h4>Samsung Galaxy S21</h4>
+                          <p>Last active: 2 days ago • Chrome Mobile</p>
+                        </div>
+                      </div>
+                      <button className="revoke-btn">Revoke</button>
+                    </div>
+
+                    <div className="session-item">
+                      <div className="session-device">
+                        <span className="device-icon">🖥️</span>
+                        <div>
+                          <h4>MacBook Pro</h4>
+                          <p>Last active: 5 days ago • Safari</p>
+                        </div>
+                      </div>
+                      <button className="revoke-btn">Revoke</button>
+                    </div>
+                  </div>
+
+                  <button className="revoke-all-btn">Revoke All Other Sessions</button>
+                </div>
+
+                {/* =========================================
+                    SECTION 4: LOGIN ACTIVITY
+                ========================================= */}
+                <div className="security-section">
+                  <div className="security-section-header">
+                    <span className="security-section-icon">📋</span>
+                    <div>
+                      <h3>Recent Login Activity</h3>
+                      <p>Monitor access to your account</p>
+                    </div>
+                  </div>
+
+                  <div className="activity-list">
+                    <div className="activity-item">
+                      <div>
+                        <span className="activity-location">Meerut, India</span>
+                        <span className="activity-time">Today, 10:30 AM</span>
+                      </div>
+                      <span className="activity-status success">Successful</span>
+                    </div>
+                    <div className="activity-item">
+                      <div>
+                        <span className="activity-location">Delhi, India</span>
+                        <span className="activity-time">Yesterday, 8:15 PM</span>
+                      </div>
+                      <span className="activity-status success">Successful</span>
+                    </div>
+                    <div className="activity-item">
+                      <div>
+                        <span className="activity-location">Unknown Location</span>
+                        <span className="activity-time">3 days ago, 2:00 AM</span>
+                      </div>
+                      <span className="activity-status warning">Failed Attempt</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* =========================================
+                    SECTION 5: DANGER ZONE
+                ========================================= */}
+                <div className="security-section danger-zone">
+                  <div className="security-section-header">
+                    <span className="security-section-icon">⚠️</span>
+                    <div>
+                      <h3>Danger Zone</h3>
+                      <p>Irreversible account actions</p>
+                    </div>
+                  </div>
+
+                  <div className="danger-actions">
+                    <div className="danger-action-item">
+                      <div>
+                        <h4>Delete Account</h4>
+                        <p>Permanently delete your account and all associated data</p>
+                      </div>
+                      <button className="delete-account-btn">Delete Account</button>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-            <span className="session-badge current">Current</span>
-          </div>
-
-          <div className="session-item">
-            <div className="session-device">
-              <span className="device-icon">📱</span>
-              <div>
-                <h4>Samsung Galaxy S21</h4>
-                <p>Last active: 2 days ago • Chrome Mobile</p>
-              </div>
-            </div>
-            <button className="revoke-btn">Revoke</button>
-          </div>
-
-          <div className="session-item">
-            <div className="session-device">
-              <span className="device-icon">🖥️</span>
-              <div>
-                <h4>MacBook Pro</h4>
-                <p>Last active: 5 days ago • Safari</p>
-              </div>
-            </div>
-            <button className="revoke-btn">Revoke</button>
-          </div>
-        </div>
-
-        <button className="revoke-all-btn">Revoke All Other Sessions</button>
-      </div>
-
-      {/* =========================================
-          SECTION 4: LOGIN ACTIVITY
-      ========================================= */}
-      <div className="security-section">
-        <div className="security-section-header">
-          <span className="security-section-icon">📋</span>
-          <div>
-            <h3>Recent Login Activity</h3>
-            <p>Monitor access to your account</p>
-          </div>
-        </div>
-
-        <div className="activity-list">
-          <div className="activity-item">
-            <div>
-              <span className="activity-location">Meerut, India</span>
-              <span className="activity-time">Today, 10:30 AM</span>
-            </div>
-            <span className="activity-status success">Successful</span>
-          </div>
-          <div className="activity-item">
-            <div>
-              <span className="activity-location">Delhi, India</span>
-              <span className="activity-time">Yesterday, 8:15 PM</span>
-            </div>
-            <span className="activity-status success">Successful</span>
-          </div>
-          <div className="activity-item">
-            <div>
-              <span className="activity-location">Unknown Location</span>
-              <span className="activity-time">3 days ago, 2:00 AM</span>
-            </div>
-            <span className="activity-status warning">Failed Attempt</span>
-          </div>
-        </div>
-      </div>
-
-      {/* =========================================
-          SECTION 5: DANGER ZONE
-      ========================================= */}
-      <div className="security-section danger-zone">
-        <div className="security-section-header">
-          <span className="security-section-icon">⚠️</span>
-          <div>
-            <h3>Danger Zone</h3>
-            <p>Irreversible account actions</p>
-          </div>
-        </div>
-
-        <div className="danger-actions">
-          <div className="danger-action-item">
-            <div>
-              <h4>Delete Account</h4>
-              <p>Permanently delete your account and all associated data</p>
-            </div>
-            <button className="delete-account-btn">Delete Account</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-)}
+          )}
 
           {/* BACKUP */}
           {activeTab === "backup" && (

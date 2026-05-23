@@ -2,6 +2,12 @@ import { useNavigate } from "react-router-dom";
 import { useState, useEffect,useRef  } from "react";
 import "../styles/selectCompany.css";
 import logo from "../assets/Logo.jpeg";
+import {
+  Building2,
+  BadgeCheck,
+  Clock,
+  Users
+} from "lucide-react";
 
 export default function SelectCompany({onClose, onSave}) {
 
@@ -92,6 +98,21 @@ export default function SelectCompany({onClose, onSave}) {
   const [selectedregState, setregSelectedState] = useState("");
   const [showStatusDropdown, setShowStatusDropdown] = useState(false);
   const [selectedStatus, setSelectedStatus] = useState("Active");
+  const [showProfileMenu, setShowProfileMenu] = useState(false);
+
+const avatarColors = [
+  "purple",
+  "blue",
+  "green",
+  "orange",
+  "pink",
+  "cyan"
+];
+
+const handleLogout = () => {
+  localStorage.removeItem("company");
+  navigate("/");
+};
   const selectCompany = (company) => {
     localStorage.setItem("company", company);
     navigate("/dashboard");
@@ -172,123 +193,411 @@ const handleGetGST = async () => {
 
 
   return (
-    <div className="sidebar-logo">
-          <span><img src={logo} alt="Company Logo" /></span>
-      
     <div className="company-page">
-      <div className="gradient-bg"></div>
-      <div className="floating-shapes">
-        <div className="shape shape-1"></div>
-        <div className="shape shape-2"></div>
-        <div className="shape shape-3"></div>
+
+  {/* BACKGROUND EFFECTS */}
+
+  <div className="gradient-bg"></div>
+
+  <div className="floating-shapes">
+    <div className="shape shape-1"></div>
+    <div className="shape shape-2"></div>
+    <div className="shape shape-3"></div>
+  </div>
+
+  
+
+    {/* =========================
+        TOPBAR
+    ========================== */}
+
+    <div className="select-company-topbar">
+      <div className="topbar-left">
+        <img
+          src={logo}
+          alt="Logo"
+          className="top-logo"
+        />
       </div>
-      
-      <div className="company-container">
-        <div className="company-header">
-          <div className="header-content">
-            <div className="logo-container">
-              <div className="logo-icon">
-                <svg viewBox="0 0 24 24" fill="none">
-                  <path d="M12 2L2 7v10c0 5.55 3.84 9.74 9 11a9.39 9.39 0 0 0 1-11.66" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-                  <path d="M20 7l-8-5-8 5v10c0 5.55 3.84 9.74 9 11 2.16-.53 4.08-1.46 5.74-2.66" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-                </svg>
-              </div>
-              <h1 className="app-title">
-                Accounting Software
-              </h1>
-            </div>
-            <p className="subtitle">Choose your company to get started</p>
-          </div>
-
-          <button
-            className="create-btn"
-            onClick={createCompany}
+      <div className="topbar-right">
+        <button className="notification-btn">
+          🔔
+          <span>0</span>
+        </button>
+        <div className="profile-wrapper">
+          <div
+            className="admin-profile"
+            onClick={() =>
+              setShowProfileMenu(!showProfileMenu)
+            }
           >
-            <svg className="btn-icon" viewBox="0 0 24 24" fill="none">
-              <path d="M12 5v14M5 12h14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-            Create Company
-          </button>
-        </div>
-
-        <div className="search-container">
-          <div className="search-wrapper">
-            <svg className="search-icon" viewBox="0 0 24 24" fill="none">
-              <circle cx="11" cy="11" r="8" stroke="currentColor" strokeWidth="2"/>
-              <path d="m21 21-4.35-4.35" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-            </svg>
-            <input
-              className="company-search"
-              placeholder="Search companies..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-            />
-            {search && (
+            <div className="admin-avatar">
+              A
+            </div>
+            <span>Admin</span>
+          </div>
+          {showProfileMenu && (
+            <div className="profile-dropdown">
+              <div className="profile-dropdown-user">
+                Admin
+              </div>
               <button
-                className="clear-search"
-                onClick={() => setSearch("")}
+                className="logout-btn"
+                onClick={handleLogout}
               >
-                <svg viewBox="0 0 24 24" fill="none">
-                  <path d="M18 6 6 18M6 6l12 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-                </svg>
+                Logout
               </button>
-            )}
-          </div>
-        </div>
-
-        <div className="stats-bar">
-          <div className="stat-item">
-            <span className="stat-number">{companies.length}</span>
-            <span className="stat-label">Total Companies</span>
-          </div>
-          <div className="stat-item">
-            <span className="stat-number">{filtered.length}</span>
-            <span className="stat-label">Found</span>
-          </div>
-        </div>
-
-        <div className="company-list">
-          {filtered.length > 0 ? (
-            filtered.map((company, i) => (
-              <div
-                key={company + i}
-                className="company-card"
-                style={{ animationDelay: `${i * 50}ms` }}
-              >
-                <div className="company-info">
-                  <div className="company-avatar">
-                    {company.charAt(0).toUpperCase()}
-                  </div>
-                  <div className="company-details">
-                    <span className="company-name">{company}</span>
-                    <span className="company-id">ID: {i + 1}</span>
-                  </div>
-                </div>
-                <button
-                  className="select-btn"
-                  onClick={() => selectCompany(company)}
-                >
-                  Select
-                  <svg className="arrow-icon" viewBox="0 0 24 24" fill="none">
-                    <path d="m9 18 6-6-6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                </button>
-              </div>
-            ))
-          ) : (
-            <div className="empty-state">
-              <div className="empty-icon">
-                <svg viewBox="0 0 64 64" fill="none">
-                  <path d="M32 2C15.43 2 2 15.43 2 32s13.43 30 30 30 30-13.43 30-30S48.57 2 32 2Z" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
-                  <path d="M20 20h24v24H20z" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </div>
-              <h3>No companies found</h3>
-              <p>Try adjusting your search or create a new company</p>
             </div>
           )}
         </div>
+      </div>
+    </div>
 
+    {/* =========================
+        HERO SECTION
+    ========================== */}
+    <div className="company-container">
+
+    <div className="hero-section">
+
+      {/* LEFT SIDE */}
+
+      <div className="hero-left">
+
+        <span className="welcome-text">
+          👋 Welcome back, <b>Admin!</b> 👋
+        </span>
+
+        <h1>
+          Select a Company to Get Started
+        </h1>
+
+        <p>
+          Access and manage all your companies from one place.
+        </p>
+
+      </div>
+
+      {/* RIGHT SIDE */}
+
+      <div className="hero-right">
+
+        <button
+          className="hero-create-btn"
+          onClick={createCompany}
+        >
+          ＋ Create New Company
+        </button>
+
+        {/* HERO IMAGE */}
+
+        <div className="hero-image-wrapper">
+
+          <img
+            src={require("../assets/ct.png")}
+            alt="ERP Illustration"
+            className="hero-image"
+          />
+
+        </div>
+
+      </div>
+
+    </div>
+
+    {/* =========================
+        STATS GRID
+    ========================== */}
+
+    <div className="company-stats-grid">
+
+      {/* TOTAL */}
+
+      <div className="company-stat-card purple">
+
+        <div className="stat-icon">
+          <Building2 size={24} />
+        </div>
+
+        <div>
+          <h2>{companies.length}</h2>
+          <p>Total Companies</p>
+        </div>
+
+      </div>
+
+      {/* ACTIVE */}
+
+      <div className="company-stat-card green">
+
+        <div className="stat-icon">
+          <BadgeCheck size={24} />
+        </div>
+
+        <div>
+          <h2>18</h2>
+          <p>Active Companies</p>
+        </div>
+
+      </div>
+
+      {/* INACTIVE */}
+
+      <div className="company-stat-card orange">
+
+        <div className="stat-icon">
+          <Clock size={24} />
+        </div>
+
+        <div>
+          <h2>4</h2>
+          <p>Inactive Companies</p>
+        </div>
+
+      </div>
+
+      {/* USERS */}
+
+      <div className="company-stat-card blue">
+
+        <div className="stat-icon">
+          <Users size={24} />
+        </div>
+
+        <div>
+          <h2>12</h2>
+          <p>Users</p>
+        </div>
+
+      </div>
+
+    </div>
+
+    {/* =========================
+        TOOLBAR
+    ========================== */}
+
+    <div className="company-toolbar">
+
+      {/* SEARCH */}
+
+      <div className="search-wrapper">
+
+        <svg
+          className="select-search-icon"
+          viewBox="0 0 24 24"
+          fill="none"
+        >
+          <circle
+            cx="11"
+            cy="11"
+            r="8"
+            stroke="currentColor"
+            strokeWidth="2"
+          />
+
+          <path
+            d="m21 21-4.35-4.35"
+            stroke="currentColor"
+            strokeWidth="2"
+          />
+        </svg>
+
+        <input
+          className="company-search"
+          placeholder="Search companies by name or ID..."
+          value={search}
+          onChange={(e) =>
+            setSearch(e.target.value)
+          }
+        />
+
+      </div>
+
+      {/* RIGHT FILTERS */}
+
+      {/* <div className="toolbar-right">
+
+        <select className="sort-select">
+
+          <option>
+            Recently Added
+          </option>
+
+          <option>
+            Company Name
+          </option>
+
+        </select>
+
+        <button className="view-btn active">
+          ☰
+        </button>
+
+        <button className="view-btn">
+          ⊞
+        </button>
+
+      </div> */}
+
+    </div>
+
+    {/* =========================
+        COMPANY TABLE
+    ========================== */}
+
+    <div className="modern-company-table">
+
+      {/* TABLE HEADER */}
+
+      <div className="select-table-header">
+
+        <div>Company</div>
+        <div>Type</div>
+        <div>Added On</div>
+        <div>Status</div>
+        <div>Last Accessed</div>
+        <div>Action</div>
+
+      </div>
+
+      {/* TABLE BODY */}
+
+      {filtered.map((company, i) => (
+
+        <div
+          key={i}
+          className="select-table-row"
+        >
+
+          {/* COMPANY CELL */}
+
+          <div className="company-cell">
+
+            <div
+              className={`table-avatar ${
+                avatarColors[i % avatarColors.length]
+              }`}
+            >
+              {company.charAt(0)}
+            </div>
+
+            <div>
+
+              <h4>{company}</h4>
+
+              <span>
+                ID: C00{i + 1}
+              </span>
+
+            </div>
+
+          </div>
+
+          {/* TYPE */}
+
+          <div>
+            Private Limited
+          </div>
+
+          {/* DATE */}
+
+          <div>
+            12 May 2025
+          </div>
+
+          {/* STATUS */}
+
+          <div>
+
+            <span className="status-badge active">
+              ● Active
+            </span>
+
+          </div>
+
+          {/* LAST ACCESSED */}
+
+          <div>
+            Today, 10:30 AM
+          </div>
+
+          {/* ACTION */}
+
+          <div className="action-cell">
+
+            <button
+              className="select-company-btn"
+              onClick={() =>
+                selectCompany(company)
+              }
+            >
+              Select Company
+            </button>
+
+            {/* <button className="star-btn">
+              ⭐
+            </button>
+
+            <button className="menu-btn">
+              ⋮
+            </button> */}
+
+          </div>
+
+        </div>
+
+      ))}
+
+    </div>
+
+    {/* =========================
+        SECURITY FOOTER
+    ========================== */}
+
+    <div className="security-footer">
+
+      <div className="security-left">
+
+        <div className="security-icon">
+          🛡
+        </div>
+
+        <div>
+
+          <h4>
+            Secure. Reliable. Always Here.
+          </h4>
+
+          <p>
+            Your data is safe with us.
+            We use enterprise-grade
+            security to protect your business.
+          </p>
+
+        </div>
+
+      </div>
+
+      <div className="security-right">
+
+        <span>
+          🔒 Encrypted Data
+        </span>
+
+        <span>
+          ☁ Regular Backups
+        </span>
+
+        <span>
+          🛡 Secure Access
+        </span>
+
+      </div>
+
+    </div>
+
+ 
         {isCreating && (
           <div className="create-popup-overlay">
               <div className="create-popup-modal">
@@ -634,6 +943,6 @@ const handleGetGST = async () => {
         )}
       </div>
     </div>
-      </div>
+      
   );
 }

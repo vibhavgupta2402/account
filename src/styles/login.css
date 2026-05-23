@@ -1,0 +1,567 @@
+/* Login.css - Modern Corporate Design with RGB Colors */
+
+/* CSS Reset & Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Main Container - Split Screen Layout */
+.smartgst-login-container {
+  display: flex;
+  min-height: 110vh;
+  width: 100%;
+  background: rgb(248, 250, 252);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+/* ==================== LEFT SIDE - IMAGE SECTION ==================== */
+.smartgst-image-half {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  /* background: linear-gradient(135deg, rgb(30, 58, 138) 0%, rgb(49, 46, 129) 100%); */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.image-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 51%;
+  z-index: 0;
+}
+
+.smartgst-bg-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* opacity: 0.3;
+  mix-blend-mode: overlay; */
+}
+
+/* Overlay Content */
+.smartgst-overlay {
+  position: relative;
+  z-index: 2;
+  padding: 3rem;
+  max-width: 500px;
+  color: rgb(255, 255, 255);
+  text-align: left;
+  margin-top: 50px;
+  margin-left: 100px;
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.smartgst-title {
+  font-size: 3.5rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, rgb(8, 8, 189) 0%, rgb(203, 213, 225) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.smartgst-powered {
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 1.5rem;
+  color: rgb(165, 180, 252);
+  border-left: 3px solid rgb(99, 102, 241);
+  padding-left: 1rem;
+}
+
+.smartgst-desc {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: rgb(10, 10, 10);
+  margin-top: 1rem;
+}
+
+/* ==================== RIGHT SIDE - FORM SECTION ==================== */
+.smartgst-form-half {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background: rgb(255, 255, 255);
+}
+
+.smartgst-login-card {
+  max-width: 480px;
+  width: 100%;
+
+  padding: 2.8rem;
+
+  position: relative;
+  overflow: hidden;
+
+  border-radius: 34px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255,255,255,0.20),
+      rgba(255,255,255,0.08)
+    );
+
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+
+  border:
+    1px solid rgba(255,255,255,0.18);
+
+  box-shadow:
+    0 20px 60px rgba(15,23,42,0.20),
+    0 8px 24px rgba(99,102,241,0.12),
+    inset 0 1px 1px rgba(255,255,255,0.25),
+    inset 0 -1px 1px rgba(255,255,255,0.06);
+
+  transform-style: preserve-3d;
+
+  transform:
+    perspective(1800px)
+    rotateX(3deg)
+    rotateY(-3deg)
+    translateY(0);
+
+  transition:
+    transform .45s ease,
+    box-shadow .45s ease,
+    background .45s ease;
+}
+
+/* TOP LIGHT EFFECT */
+
+.smartgst-login-card::before {
+  content: "";
+
+  position: absolute;
+
+  top: -120px;
+  left: -80px;
+
+  width: 260px;
+  height: 260px;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(255,255,255,0.35),
+      transparent 70%
+    );
+
+  pointer-events: none;
+}
+
+/* BOTTOM PURPLE GLOW */
+
+.smartgst-login-card::after {
+  content: "";
+
+  position: absolute;
+
+  bottom: -100px;
+  right: -100px;
+
+  width: 240px;
+  height: 240px;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(99,102,241,0.22),
+      transparent 70%
+    );
+
+  filter: blur(10px);
+
+  pointer-events: none;
+}
+
+/* HOVER EFFECT */
+
+.smartgst-login-card:hover {
+
+  transform:
+    perspective(1800px)
+    rotateX(0deg)
+    rotateY(0deg)
+    translateY(-6px)
+    scale(1.01);
+
+  box-shadow:
+    0 30px 70px rgba(15,23,42,0.26),
+    0 12px 30px rgba(99,102,241,0.18),
+    inset 0 1px 1px rgba(255,255,255,0.28);
+}
+
+
+.smartgst-login-card h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: rgb(15, 23, 42);
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.02em;
+}
+
+.smartgst-subtitle {
+  color: rgb(100, 116, 139);
+  font-size: 0.875rem;
+  margin-bottom: 2rem;
+  font-weight: 400;
+}
+
+/* Form Styles */
+.smartgst-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.smartgst-form input {
+  width: 100%;
+  padding: 0.875rem 1rem;
+  border: 1.5px solid rgb(226, 232, 240);
+  border-radius: 12px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: rgb(15, 23, 42);
+  background: rgb(255, 255, 255);
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.smartgst-form input:focus {
+  outline: none;
+  border-color: rgb(99, 102, 241);
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+}
+
+.smartgst-form input::placeholder {
+  color: rgb(148, 163, 184);
+  font-weight: 400;
+}
+
+.smartgst-form input:disabled {
+  background: rgb(248, 250, 252);
+  cursor: not-allowed;
+  color: rgb(100, 116, 139);
+}
+
+/* Email Group with Send OTP Button */
+.smartgst-email-group {
+  position: relative;
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.smartgst-email-group input {
+  flex: 1;
+}
+
+.smartgst-send-btn {
+  padding: 0.875rem 1.25rem;
+  background: linear-gradient(135deg, rgb(99, 102, 241) 0%, rgb(139, 92, 246) 100%);
+  color: rgb(255, 255, 255);
+  border: none;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  font-family: inherit;
+  letter-spacing: 0.5px;
+}
+
+.smartgst-send-btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+  background: linear-gradient(135deg, rgb(109, 112, 248) 0%, rgb(147, 102, 252) 100%);
+}
+
+.smartgst-send-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.smartgst-otp-sent {
+  position: absolute;
+  bottom: -1.5rem;
+  left: 0;
+  font-size: 0.75rem;
+  color: rgb(34, 197, 94);
+  font-weight: 500;
+}
+
+/* OTP Section */
+.smartgst-otp-section {
+  animation: slideDown 0.3s ease-out;
+  background: rgb(248, 250, 252);
+  padding: 1rem;
+  border-radius: 12px;
+  border: 1px solid rgb(226, 232, 240);
+}
+
+.smartgst-otp-section p {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: rgb(71, 85, 105);
+  margin-bottom: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.smartgst-otp-section input {
+  text-align: center;
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: 4px;
+  font-family: 'Courier New', monospace;
+}
+
+/* Primary Button */
+.smartgst-btn {
+  width: 100%;
+  padding: 0.875rem;
+  background: linear-gradient(135deg, rgb(15, 23, 42) 0%, rgb(30, 41, 59) 100%);
+  color: rgb(255, 255, 255);
+  border: none;
+  border-radius: 12px;
+  font-size: 0.875rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 0.5rem;
+  letter-spacing: 0.5px;
+  font-family: inherit;
+  text-transform: uppercase;
+}
+
+.smartgst-btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  background: linear-gradient(135deg, rgb(30, 41, 59) 0%, rgb(51, 65, 85) 100%);
+}
+
+.smartgst-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Links Section */
+.smartgst-links {
+  text-align: center;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgb(226, 232, 240);
+}
+
+.smartgst-links a {
+  color: rgb(99, 102, 241);
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition: color 0.2s ease;
+}
+
+.smartgst-links a:hover {
+  color: rgb(79, 70, 229);
+  text-decoration: underline;
+}
+
+/* Copyright */
+.smartgst-copyright {
+  text-align: center;
+  margin-top: 2rem;
+  font-size: 0.75rem;
+  color: rgb(148, 163, 184);
+  font-weight: 400;
+}
+
+/* ==================== ANIMATIONS ==================== */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ==================== RESPONSIVE DESIGN ==================== */
+@media (max-width: 1024px) {
+  .smartgst-title {
+    font-size: 2.5rem;
+  }
+  
+  .smartgst-overlay {
+    padding: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .smartgst-login-container {
+    flex-direction: column;
+  }
+  
+  .smartgst-image-half {
+    min-height: 300px;
+  }
+  
+  .smartgst-overlay {
+    text-align: center;
+  }
+  
+  .smartgst-powered {
+    text-align: center;
+    border-left: none;
+    padding-left: 0;
+  }
+  
+  .smartgst-form-half {
+    padding: 1.5rem;
+  }
+  
+  .smartgst-login-card {
+    padding: 1.5rem;
+  }
+  
+  .smartgst-login-card h2 {
+    font-size: 1.5rem;
+  }
+  
+  .smartgst-email-group {
+    flex-direction: column;
+  }
+  
+  .smartgst-send-btn {
+    width: 100%;
+  }
+  
+  .smartgst-otp-sent {
+    position: static;
+    margin-top: 0.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .smartgst-login-card {
+    padding: 1rem;
+  }
+  
+  .smartgst-title {
+    font-size: 2rem;
+  }
+  
+  .smartgst-desc {
+    font-size: 0.875rem;
+  }
+}
+
+/* ==================== UTILITY CLASSES ==================== */
+/* Loading State for Buttons */
+.smartgst-btn.loading,
+.smartgst-send-btn.loading {
+  position: relative;
+  color: transparent;
+}
+
+.smartgst-btn.loading::after,
+.smartgst-send-btn.loading::after {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  top: 50%;
+  left: 50%;
+  margin-left: -8px;
+  margin-top: -8px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: rgb(255, 255, 255);
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Focus Visible for Accessibility */
+.smartgst-form input:focus-visible,
+.smartgst-btn:focus-visible,
+.smartgst-send-btn:focus-visible {
+  outline: none;
+  ring: 2px solid rgb(99, 102, 241);
+  ring-offset: 2px;
+}
+
+/* Error State */
+.smartgst-form input.error {
+  border-color: rgb(239, 68, 68);
+}
+
+.smartgst-error-message {
+  color: rgb(239, 68, 68);
+  font-size: 0.75rem;
+  margin-top: -0.5rem;
+}
+
+/* Success State */
+.smartgst-success-message {
+  color: rgb(34, 197, 94);
+  font-size: 0.75rem;
+  margin-top: -0.5rem;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgb(241, 245, 249);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgb(148, 163, 184);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(100, 116, 139);
+}

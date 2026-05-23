@@ -54,6 +54,7 @@ import CompanySettings from "./pages/CompanySettings";
 import InvoiceSetting from "./pages/InvoiceSetting";
 import Itemgroup from "./pages/itemgroup";
 import  ReportsDashboard from "./pages/ReportsDashboard";
+import  Login from "./pages/login";
 
 
 // JournalEntries
@@ -62,7 +63,9 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-         <Route path="/" element={<SelectCompany/>}/>
+         {/* <Route path="/" element={<SelectCompany/>}/> */}
+         <Route path="/" element={<Login/>} />
+         <Route path="/login" element={<Login/>} />
          <Route path="/select-company" element={<SelectCompany />} />
         <Route element={<Layout />}>
           <Route path="/dashboard" element={<Dashboard />} />
@@ -116,6 +119,7 @@ export default function App() {
           <Route path="/InvoiceSetting" element={<InvoiceSetting/>} />
           <Route path="/Itemgroup" element={<Itemgroup/>} />
           <Route path="/ReportsDashboard" element={<ReportsDashboard/>} />
+          
         
 
 

@@ -213,6 +213,41 @@ const [godownList, setGodownList] = useState(["Main Store"]);
 const [selectedGodown, setSelectedGodown] = useState("");
 
 const [showGodownModal, setShowGodownModal] = useState(false);
+const [showCategoryModal, setShowCategoryModal] = useState(false);
+const [categoryForm, setCategoryForm] = useState({
+  name: "",
+  description: ""
+});
+const saveCategory = () => {
+
+  if (!categoryForm.name.trim()) return;
+
+  // ADD CATEGORY
+
+  setCategoryList([
+    ...categoryList,
+    categoryForm.name
+  ]);
+
+  // AUTO SELECT NEW CATEGORY
+
+  setNewProduct({
+    ...newProduct,
+    category: categoryForm.name
+  });
+
+  // RESET FORM
+
+  setCategoryForm({
+    name: "",
+    description: ""
+  });
+
+};
+const [categoryList, setCategoryList] = useState([
+  "Electronics",
+  "Accessories"
+]);
 const [newGodown, setNewGodown] = useState({
   name: "",
   address: ""
@@ -791,225 +826,571 @@ const [openingAmount, setOpeningAmount] = useState("");
           </div>
         )} */}
       {showModal && (
-        <div className="Item_modal">
-          <div className="modal-box">
-            <h2>Add New Product</h2>
+  <div className="Item_modal">
+
+    <div className="modal-box">
+
+      {/* ================= HEADER ================= */}
+
+      <div className="item-modal-header">
+
+        <div>
+          <h2>Add New Product</h2>
+          <p>Create inventory item details</p>
+        </div>
+
+        <button
+          className="item-modal-close"
+          onClick={() => setShowModal(false)}
+        >
+          ✕
+        </button>
+
+      </div>
+
+      {/* ================= BODY ================= */}
+
+      <div className="item-modal-body">
+
+        {/* ================= BASIC DETAILS ================= */}
+
+        <div className="item-section">
+
+          <div className="item-section-title">
+            Basic Details
+          </div>
+
+          <div className="item-grid-row">
 
             <input
-              placeholder="Name"
+              placeholder="Product Name"
               onChange={(e)=>
-                setNewProduct({...newProduct,name:e.target.value})
+                setNewProduct({
+                  ...newProduct,
+                  name:e.target.value
+                })
               }
             />
 
             <input
-              placeholder="HSN"
+              placeholder="HSN / SAC Code"
               onChange={(e)=>
-                setNewProduct({...newProduct,hsn:e.target.value})
+                setNewProduct({
+                  ...newProduct,
+                  hsn:e.target.value
+                })
               }
             />
-            <input
-              placeholder="Description of items"
-              onChange={(e)=>
-                setNewProduct({...newProduct,hsn:e.target.value})
-              }
-            />
+
+          </div>
+
+          <textarea
+            placeholder="Description of items"
+            onChange={(e)=>
+              setNewProduct({
+                ...newProduct,
+                description:e.target.value
+              })
+            }
+          />
+
+        </div>
+
+        {/* ================= INVENTORY DETAILS ================= */}
+
+        <div className="item-section">
+
+          <div className="item-section-title">
+            Inventory Details
+          </div>
+
+          <div className="item-grid-row">
+
+            {/* UNIT */}
+
             <div className="unit-dropdown" ref={unitRef}>
+
               <input
                 placeholder="Select Unit (e.g. KGS)"
                 value={unitSearch}
                 onChange={(e) => {
-                  setUnitSearch(e.target.value.toUpperCase());
+                  setUnitSearch(
+                    e.target.value.toUpperCase()
+                  );
+
                   setShowUnitDropdown(true);
                 }}
-                onClick={() => setShowUnitDropdown(true)}
+                onClick={() =>
+                  setShowUnitDropdown(true)
+                }
               />
 
               {showUnitDropdown && (
+
                 <div className="unit-list">
+
                   {units
                     .filter(
                       (u) =>
-                        u.code.toLowerCase().includes(unitSearch.toLowerCase()) ||
-                        u.name.toLowerCase().includes(unitSearch.toLowerCase()) // optional search
+                        u.code
+                          .toLowerCase()
+                          .includes(
+                            unitSearch.toLowerCase()
+                          ) ||
+
+                        u.name
+                          .toLowerCase()
+                          .includes(
+                            unitSearch.toLowerCase()
+                          )
                     )
+
                     .map((u, i) => (
+
                       <div
                         key={i}
                         className="unit-item"
+
                         onClick={() => {
-                          setUnitSearch(u.code); // ✅ ONLY CODE SHOWN
-                          setNewProduct({ ...newProduct, unit: u.code });
+
+                          setUnitSearch(u.code);
+
+                          setNewProduct({
+                            ...newProduct,
+                            unit: u.code
+                          });
+
                           setShowUnitDropdown(false);
+
                         }}
                       >
-                        {u.code} {/* ✅ ONLY CODE DISPLAY */}
+
+                        {u.code}
+
                       </div>
+
                     ))}
 
                   {units.filter(
                     (u) =>
-                      u.code.toLowerCase().includes(unitSearch.toLowerCase()) ||
-                      u.name.toLowerCase().includes(unitSearch.toLowerCase())
-                  ).length === 0 && (
-                    <div className="unit-item no-data">No unit found</div>
-                  )}
-                </div>
-              )}
-            </div>
-            {/* ================= GODOWN ================= */}
-            <div className="row">
-              <select
-                value={selectedGodown}
-                onChange={(e) => {
-                  setSelectedGodown(e.target.value);
-                  setNewProduct({ ...newProduct, godown: e.target.value });
-                }}
-              >
-                <option>Select Godown</option>
-                {godownList.map((g, i) => (
-                  <option key={i}>{g}</option>
-                ))}
-              </select>
+                      u.code
+                        .toLowerCase()
+                        .includes(
+                          unitSearch.toLowerCase()
+                        ) ||
 
-              <button
-                className="gd-add-btn"
-                onClick={() => setShowGodownModal(true)}
-              >
-                + Add New
-              </button>
+                      u.name
+                        .toLowerCase()
+                        .includes(
+                          unitSearch.toLowerCase()
+                        )
+                  ).length === 0 && (
+
+                    <div className="unit-item no-data">
+                      No unit found
+                    </div>
+
+                  )}
+
+                </div>
+
+              )}
+
+            </div>
+
+            {/* GODOWN */}
+
+            <div className="inline-action-field">
+
+  <select
+    value={selectedGodown}
+
+    onChange={(e) => {
+
+      setSelectedGodown(
+        e.target.value
+      );
+
+      setNewProduct({
+        ...newProduct,
+        godown: e.target.value
+      });
+
+    }}
+  >
+
+    <option>Select Godown</option>
+
+    {godownList.map((g, i) => (
+
+      <option key={i}>
+        {g}
+      </option>
+
+    ))}
+
+  </select>
+
+  <button
+    className="gd-add-btn"
+    onClick={() =>
+      setShowGodownModal(true)
+    }
+  >
+    + Add
+  </button>
+
 </div>
 
+          </div>
 
+          <div className="item-grid-row">
 
-            <div className="row">
-              <select
-                onChange={(e)=>
-                  setNewProduct({...newProduct,category:e.target.value})
-                }
-              >
-                <option>Select Category</option>
-                <option>Electronics</option>
-                <option>Accessories</option>
-              </select>
+            {/* CATEGORY */}
 
-              <button className="item-create-btn">Create</button>
-            </div>
+            <div className="inline-action-field">
+
+  <select
+    onChange={(e)=>
+      setNewProduct({
+        ...newProduct,
+        category:e.target.value
+      })
+    }
+  >
+
+    <option>Select Category</option>
+
+    <option>Electronics</option>
+
+    <option>Accessories</option>
+
+  </select>
+
+  <button
+  className="item-create-btn"
+  onClick={() =>
+    setShowCategoryModal(true)
+  }
+>
+  Create
+</button>
+
+</div>
+
+            {/* TYPE */}
 
             <select
               onChange={(e)=>
-                setNewProduct({...newProduct,type:e.target.value})
+                setNewProduct({
+                  ...newProduct,
+                  type:e.target.value
+                })
               }
             >
-              <option>Select Type of Supply</option>
+
+              <option>
+                Select Type of Supply
+              </option>
+
               <option>Goods</option>
+
               <option>Service</option>
+
               <option>Capital Goods</option>
+
             </select>
 
-            <div className="row">
+          </div>
+
+        </div>
+
+        {/* ================= TAX SECTION ================= */}
+
+        <div className="item-section">
+
+          <div className="item-section-title">
+            Tax Information
+          </div>
+
+          <div className="tax-item-grid-row">
+
+            <div className="tax-rate-row">
+
               <input
                 type="number"
-                placeholder="Rate"
+                placeholder="GST Rate"
+
                 onChange={(e)=>
-                  setNewProduct({...newProduct,rate:e.target.value})
+                  setNewProduct({
+                    ...newProduct,
+                    rate:e.target.value
+                  })
                 }
               />
-              <span className="percent">%</span>
+
+              <span className="percent">
+                %
+              </span>
+
             </div>
 
             <select
               onChange={(e)=>
-                setNewProduct({...newProduct,taxability:e.target.value})
+                setNewProduct({
+                  ...newProduct,
+                  taxability:e.target.value
+                })
               }
             >
-              <option>Select Taxability Type</option>
+
+              <option>
+                Select Taxability Type
+              </option>
+
               <option>Taxable</option>
+
               <option>Non-GST</option>
+
               <option>Nil Rated</option>
+
               <option>Exempt</option>
+
             </select>
-            {/* ================= OPENING BALANCE ================= */}
-            <div className="opening-balance">
-              <label>Opening Balance</label>
 
-              <div className="row">
-                <input
-                  type="number"
-                  placeholder="Qty"
-                  value={openingQty}
-                  onChange={(e) => setOpeningQty(e.target.value)}
-                />
+          </div>
 
-                <input
-                  type="number"
-                  placeholder="Rate"
-                  value={openingRate}
-                  onChange={(e) => setOpeningRate(e.target.value)}
-                />
+        </div>
 
-                <input
-                  type="number"
-                  placeholder="Amount"
-                  value={openingAmount}
-                  onChange={(e) => setOpeningAmount(e.target.value)}
-                />
-              </div>
-            </div>
-            {showGodownModal && (
-              <div className="mini-modal-overlay">
-                <div className="mini-modal">
-                  <h3>Add New Godown</h3>
+        {/* ================= OPENING BALANCE ================= */}
 
-                  <input
-                    placeholder="Name"
-                    value={newGodown.name}
-                    onChange={(e) =>
-                      setNewGodown({ ...newGodown, name: e.target.value })
-                    }
-                  />
+        <div className="item-section">
 
-                  <textarea
-                    placeholder="Address"
-                    value={newGodown.address}
-                    onChange={(e) =>
-                      setNewGodown({ ...newGodown, address: e.target.value })
-                    }
-                  />
+          <div className="item-section-title">
+            Opening Balance
+          </div>
 
-                  <div className="modal-actions">
-                    <button
-                      className="cancel"
-                      onClick={() => setShowGodownModal(false)}
-                    >
-                      Cancel
-                    </button>
+          <div className="open-item-grid-row">
 
-                    <button
-                      className="save"
-                      onClick={() => {
-                        if (newGodown.name.trim()) {
-                          setGodownList([...godownList, newGodown.name]);
-                          setSelectedGodown(newGodown.name);
-                          setShowGodownModal(false);
-                          setNewGodown({ name: "", address: "" });
-                        }
-                      }}
-                    >
-                      Save
-                    </button>
-                  </div>
-                </div>
-              </div>
-            )}
+            <input
+              type="number"
+              placeholder="Qty"
 
+              value={openingQty}
+
+              onChange={(e) =>
+                setOpeningQty(e.target.value)
+              }
+            />
+
+            <input
+              type="number"
+              placeholder="Rate"
+
+              value={openingRate}
+
+              onChange={(e) =>
+                setOpeningRate(e.target.value)
+              }
+            />
+            <input
+            type="number"
+            placeholder="Amount"
+
+            value={openingAmount}
+
+            onChange={(e) =>
+              setOpeningAmount(e.target.value)
+            }
+          />
+
+          </div>
+
+          
+
+        </div>
+
+      </div>
+
+      {/* ================= GODOWN MODAL ================= */}
+
+      {showGodownModal && (
+        <div className="mini-modal-overlay">
+          <div className="mini-modal">
+            <h3>Add New Godown</h3>
+            <input
+              placeholder="Godown Name"
+              value={newGodown.name}
+              onChange={(e) =>
+                setNewGodown({
+                  ...newGodown,
+                  name: e.target.value
+                })
+              }
+            />
+            <textarea
+              placeholder="Address"
+              value={newGodown.address}
+              onChange={(e) =>
+                setNewGodown({
+                  ...newGodown,
+                  address: e.target.value
+                })
+              }
+            />
             <div className="modal-actions">
-              <button className="cancel" onClick={()=>setShowModal(false)}>Cancel</button>
-              <button className="save" onClick={handleAdd}>Save</button>
+              <button
+                className="cancel"
+                onClick={() =>
+                  setShowGodownModal(false)
+                }
+              >
+                Cancel
+              </button>
+              <button
+                className="save"
+                onClick={() => {
+                  if (
+                    newGodown.name.trim()
+                  ) {
+                    setGodownList([
+                      ...godownList,
+                      newGodown.name
+                    ]);
+                    setSelectedGodown(
+                      newGodown.name
+                    );
+                    setShowGodownModal(false);
+                    setNewGodown({
+                      name: "",
+                      address: ""
+                    });
+                  }
+                }}
+              >
+                Save
+              </button>
             </div>
           </div>
         </div>
       )}
+      {showCategoryModal && (
+
+  <div className="mini-modal-overlay">
+
+    <div className="mini-modal">
+
+      <div className="mini-modal-header">
+
+        <h3>Create Stock Category</h3>
+
+        <button
+          className="mini-close-btn"
+          onClick={() =>
+            setShowCategoryModal(false)
+          }
+        >
+          ✕
+        </button>
+
+      </div>
+
+      <div className="inventory-form-group">
+
+        <label>Name</label>
+
+        <input
+          value={categoryForm.name}
+
+          onChange={(e) =>
+            setCategoryForm({
+              ...categoryForm,
+              name: e.target.value
+            })
+          }
+
+          placeholder="Electronics"
+        />
+
+      </div>
+
+      <div className="inventory-form-group">
+
+        <label>Description</label>
+
+        <textarea
+          rows="3"
+
+          value={categoryForm.description}
+
+          onChange={(e) =>
+            setCategoryForm({
+              ...categoryForm,
+              description: e.target.value
+            })
+          }
+        />
+
+      </div>
+
+      <div className="modal-actions">
+
+        <button
+          className="cancel"
+
+          onClick={() =>
+            setShowCategoryModal(false)
+          }
+        >
+          Cancel
+        </button>
+
+        <button
+          className="save"
+
+          onClick={() => {
+
+            saveCategory();
+
+            setShowCategoryModal(false);
+
+          }}
+        >
+          Save Category
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+)}
+
+      {/* ================= FOOTER ================= */}
+
+      <div className="modal-actions">
+
+        <button
+          className="cancel"
+          onClick={() => setShowModal(false)}
+        >
+          Cancel
+        </button>
+
+        <button
+          className="save"
+          onClick={handleAdd}
+        >
+          Save Product
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+)}
       </div>
     </div>
   );
