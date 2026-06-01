@@ -671,7 +671,9 @@ td {
     display: flex;
     gap: 40px;
     border-bottom: 1px solid var(--border);
-    margin: 16px 0
+    margin: 16px 0;
+    border-radius:16px;
+        box-shadow: 0 6px 35px -10px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.6), inset 0 -1px 0 rgba(0, 0, 0, 0.1), 0 8px 20px rgba(0, 0, 0, 0.1);
 }
 
 .tab {
@@ -2414,7 +2416,7 @@ background:#dc2626;
   background: #f8fafc;
   border: 1px solid #e2e8f0;
 
-  box-shadow: 0 4px 18px rgba(0,0,0,0.04);
+     box-shadow: 0 6px 35px -10px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.6), inset 0 -1px 0 rgba(0, 0, 0, 0.1), 0 8px 20px rgba(0, 0, 0, 0.1);
 }
 
 /* TOP ROW */

@@ -83,7 +83,7 @@ const ReportsDashboard = () => {
       <div className="reports-dashboard">
         {/* Compact Header */}
         <div className="dashboard-header">
-          <div className="header-left">
+          <div className="report-header-left">
             <div className="header-icon">
               <TrendingUp size={20} />
             </div>

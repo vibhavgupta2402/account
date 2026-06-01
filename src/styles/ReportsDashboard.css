@@ -18,7 +18,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
   padding: 1rem 1.5rem;
   background: rgba(255, 255, 255, 0.4);
   backdrop-filter: blur(20px);
@@ -51,7 +51,7 @@
   opacity: 0.6;
 }
 
-.header-left {
+.report-header-left {
   display: flex;
   align-items: center;
   gap: 1rem;
@@ -99,12 +99,11 @@
 }
 
 /* 3D Title Text - Static Premium */
-.header-left h1 {
+.report-header-left h1 {
   font-size: 1.75rem;
   font-weight: 800;
   background: linear-gradient(135deg, 
     #1e293b 0%, 
-   
     #1e293b 100%);
   -webkit-background-clip: text;
   background-clip: text;
@@ -120,7 +119,7 @@
 }
 
 /* 3D Subtitle - Static */
-.header-left p {
+.report-header-left p {
   font-size: 0.8125rem;
   background: linear-gradient(135deg, #64748b 0%, #94a3b8 100%);
   -webkit-background-clip: text;
@@ -421,7 +420,7 @@
     gap: 1rem;
   }
 
-  .header-left h1 {
+  .report-header-left h1 {
     font-size: 1.25rem;
   }
   
@@ -547,7 +546,7 @@
 }
 
 /* Subtle 3D Depth for Header Text */
-.header-left h1 {
+.report-header-left h1 {
   letter-spacing: -0.5px;
   position: relative;
   display: inline-block;
