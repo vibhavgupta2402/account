@@ -570,7 +570,7 @@ import {
   Legend
 } from "chart.js";
 
-import { Chart } from "react-chartjs-2";
+import { Bar } from "react-chartjs-2";
 import {
   ShoppingCart,
   ReceiptText,
@@ -1281,8 +1281,7 @@ export default function Dashboard() {
 
             <div className="chart-wrapper">
 
-              <Chart
-                type="bar"
+              <Bar
                 data={chartData[view]}
                 options={chartOptions}
               />
