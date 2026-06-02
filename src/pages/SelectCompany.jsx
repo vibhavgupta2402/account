@@ -619,14 +619,14 @@ const handleGetGST = async () => {
                     
                     <div className="popup-field">
                       <label>GSTIN</label>
-                      <div className="gst-row">
+                      <div className="sel-gst-row">
                         <input 
                           maxLength={15} 
                           value={gstin}
                           onChange={(e) => setGstin(e.target.value)}
                           placeholder="22AAAAA0000A1Z"
                         />
-                        <button className="gst-btn" onClick={handleGetGST}>
+                        <button className="sel-gst-btn" onClick={handleGetGST}>
                           Get GST
                         </button>
                       </div>
