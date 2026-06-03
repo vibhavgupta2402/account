@@ -612,7 +612,7 @@ export default function Dashboard() {
     contactPerson: "",
     contactNo: "",
     financialYear: ""});
-  const [view, setView] = useState("monthly");
+  const [view, setView] = useState("daily");
   useEffect(() => {
     const selectedCompany = localStorage.getItem("company");
     if (selectedCompany) {
@@ -653,7 +653,12 @@ export default function Dashboard() {
 
   {
     title: "Total Expenses",
-    amount: "12.52 L",
+    amount: (
+    <div className="dual-amount">
+      <span>Direct Exp :<strong> 12.5 L</strong></span>
+      <span>Indirect Exp :<strong> 23.25 L</strong></span>
+    </div>
+  ),
     icon: <Wallet size={23} />,
     bg: "linear-gradient(135deg,#dc2626,#fb7185)"
   },
@@ -691,14 +696,24 @@ export default function Dashboard() {
 
   {
     title: "Cash/Bank",
-    amount: "85K",
+    amount: (
+    <div className="dual-amount">
+      <span>Cash :<strong> 85K</strong></span>
+      <span>Bank :<strong> 3.25 L</strong></span>
+    </div>
+  ),
     icon: <Landmark size={23} />,
     bg: "linear-gradient(135deg,#0891b2,#22d3ee)"
   },
 
   {
-    title: "Assets & Liability",
-    amount: "10.32 L",
+    title: "Assets & Liabilities",
+    amount: (
+    <div className="dual-amount">
+      <span>Assets :<strong> 10.52 L</strong></span>
+      <span>Liabilities :<strong> 8.25 L</strong></span>
+    </div>
+  ),
     icon: <Scale size={23} />,
     bg: "linear-gradient(135deg,#7c3aed,#c084fc)"
   },
@@ -711,8 +726,13 @@ export default function Dashboard() {
   },
 
   {
-    title: "Total Receipts",
-    amount: "2.85 Cr.",
+    title: "Stock",
+    amount: (
+    <div className="dual-amount">
+      <span>In :<strong> 85 cr</strong></span>
+      <span>out :<strong> 3.25 cr</strong></span>
+    </div>
+  ),
     icon: <IndianRupee size={23} />,
     bg: "linear-gradient(135deg,#059669,#34d399)"
   }
@@ -1162,60 +1182,165 @@ export default function Dashboard() {
         <div className="middle-grid">
 
           {/* GST TABLE */}
-
           <div className="gst-card">
 
-            <div className="section-title">
-              GST Status
+            <div className="gst-top-header">
+
+              <div className="section-title">
+                GST Status
+              </div>
+
+              <div className="gst-filter">
+
+                <span>
+                  Month
+                </span>
+
+                <select className="gst-select">
+
+                  <option>
+                    Current Month
+                  </option>
+
+                  <option>
+                    April
+                  </option>
+
+                  <option>
+                    May
+                  </option>
+
+                  <option>
+                    June
+                  </option>
+
+                </select>
+
+              </div>
+
             </div>
-            <table>
+
+            <table className="gst-table">
+
               <thead>
+
                 <tr>
-                  <th></th>
-                  <th>IGST</th>
-                  <th>CGST</th>
-                  <th>SGST</th>
-                  <th>CESS</th>
-                  <th>Total GST</th>
+
+                  <th className="part-head">Particulars</th>
+
+                  <th className="igst-head">
+                    IGST
+                  </th>
+
+                  <th className="cgst-head">
+                    CGST
+                  </th>
+
+                  <th className="sgst-head">
+                    SGST
+                  </th>
+
+                  <th className="cess-head">
+                    CESS
+                  </th>
+
+                  <th className="total-head">
+                    Total GST
+                  </th>
+
                 </tr>
 
               </thead>
 
               <tbody>
 
-                <tr>
-                  <td>Net Outputs</td>
-                  <td>5,00,000</td>
-                  <td>3,80,000</td>
-                  <td>3,80,000</td>
-                  <td>30,000</td>
-                  <td>12,90,000</td>
+                {/* NET OUTPUT */}
+
+                <tr className="output-row">
+
+                  <td className="row-title output-title">
+                    Net Outputs
+                  </td>
+
+                  <td className="output-value">
+                    5,00,000
+                  </td>
+
+                  <td className="output-value">
+                    3,80,000
+                  </td>
+
+                  <td className="output-value">
+                    3,80,000
+                  </td>
+
+                  <td className="output-value">
+                    30,000
+                  </td>
+
+                  <td className="total-output">
+                    12,90,000
+                  </td>
+
                 </tr>
 
-                <tr>
-                  <td>Less Inputs</td>
-                  <td>6,00,000</td>
-                  <td>4,00,000</td>
-                  <td>4,00,000</td>
-                  <td>10,000</td>
-                  <td>14,10,000</td>
-                </tr>
+                {/* LESS INPUT */}
 
-                <tr className="negative-row">
-                  <td>ITC/Payable</td>
-                  <td>-1,00,000</td>
-                  <td>-20,000</td>
-                  <td>-20,000</td>
-                  <td>20,000</td>
-                  <td>-1,20,000</td>
+                <tr className="input-row">
+                  <td className="row-title input-title">
+                    Less Inputs
+                  </td>
+                  <td className="input-value">
+                    6,00,000
+                  </td>
+                  <td className="input-value">
+                    4,00,000
+                  </td>
+                  <td className="input-value">
+                    4,00,000
+                  </td>
+                  <td className="input-value">
+                    10,000
+                  </td>
+                  <td className="total-input">
+                    14,10,000
+                  </td>
                 </tr>
-
+                {/* ITC PAYABLE */}
+                <tr className="payable-row">
+                  <td className="row-title payable-title">
+                    <span className="itc-text">
+                      ITC
+                    </span>
+                    <span className="slash-text">
+                      /
+                    </span>
+                    <span className="payable-text">
+                      Payable
+                    </span>
+                  </td>
+                  {/* NEGATIVE */}
+                  <td className="negative-cell">
+                    -1,00,000
+                  </td>
+                  <td className="negative-cell">
+                    -20,000
+                  </td>
+                  <td className="negative-cell">
+                    -20,000
+                  </td>
+                  {/* POSITIVE */}
+                  <td className="positive-cell">
+                    20,000
+                  </td>
+                  {/* TOTAL */}
+                  <td className="negative-total">
+                    -1,20,000
+                  </td>
+                </tr>
               </tbody>
-
             </table>
-
           </div>
-
           {/* RIGHT SIDE */}
 
           <div className="side-cards">
@@ -1258,6 +1383,9 @@ export default function Dashboard() {
                 }
                 className="graph-select"
               >
+                <option value="daily">
+                  Daily
+                </option>
 
                 <option value="monthly">
                   Month Wise
@@ -1271,9 +1399,7 @@ export default function Dashboard() {
                   Year Wise
                 </option>
 
-                <option value="daily">
-                  Daily
-                </option>
+                
 
               </select>
 
@@ -1482,7 +1608,7 @@ export default function Dashboard() {
 
               <tr>
                 <td>15-02-26</td>
-                <td>ABC Traders</td>
+                <td>ABC Traders</td>  
                 <td>Sales</td>
                 <td>Tax/2025-26/001</td>
                 <td>5,10,320</td>

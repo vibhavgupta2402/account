@@ -6,6 +6,7 @@
 
 .dashboard-page {
   padding: 20px;
+  zoom: .95;
 }
 
 
@@ -191,6 +192,26 @@
   flex-wrap: wrap;
 
 }
+
+
+.dual-amount {
+  display: flex;
+  flex-direction: column;
+  gap: 0px;
+}
+
+.dual-amount span {
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(12, 12, 12, 0.95);
+  line-height: 1.1;
+}
+
+.dual-amount strong {
+  font-size: 16px;
+  font-weight: 700;
+  color: rgb(17, 17, 17);
+}
 /* =========================================
     NOTIFICATION
 ========================================= */
@@ -339,9 +360,9 @@
 .summary-card {
   background: white;
   border-radius: 16px;
-  padding: 10px;
+  padding:  8px;
   display: flex;
-  gap: 15px;
+  gap: 10px;
   align-items: center;
   border: 1px solid #e5e7eb;
   box-shadow: 0 3px 12px rgba(0,0,0,0.05);
@@ -438,6 +459,248 @@ table td {
 .mini-card.blue {
   background: #eff6ff;
 }
+
+
+/* =========================================
+    GST CARD
+========================================= */
+/* =========================================
+    TOP HEADER
+========================================= */
+
+.gst-top-header {
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  margin-bottom: 18px;
+
+  gap: 15px;
+
+  flex-wrap: wrap;
+
+}
+
+.gst-filter {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+}
+
+.gst-filter span {
+
+  font-size: 14px;
+
+  font-weight: 700;
+
+  color: #374151;
+
+}
+
+.gst-select {
+
+  height: 35px;
+
+  border-radius: 10px;
+
+  border: 1px solid #d1d5db;
+
+  padding: 0 14px;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  background: white;
+
+  outline: none;
+
+}
+
+/* =========================================
+    TABLE
+========================================= */
+
+.gst-table {
+
+  width: 100%;
+
+  border-collapse: collapse;
+
+}
+
+.gst-table thead th {
+
+  padding: 5px;
+  font-size: 15px;
+  font-weight: 800;
+  text-align: center;
+  border-bottom:
+    2px solid #e5e7eb;
+
+}
+
+/* HEAD COLORS */
+
+.igst-head {
+
+  color: #2563eb;
+
+}
+
+.cgst-head {
+
+  color: #4f46e5;
+
+}
+
+.sgst-head {
+
+  color: #7c3aed;
+
+}
+
+.cess-head {
+
+  color: #ea580c;
+
+}
+
+.total-head {
+  color: #16a34a;
+
+}
+
+/* =========================================
+    BODY
+========================================= */
+
+.gst-table tbody td {
+  padding: 6px 10px;
+  font-size: 15px;
+  font-weight: 700;
+  text-align: center;
+  border-bottom:
+    1px solid #f1f5f9;
+
+}
+
+/* ROW TITLES */
+
+.row-title {
+
+  text-align: center !important;
+  font-size: 16px !important;
+  font-weight: 800 !important;
+
+}
+
+/* OUTPUT */
+
+.output-title {
+
+  color: #ea580c;
+
+}
+
+.output-value {
+
+  color: #c2410c;
+
+}
+
+.total-output {
+
+  color: #15803d;
+
+  font-size: 17px;
+
+  font-weight: 900;
+
+}
+
+/* INPUT */
+
+.input-title {
+
+  color: #16a34a;
+
+}
+
+.input-value {
+
+  color: #15803d;
+
+}
+
+.total-input {
+
+  color: #15803d;
+
+  font-size: 17px;
+
+  font-weight: 900;
+
+}
+
+/* PAYABLE */
+.payable-title { display: flex; align-items: center; gap: 6px; font-weight: 900 !important; justify-content: center; }
+.itc-text { color: #f59e0b; }
+.slash-text { color: #050505; } 
+.payable-text { color: #dc2626; }
+
+.negative-cell {
+  color: #f59e0b;
+  font-weight: 800;
+
+}
+
+.positive-cell {
+  color: #dc2626;
+  font-weight: 800;
+  border-radius: 8px;
+}
+.part-head{
+      color: #090909;
+}
+.negative-total {
+
+  color: #f59e0b;
+
+  font-size: 17px;
+
+  font-weight: 900;
+
+}
+
+/* =========================================
+    RESPONSIVE
+========================================= */
+
+@media (max-width: 768px) {
+
+  .gst-card {
+
+    overflow-x: auto;
+
+  }
+
+  .gst-table {
+
+    min-width: 700px;
+
+  }
+
+}
+
+
 
 /* =========================
     CHART SECTION
