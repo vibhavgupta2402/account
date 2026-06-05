@@ -84,23 +84,7 @@ body {
     );
     pointer-events: none;
 }
-.menu li a {
-    display: flex;
-    align-items: center;
-    gap: 12px;
 
-    padding: 14px 16px;
-
-    border-radius: 14px;
-
-    color: #d1d5db;
-
-    transition: all .25s ease;
-}
-.menu li a:hover {
-    background: rgba(255,255,255,0.06);
-    color: white;
-}
 
 .menu a {
     transition: all 0.2s ease;
