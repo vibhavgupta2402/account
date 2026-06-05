@@ -937,7 +937,7 @@ const chartData = {
             "#a6ceff"
           ),
         borderRadius: 5,
-        barThickness: 8
+        // barThickness: 8
       },
 
       {
@@ -950,7 +950,7 @@ const chartData = {
           "#4de4f8"
         ),
         borderRadius: 4,
-        barThickness: 8
+        // barThickness: 8
       },
 
       {
@@ -963,7 +963,7 @@ const chartData = {
           "#fcc670"
         ),
         borderRadius: 4,
-        barThickness: 8
+        // barThickness: 8
       },
 
       {
@@ -976,7 +976,7 @@ const chartData = {
           "#80f4a1"
         ),
         borderRadius: 4,
-        barThickness: 8
+        // barThickness: 8
       }
 
     ]
@@ -1003,7 +1003,7 @@ const chartData = {
             "#a6ceff"
           ),
         borderRadius: 4,
-        barThickness: 8
+        // barThickness: 8
       },
 
       {
@@ -1016,7 +1016,7 @@ const chartData = {
           "#4de4f8"
         ),
         borderRadius: 4,
-        barThickness: 8
+        // barThickness: 8
       },
 
       {
@@ -1029,7 +1029,7 @@ const chartData = {
           "#fcc670"
         ),
         borderRadius: 4,
-        barThickness: 8
+        // barThickness: 8
       },
 
       {
@@ -1042,7 +1042,7 @@ const chartData = {
           "#80f4a1"
         ),
         borderRadius: 4,
-        barThickness: 8
+        // barThickness: 8
       }
 
     ]
@@ -1059,7 +1059,7 @@ const chartData = {
 
       {
         label: "Sales",
-        data: [55,72,68,78],
+        data: [19,23,19,17],
         backgroundColor: (context) =>
           createBarGradient(
             context,
@@ -1067,12 +1067,12 @@ const chartData = {
             "#a6ceff"
           ),
         borderRadius: 4,
-        barThickness: 8
+        // barThickness: 8
       },
 
       {
         label: "Purchase",
-        data: [38,48,45,52],
+        data: [20,13,24,23],
         backgroundColor: (context) =>
         createBarGradient(
           context,
@@ -1080,12 +1080,12 @@ const chartData = {
           "#4de4f8"
         ),
         borderRadius: 4,
-        barThickness: 8
+        // barThickness: 8
       },
 
       {
         label: "Expenses",
-        data: [22,26,25,28],
+        data: [20,12,15,18],
         backgroundColor: (context) =>
         createBarGradient(
           context,
@@ -1093,7 +1093,7 @@ const chartData = {
           "#fcc670"
         ),
         borderRadius: 4,
-        barThickness: 8
+        // barThickness: 8
       },
 
       {
@@ -1106,7 +1106,7 @@ const chartData = {
           "#80f4a1"
         ),
         borderRadius: 4,
-        barThickness: 8
+        // barThickness: 8
       }
 
     ]
@@ -1126,7 +1126,7 @@ const chartData = {
 
       {
         label: "Sales",
-        data: [180,220,280,350],
+        data: [18,22,22,23],
         backgroundColor: (context) =>
           createBarGradient(
             context,
@@ -1134,12 +1134,12 @@ const chartData = {
             "#a6ceff"
           ),
         borderRadius: 4,
-        barThickness: 8
+        // barThickness: 8
       },
 
       {
         label: "Purchase",
-        data: [120,150,190,250],
+        data: [12,15,19,21],
         backgroundColor: (context) =>
         createBarGradient(
           context,
@@ -1147,12 +1147,12 @@ const chartData = {
           "#4de4f8"
         ),
         borderRadius: 4,
-        barThickness: 8
+        // barThickness: 8
       },
 
       {
         label: "Expenses",
-        data: [80,95,120,145],
+        data: [10,22,12,14],
         backgroundColor: (context) =>
         createBarGradient(
           context,
@@ -1160,12 +1160,12 @@ const chartData = {
           "#fcc670"
         ),
         borderRadius: 4,
-        barThickness: 8
+        // barThickness: 8
       },
 
       {
         label: "Profit",
-        data: [40,55,90,120],
+        data: [20,22,20,20],
         backgroundColor: (context) =>
         createBarGradient(
           context,
@@ -1173,7 +1173,7 @@ const chartData = {
           "#80f4a1"
         ),
         borderRadius: 4,
-        barThickness: 8
+        // barThickness: 8
       }
 
     ]
@@ -1183,12 +1183,12 @@ const chartData = {
 };
 const chartOptions = {
   responsive: true,
-  // datasets: {
-  //   bar: {
-  //     categoryPercentage: 0.70,
-  //     barPercentage: 0.50
-  //   }
-  // },
+  datasets: {
+    bar: {
+      categoryPercentage: 0.5,
+      barPercentage: 0.6
+    }
+  },
 
   maintainAspectRatio: false,
   plugins: {
@@ -1534,11 +1534,13 @@ const chartOptions = {
               <div className="card-content">
                 <h4>E-Way Bill Status</h4>
                 <div className="card-status-row">
-                  <span>Generated :</span>
+                  <span >Generated </span>
+                   <span className="separator">:</span>
                   <span className="value">125</span>
                 </div>
                 <div className="card-status-row">
-                  <span>Sales :</span>
+                  <span >Sales </span>
+                   <span className="separator">:</span>
                   <span className="value">2.11 Cr.</span>
                 </div>
               </div>
@@ -1552,17 +1554,20 @@ const chartOptions = {
               <div className="card-content">
                 <h4>E-Invoice Status</h4>
                 <div className="status-row">
-                  <span>Generated :</span>
+                  <span>Generated</span>
+                  <span className="separator">:</span>
                   <span className="value">325</span>
                 </div>
 
                 <div className="status-row">
-                  <span>Sales :</span>
+                  <span>Sales</span>
+                  <span className="separator">:</span>
                   <span className="value">2.07 Cr.</span>
                 </div>
 
                 <div className="status-row">
-                  <span>Pending :</span>
+                  <span>Pending </span>
+                  <span className="separator">:</span>
                   <span className="pending-value">30</span>
                 </div>
               </div>

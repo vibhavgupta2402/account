@@ -742,21 +742,27 @@
   color: #4b5563;
 }
 .status-row {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 70px 10px  1fr;
   align-items: center;
-  margin-top: 1px;
-  width: 45%;
+  margin-bottom: 2px;
+  font-size: 14px;
+  line-height: 1.5;
 }
 .status-row span{
   font-weight: 500;
 }
 .card-status-row{
-  display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 5px;
-    width: 40%;
+  display: grid;
+  grid-template-columns: 70px 10px  1fr;
+  align-items: center;
+  margin-bottom: 1px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.separator {
+  text-align: center;
+  color: #4b5563;
 }
 .card-status-row{
   font-weight: 500;
