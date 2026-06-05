@@ -1195,8 +1195,8 @@
 }
 
 /* Selection styling */
-::selection {
+/* ::selection {
   background: #34d399;
   color: white;
-}
+} */
 
