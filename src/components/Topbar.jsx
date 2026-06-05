@@ -59,23 +59,44 @@
 import "../styles/tabbar.css";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import {
+  FaShoppingCart,
+  FaFileInvoice,
+  FaMoneyCheckAlt,
+  FaReceipt,
+  FaTruck,
+  FaBook,
+  FaExchangeAlt,
+  FaClipboardList,
+} from "react-icons/fa";
 
 export default function Topbar({ collapsed, toggleSidebar }) {
   const navigate = useNavigate();
   const [activeMenu, setActiveMenu] = useState("sale");
 
   const menuItems = [
-    { key: "sale", label: "Sale", path: "/SalesInvoices" },
-    { key: "credit", label: "Credit Note", path: "/CreditNote"},
-    { key: "debit", label: "Debit Note", path: "/DebitNote" },
-    { key: "payment", label: "Payment", path: "/PaymentInvoice"},
-    { key: "receipt", label: "Receipt", path: "/Receipts" },
-    { key: "purchase", label: "Purchase", path: "/purchasevoucher" },
-    { key: "journal", label: "Journal", path: "/Journal" },
-    { key: "deliverychallan", label: "Delivery Challan", path: "/Delivery" },
-    { key: "Purchaseorder", label: "Purchase Order", path: "/PurchaseOrder"},
-    { key: "Saleorder", label: "Sale Order", path: "/SaleOrder" },
-    { key: "Contra", label: "Contra", path: "/contra" },
+    { key: "sale", label: "Sale",icon: <FaShoppingCart />,
+    color: "#3b82f6", path: "/SalesInvoices" },
+    { key: "credit", label: "Credit Note",icon: <FaFileInvoice />,
+    color: "#06b6d4", path: "/CreditNote"},
+    { key: "debit", label: "Debit Note", icon: <FaFileInvoice />,
+    color: "#6366f1", path: "/DebitNote" },
+    { key: "payment", label: "Payment",icon: <FaMoneyCheckAlt />,
+    color: "#22c55e", path: "/PaymentInvoice"},
+    { key: "receipt", label: "Receipt", icon: <FaReceipt />,
+    color: "#10b981", path: "/Receipts" },
+    { key: "purchase", label: "Purchase",icon: <FaShoppingCart />,
+    color: "#ec4899", path: "/purchasevoucher" },
+    { key: "journal", label: "Journal", icon: <FaBook />,
+    color: "#4f46e5", path: "/Journal" },
+    { key: "deliverychallan", label: "Delivery Challan",icon: <FaTruck />,
+    color: "#f59e0b", path: "/Delivery" },
+    { key: "Purchaseorder", label: "Purchase Order",icon: <FaClipboardList />,
+    color: "#2563eb", path: "/PurchaseOrder"},
+    { key: "Saleorder", label: "Sale Order", icon: <FaClipboardList />,
+    color: "#f97316", path: "/SaleOrder" },
+    { key: "Contra", label: "Contra",icon: <FaExchangeAlt />,
+    color: "#8b5cf6", path: "/contra" },
 
   ];
 
@@ -93,18 +114,29 @@ export default function Topbar({ collapsed, toggleSidebar }) {
       </div>
 
       <div className="top-actions">
-        {/* <div className="top-menu"> */}
-          {menuItems.map((item) => (
-            <button
-              key={item.key}
-              className={`menu-btn ${item.key}-btn ${activeMenu === item.key ? 'active' : ''}`}
-              onClick={() => handleMenuClick(item.path, item.key)}
-            >
-              {/* <span className="menu-icon">{item.icon}</span> */}
-              <span className="menu-label">{item.label}</span>
-            </button>
-          ))}
-        </div>
+        {menuItems.map((item) => (
+          <button
+            key={item.key}
+            className={`voucher-btn ${
+              activeMenu === item.key ? "active" : ""
+            }`}
+            style={{
+              "--btn-color": item.color,
+            }}
+            onClick={() =>
+              handleMenuClick(item.path, item.key)
+            }
+          >
+            <span className="voucher-icon">
+              {item.icon}
+            </span>
+
+            <span className="voucher-label">
+              {item.label}
+            </span>
+          </button>
+        ))}
+      </div>
         
         {/* <div className="cta-buttons">
           <button 

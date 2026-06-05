@@ -557,7 +557,7 @@
 // }
 
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import {useOutletContext,useNavigate} from "react-router-dom";
 import {
   Chart as ChartJS,
@@ -570,7 +570,10 @@ import {
   Legend
 } from "chart.js";
 
+// import { Line } from "react-chartjs-2";
 import { Bar } from "react-chartjs-2";
+import { FaTruck, FaFileInvoice } from "react-icons/fa";
+// import ChartDataLabels from "chartjs-plugin-datalabels";
 import {
   ShoppingCart,
   ReceiptText,
@@ -742,333 +745,511 @@ export default function Dashboard() {
   /* ================================
       CHART DATA
   ================================= */
-
-  const chartData = {
-
-    monthly: {
-
-      labels: [
-        "Jan","Feb","Mar","Apr",
-        "May","Jun","Jul","Aug",
-        "Sep","Oct","Nov","Dec"
-      ],
-
-      datasets: [
-
-        {
-          label: "Sales",
-
-          data: [
-            32,28,30,26,
-            29,34,31,28,
-            30,35,33,37
-          ],
-
-          backgroundColor: "#ff4d6d",
-
-          borderRadius: 8,
-
-          barThickness: 10
-        },
-
-        {
-          label: "Purchase",
-
-          data: [
-            22,20,24,18,
-            21,26,22,20,
-            21,28,25,29
-          ],
-
-          backgroundColor: "#3b82f6",
-
-          borderRadius: 8,
-
-          barThickness: 10
-        },
-
-        {
-          label: "Expenses",
-
-          data: [
-            14,12,15,13,
-            14,18,16,14,
-            15,19,17,18
-          ],
-
-          backgroundColor: "#f97316",
-
-          borderRadius: 8,
-
-          barThickness: 10
-        },
-
-        {
-          label: "Profit",
-
-          data: [
-            10,8,9,7,
-            8,12,10,9,
-            11,13,12,14
-          ],
-
-          backgroundColor: "#65a30d",
-
-          borderRadius: 8,
-
-          barThickness: 10
-        }
-
-      ]
-
-    },
-
-    quarterly: {
-
-      labels: [
-        "Q1","Q2","Q3","Q4"
-      ],
-
-      datasets: [
-
-        {
-          label: "Sales",
-
-          data: [
-            90,110,95,120
-          ],
-
-          backgroundColor: "#ff4d6d",
-          borderRadius: 8,
-          barPercentage: 0.9,
-          categoryPercentage: 0.7
-        },
-
-        {
-          label: "Purchase",
-
-          data: [
-            60,72,66,75
-          ],
-
-          backgroundColor: "#3b82f6",
-
-          borderRadius: 8,
-          barPercentage: 0.9,
-
-  categoryPercentage: 0.7
-        },
-
-        {
-          label: "Expenses",
-
-          data: [
-            40,46,42,50
-          ],
-
-          backgroundColor: "#f97316",
-
-          borderRadius: 8
-        },
-
-        {
-          label: "Profit",
-
-          data: [
-            20,28,24,35
-          ],
-
-          backgroundColor: "#65a30d",
-
-          borderRadius: 8
-        }
-
-      ]
-
-    },
-
-    yearly: {
-
-      labels: [
-        "2023","2024","2025","2026"
-      ],
-
-      datasets: [
-
-        {
-          label: "Sales",
-
-          data: [
-            320,420,390,480
-          ],
-          backgroundColor: "#ff4d6d",
-          borderRadius: 8
-        },
-
-        {
-          label: "Purchase",
-
-          data: [
-            210,260,250,300
-          ],
-
-          backgroundColor: "#3b82f6",
-
-          borderRadius: 8
-        },
-
-        {
-          label: "Expenses",
-
-          data: [
-            150,180,170,210
-          ],
-
-          backgroundColor: "#f97316",
-
-          borderRadius: 8
-        },
-
-        {
-          label: "Profit",
-
-          data: [
-            70,100,95,130
-          ],
-
-          backgroundColor: "#65a30d",
-
-          borderRadius: 8
-        }
-
-      ]
-
-    },
-
-    daily: {
-
-      labels: [
-        "Mon","Tue","Wed",
-        "Thu","Fri","Sat","Sun"
-      ],
-
-      datasets: [
-
-        {
-          label: "Sales",
-
-          data: [
-            12,15,14,13,18,20,17
-          ],
-
-          backgroundColor: "#ff4d6d",
-
-          borderRadius: 8
-        },
-
-        {
-          label: "Purchase",
-
-          data: [
-            8,10,9,8,11,12,10
-          ],
-
-          backgroundColor: "#3b82f6",
-
-          borderRadius: 8
-        },
-
-        {
-          label: "Expenses",
-
-          data: [
-            5,6,5,7,8,7,6
-          ],
-
-          backgroundColor: "#f97316",
-
-          borderRadius: 8
-        },
-
-        {
-          label: "Profit",
-
-          data: [
-            4,5,4,5,7,8,7
-          ],
-
-          backgroundColor: "#65a30d",
-
-          borderRadius: 8
-        }
-
-      ]
-
-    }
-
-  };
-
-  const chartOptions = {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      legend: {
-        position: "top",
-        labels: {
-          boxWidth: 18,
-          boxHeight: 18,
-          padding: 20,
-          color: "#111827",
-          font: {
-            size: 14,
-            weight: "600"
-          }
-
-        }
-
-      }
-
-    },
-
-    scales: {
-      x: {
-        grid: {
-          display: false
-        },
-        ticks: {
-          color: "#374151",
-          font: {
-            size: 13,
-            weight: "600"
-          }
-
-        }
-
+/* =========================================
+    PREMIUM CHART DATA
+========================================= */
+
+// const createGradient = (context, startColor) => {
+//   const chart = context.chart;
+//   const { ctx, chartArea } = chart;
+
+//   if (!chartArea) return null;
+
+//   const gradient = ctx.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
+//   gradient.addColorStop(0, startColor);
+//   gradient.addColorStop(0.35, startColor.replace("1)", "0.15)"));
+//   gradient.addColorStop(0.50, "rgba(255, 255, 255, 0)");
+
+//   return gradient;
+// };
+
+// const commonDataset = (label, data, borderColor, gradientColor) => ({
+//   label,
+//   data,
+//   borderColor,
+//   backgroundColor: (context) => createGradient(context, gradientColor),
+//   fill: true,
+//   tension: 0.45,
+//   borderWidth: 3,
+//   pointRadius: 0,
+//   pointHoverRadius: 6,
+//   pointHoverBackgroundColor: "#ffffff",
+//   pointHoverBorderWidth: 4,
+//   cubicInterpolationMode: "monotone"
+// });
+
+// const chartData = useMemo(() => {
+//   return {
+//     daily: {
+//       labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+//       datasets: [
+//         commonDataset("Sales", [32, 38, 42, 39, 47, 44, 52], "#2563eb", "rgba(37, 99, 235, 1)"),
+//         commonDataset("Purchase", [18, 24, 28, 25, 30, 27, 36], "#64748b", "rgba(100, 116, 139, 1)"),
+//         commonDataset("Expenses", [10, 15, 14, 13, 18, 16, 20], "#f97316", "rgba(249, 115, 22, 1)"),
+//         commonDataset("Profit", [4, 8, 7, 7, 10, 8, 12], "#65a30d", "rgba(101, 163, 13, 1)")
+//       ]
+//     },
+//     monthly: {
+//       labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+//       datasets: [
+//         commonDataset("Sales", [28, 35, 41, 38, 49, 40, 45, 52, 47, 58, 50, 63], "#2563eb", "rgba(37, 99, 235, 1)"),
+//         commonDataset("Purchase", [18, 24, 29, 25, 31, 27, 25, 30, 27, 33, 29, 37], "#64748b", "rgba(100, 116, 139, 1)"),
+//         commonDataset("Expenses", [9, 14, 13, 12, 16, 15, 14, 17, 16, 21, 19, 24], "#f97316", "rgba(249, 115, 22, 1)"),
+//         commonDataset("Profit", [3, 8, 7, 7, 9, 8, 7, 10, 8, 12, 10, 14], "#65a30d", "rgba(101, 163, 13, 1)")
+//       ]
+//     },
+//     quarterly: {
+//       labels: ["Q1", "Q2", "Q3", "Q4"],
+//       datasets: [
+//         commonDataset("Sales", [120, 145, 138, 170], "#2563eb", "rgba(37, 99, 235, 1)"),
+//         commonDataset("Purchase", [70, 82, 78, 96], "#64748b", "rgba(100, 116, 139, 1)"),
+//         commonDataset("Expenses", [42, 50, 46, 60], "#f97316", "rgba(249, 115, 22, 1)"),
+//         commonDataset("Profit", [18, 25, 22, 32], "#65a30d", "rgba(101, 163, 13, 1)")
+//       ]
+//     },
+//     yearly: {
+//       labels: ["2022", "2023", "2024", "2025"],
+//       datasets: [
+//         commonDataset("Sales", [280, 340, 410, 520], "#2563eb", "rgba(37, 99, 235, 1)"),
+//         commonDataset("Purchase", [170, 210, 250, 320], "#64748b", "rgba(100, 116, 139, 1)"),
+//         commonDataset("Expenses", [90, 120, 145, 180], "#f97316", "rgba(249, 115, 22, 1)"),
+//         commonDataset("Profit", [42, 58, 75, 120], "#65a30d", "rgba(101, 163, 13, 1)")
+//       ]
+//     }
+//   };
+// }, []);
+//     const chartOptions = {
+//   responsive: true,
+//   maintainAspectRatio: false,
+//   interaction: {
+//     mode: "index",
+//     intersect: false
+//   },
+//   plugins: {
+//     legend: {
+//       position: "top",
+//       align: "center",
+//       labels: {
+//         usePointStyle: true,
+//         pointStyle: "circle",
+//         padding: 30, // Increased padding for breathing room
+//         color: "#1e293b", // Slate-800 instead of harsh true black
+//         boxWidth: 10,
+//         boxHeight: 10,
+//         font: {
+//           size: 14,
+//           weight: "600", // Semi-bold looks cleaner than ultra-thick 700
+//           family: "'Inter', sans-serif"
+//         }
+//       }
+//     },
+//     tooltip: {
+//       backgroundColor: "rgba(17, 24, 39, 0.95)", // Slightly translucent dark glass
+//       titleColor: "#ffffff",
+//       bodyColor: "#f3f4f6",
+//       padding: 12,
+//       cornerRadius: 12,
+//       boxPadding: 6, // Adds premium spacing inside tooltips
+//       usePointStyle: true // Uses the circular icons in the tooltip matching the legend
+//     }
+//   },
+//   scales: {
+//     x: {
+//       grid: {
+//         display: false
+//       },
+//       ticks: {
+//         color: "#94a3b8", // Subdued gray text so chart curves stand out
+//         padding: 10,
+//         font: {
+//           size: 12,
+//           weight: "600",
+//           family: "'Inter', sans-serif"
+//         }
+//       },
+//       border: {
+//         display: false // Removes the harsh bottom line axis line
+//       }
+//     },
+//     y: {
+//       beginAtZero: true,
+//       suggestedMax: 60, // Gives the chart top headroom exactly like the image
+//       grid: {
+//         color: "rgba(226, 232, 240, 0.4)", // Very soft slate divider lines
+//         drawTicks: false
+//       },
+//       border: {
+//         display: false
+//       },
+//       ticks: {
+//         color: "#94a3b8",
+//         padding: 12,
+//         font: {
+//           size: 12,
+//           weight: "500",
+//           family: "'Inter', sans-serif"
+//         },
+//         callback: (value) => value + "L"
+//       }
+//     }
+//   }
+// };
+const createBarGradient = (
+  context,
+  color1,
+  color2
+) => {
+
+  const chart = context.chart;
+  const { ctx, chartArea } = chart;
+  if (!chartArea) return null;
+  const gradient =
+    ctx.createLinearGradient(
+      0,
+      chartArea.top,
+      0,
+      chartArea.bottom
+    );
+  gradient.addColorStop(0, color1);
+  gradient.addColorStop(1, color2);
+  gradient.addColorStop(
+    1,
+    "rgba(255,255,255,0.12)"
+  );
+  return gradient;
+};
+
+
+const chartData = {
+  daily: {
+    labels: [
+      "Mon","Tue","Wed",
+      "Thu","Fri","Sat","Sun"
+    ],
+    datasets: [
+      {
+        label: "Sales",
+        data: [12,15,13,14,18,22,17],
+        backgroundColor: (context) =>
+          createBarGradient(
+            context,
+            "#084ee5",
+            "#a6ceff"
+          ),
+        borderRadius: 5,
+        barThickness: 8
       },
 
-      y: {
+      {
+        label: "Purchase",
+        data: [8,10,9,8,11,13,9],
+        backgroundColor: (context) =>
+        createBarGradient(
+          context,
+          "#032a34",
+          "#4de4f8"
+        ),
+        borderRadius: 4,
+        barThickness: 8
+      },
 
-        beginAtZero: true,
+      {
+        label: "Expenses",
+        data: [5,6,5,5,7,8,6],
+        backgroundColor: (context) =>
+        createBarGradient(
+          context,
+          "#f91511",
+          "#fcc670"
+        ),
+        borderRadius: 4,
+        barThickness: 8
+      },
 
-        grid: {
-          color: "#e5e7eb"
-        },
-
-        ticks: {
-
-          color: "#374151",
-
-          callback: (value) =>
-            value + " L"
-
-        }
-
+      {
+        label: "Profit",
+        data: [4,5,4,4,6,6,5],
+        backgroundColor: (context) =>
+        createBarGradient(
+          context,
+          "#05571197",
+          "#80f4a1"
+        ),
+        borderRadius: 4,
+        barThickness: 8
       }
 
+    ]
+
+  },
+
+  monthly: {
+
+    labels: [
+      "Jan","Feb","Mar","Apr",
+      "May","Jun","Jul","Aug",
+      "Sep","Oct","Nov","Dec"
+    ],
+
+    datasets: [
+
+      {
+        label: "Sales",
+        data: [12,15,13,14,18,22,17,16,20,19,18,21],
+        backgroundColor: (context) =>
+          createBarGradient(
+            context,
+            "#084ee5",
+            "#a6ceff"
+          ),
+        borderRadius: 4,
+        barThickness: 8
+      },
+
+      {
+        label: "Purchase",
+        data: [8,10,9,8,11,13,9,10,12,11,10,12],
+        backgroundColor: (context) =>
+        createBarGradient(
+          context,
+          "#032a34",
+          "#4de4f8"
+        ),
+        borderRadius: 4,
+        barThickness: 8
+      },
+
+      {
+        label: "Expenses",
+        data: [5,6,5,5,7,8,6,6,7,7,6,7],
+        backgroundColor: (context) =>
+        createBarGradient(
+          context,
+          "#f91511",
+          "#fcc670"
+        ),
+        borderRadius: 4,
+        barThickness: 8
+      },
+
+      {
+        label: "Profit",
+        data: [4,5,4,4,6,6,5,5,6,6,5,6],
+        backgroundColor: (context) =>
+        createBarGradient(
+          context,
+          "#05571197",
+          "#80f4a1"
+        ),
+        borderRadius: 4,
+        barThickness: 8
+      }
+
+    ]
+
+  },
+
+  quarterly: {
+
+    labels: [
+      "Q1","Q2","Q3","Q4"
+    ],
+
+    datasets: [
+
+      {
+        label: "Sales",
+        data: [55,72,68,78],
+        backgroundColor: (context) =>
+          createBarGradient(
+            context,
+            "#084ee5",
+            "#a6ceff"
+          ),
+        borderRadius: 4,
+        barThickness: 8
+      },
+
+      {
+        label: "Purchase",
+        data: [38,48,45,52],
+        backgroundColor: (context) =>
+        createBarGradient(
+          context,
+          "#032a34",
+          "#4de4f8"
+        ),
+        borderRadius: 4,
+        barThickness: 8
+      },
+
+      {
+        label: "Expenses",
+        data: [22,26,25,28],
+        backgroundColor: (context) =>
+        createBarGradient(
+          context,
+          "#f91511",
+          "#fcc670"
+        ),
+        borderRadius: 4,
+        barThickness: 8
+      },
+
+      {
+        label: "Profit",
+        data: [18,22,20,24],
+        backgroundColor: (context) =>
+        createBarGradient(
+          context,
+          "#05571197",
+          "#80f4a1"
+        ),
+        borderRadius: 4,
+        barThickness: 8
+      }
+
+    ]
+
+  },
+
+  yearly: {
+
+    labels: [
+      "2022",
+      "2023",
+      "2024",
+      "2025"
+    ],
+
+    datasets: [
+
+      {
+        label: "Sales",
+        data: [180,220,280,350],
+        backgroundColor: (context) =>
+          createBarGradient(
+            context,
+            "#084ee5",
+            "#a6ceff"
+          ),
+        borderRadius: 4,
+        barThickness: 8
+      },
+
+      {
+        label: "Purchase",
+        data: [120,150,190,250],
+        backgroundColor: (context) =>
+        createBarGradient(
+          context,
+          "#032a34",
+          "#4de4f8"
+        ),
+        borderRadius: 4,
+        barThickness: 8
+      },
+
+      {
+        label: "Expenses",
+        data: [80,95,120,145],
+        backgroundColor: (context) =>
+        createBarGradient(
+          context,
+          "#f91511",
+          "#fcc670"
+        ),
+        borderRadius: 4,
+        barThickness: 8
+      },
+
+      {
+        label: "Profit",
+        data: [40,55,90,120],
+        backgroundColor: (context) =>
+        createBarGradient(
+          context,
+          "#05571197",
+          "#80f4a1"
+        ),
+        borderRadius: 4,
+        barThickness: 8
+      }
+
+    ]
+
+  }
+
+};
+const chartOptions = {
+  responsive: true,
+  // datasets: {
+  //   bar: {
+  //     categoryPercentage: 0.70,
+  //     barPercentage: 0.50
+  //   }
+  // },
+
+  maintainAspectRatio: false,
+  plugins: {
+    legend: {
+      position: "top",
+      labels: {
+        usePointStyle: true,
+        pointStyle: "circle",
+        boxWidth: 8,
+        boxHeight: 8,
+        padding: 30,
+        color: "#334155",
+        font: {
+          size: 12,
+          weight: "600"
+        }
+      }
+    },
+    
+    datalabels: {
+    anchor: "end",
+    align: "top",
+    color: "#475569",
+    font: {
+      size: 10,
+      weight: "600"
+    },
+    formatter: (value) =>
+      `${value} Cr`
+
+  }
+
+  },
+
+  scales: {
+    x: {
+      stacked: false,
+      grid: { display: false},
+      ticks: {
+        color: "#64748B",
+        font: {
+          weight: "600"
+        }
+      }
+    },
+    y: {
+      beginAtZero: true,
+      max: 25,
+      grid: {
+        color: "#EEF2F7",
+        drawBorder: false
+      },
+      ticks: {
+        stepSize: 5,
+        color: "#94A3B8",
+        callback: (value) =>
+          `${value} Cr`
+      }
     }
-
-  };
-
+  }
+};
   return (
     <div className={`main ${collapsed ? "collapsed" : ""}`}>
       <div className="dashboard-page">
@@ -1346,16 +1527,45 @@ export default function Dashboard() {
           <div className="side-cards">
 
             <div className="mini-card green">
-              <h4>E-Way Bill Status</h4>
-              <p>Generated: 125</p>
-              <p>Sales: 2.11 Cr.</p>
+              <div className="card-icon">
+                <FaTruck />
+              </div>
+
+              <div className="card-content">
+                <h4>E-Way Bill Status</h4>
+                <div className="card-status-row">
+                  <span>Generated :</span>
+                  <span className="value">125</span>
+                </div>
+                <div className="card-status-row">
+                  <span>Sales :</span>
+                  <span className="value">2.11 Cr.</span>
+                </div>
+              </div>
             </div>
 
             <div className="mini-card blue">
-              <h4>E-Invoice Status</h4>
-              <p>Generated: 325</p>
-              <p>Sales: 2.07 Cr.</p>
-              <p>Pending: 30</p>
+              <div className="card-icon">
+                <FaFileInvoice />
+              </div>
+
+              <div className="card-content">
+                <h4>E-Invoice Status</h4>
+                <div className="status-row">
+                  <span>Generated :</span>
+                  <span className="value">325</span>
+                </div>
+
+                <div className="status-row">
+                  <span>Sales :</span>
+                  <span className="value">2.07 Cr.</span>
+                </div>
+
+                <div className="status-row">
+                  <span>Pending :</span>
+                  <span className="pending-value">30</span>
+                </div>
+              </div>
             </div>
 
           </div>
@@ -1369,13 +1579,12 @@ export default function Dashboard() {
         <div className="chart-grid">
 
           {/* CHART */}
-
           <div className="chart-card">
-
+            {/* HEADER */}
             <div className="chart-header">
-
-              <h3>Business Graph</h3>
-
+              <h3>
+                Business Graph
+              </h3>
               <select
                 value={view}
                 onChange={(e)=>
@@ -1383,6 +1592,7 @@ export default function Dashboard() {
                 }
                 className="graph-select"
               >
+
                 <option value="daily">
                   Daily
                 </option>
@@ -1398,24 +1608,91 @@ export default function Dashboard() {
                 <option value="yearly">
                   Year Wise
                 </option>
-
-                
-
               </select>
-
             </div>
-
+            {/* CHART */}
             <div className="chart-wrapper">
-
+              {/* <Line
+                data={chartData[view]}
+                options={chartOptions}
+              /> */}
               <Bar
                 data={chartData[view]}
                 options={chartOptions}
               />
-
             </div>
-
+            {/* TREND STATS */}
+            <div className="trend-stats">
+              {/* CARD 1 */}
+              <div className="trend-box">
+                <div className="trend-icon blue">
+                  ↑
+                </div>
+                <div className="trend-content">
+                  <p>
+                    Highest Sales
+                  </p>
+                  <h4>
+                    ₹4.45 Cr
+                  </h4>
+                  <span>
+                    in December
+                  </span>
+                </div>
+              </div>
+              {/* CARD 2 */}
+              <div className="trend-box">
+                <div className="trend-icon gray">
+                  ↓
+                </div>
+                <div className="trend-content">
+                  <p>
+                    Lowest Sales
+                  </p>
+                  <h4>
+                    ₹2.45 Cr
+                  </h4>
+                  <span>
+                    in January
+                  </span>
+                </div>
+              </div>
+              {/* CARD 3 */}
+              <div className="trend-box">
+                <div className="trend-icon orange">
+                  ⟳
+                </div>
+                <div className="trend-content">
+                  <p>
+                    Avg. Monthly Sales
+                  </p>
+                  <h4>
+                    ₹3.12 Cr
+                  </h4>
+                  <span>
+                    12 Months Avg.
+                  </span>
+                </div>
+              </div>
+              {/* CARD 4 */}
+              <div className="trend-box">
+                <div className="trend-icon green">
+                  %
+                </div>
+                <div className="trend-content">
+                  <p>
+                    Avg. Profit Margin
+                  </p>
+                  <h4>
+                    24.82%
+                  </h4>
+                  <span>
+                    12 Months Avg.
+                  </span>
+                </div>
+              </div>
+            </div>
           </div>
-
           {/* SIDE TABLES */}
 
           <div className="pending-section">
