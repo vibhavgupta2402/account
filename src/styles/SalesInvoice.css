@@ -34,6 +34,31 @@
   gap: 6px;
   align-items: center;
 }
+/* sale header */
+.sale-header-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  border-radius: 14px;
+  padding: 13px 5px;
+  width: fit-content;
+  margin-top: -4px;
+}
+
+.sale-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  background: #f3f0ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sale-icon i {
+  font-size: 24px;
+  color: #6d4aff;
+}
 
 .settings-btn {
   height: 30px;
@@ -173,21 +198,22 @@
   width: 40%;
 }
 
-.voucher-value {
+.sale-voucher-value {
   font-size: 14px;
   font-weight: 600;
-  color: #111827;
-  background: #f3f4f6;
-  padding: 4px 10px;
+  color: #3b82f6;
+  background: #f3f0ff;
+  padding: 3px 10px;
   border-radius: 6px;
 }
 
 /* ROW 2 */
 .invoice-row {
   display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 20px;
+  grid-template-columns: 240px 180px;
+  gap: 24px;
   align-items: end;
+  justify-content: start;
 }
 
 /* Invoice */
@@ -217,9 +243,34 @@
   gap: 15px;
   align-items: end;
 }
+.sale-disp-section-title,
+.customer-card-title,
+.sales-edit-btn,
+.new-customer-btn
+ {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sale-disp-section-title svg {
+  color: #6c4cff;
+  font-size: 14px;
+}
+.customer-card-title svg {
+  color: #6c4cff;
+  font-size: 14px;
+}
+.sale-disp-section-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
 
 .invoice-header-section input {
-  width: 35%;
+  width: 55%;
   height: 30px;
   padding: 5px 8px;
   font-size: 13px;
@@ -239,8 +290,8 @@
 
 /* section title */
 .section-card h2 {
-  font-size: 15px;
-  margin-bottom: 6px;
+  font-size: 21px;
+  margin-bottom: 2px;
 }
 .title{
     text-align: center;
@@ -304,13 +355,20 @@
   
 } */
 
-.form-group {
+.sale-form-group {
   display: flex;
   flex-direction: column;
   gap: 3px;
 }
+.dispatch-center-fields {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 30px;
+  width: 55%;
+}
 
-.form-group label {
+.sale-form-group label {
   font-size: 11px;
   color: #6b7280;
 }
@@ -541,33 +599,77 @@
 
 /* ================== FOOTER ================== */
 
-.footer-actions {
+.sale-footer-actions {
   display: flex;
   justify-content: flex-end;
   gap: 8px;
   margin-top: 10px;
 }
 
-.footer-actions button {
+.sale-footer-actions button {
   padding: 6px 12px;
   font-size: 13px;
   border: none;
   border-radius: 4px;
 }
 
-.footer-actions button:nth-child(1) {
-  background: green;
+.sale-footer-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.sale-footer-actions button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border: none;
+  border-radius: 6px;
+  padding: 5px 8px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.sale-footer-actions button svg {
+  font-size: 11px;
+}
+.sale-save-btn {
+  background: #22c55e;
   color: white;
 }
 
-.footer-actions button:nth-child(2) {
-  background: blue;
+.sale-save-btn:hover {
+  background: #16a34a;
+}
+
+.sale-save-send-btn {
+  background: #6366f1;
   color: white;
 }
 
-.footer-actions button:nth-child(3) {
-  background: red;
+.sale-save-send-btn:hover {
+  background: #4f46e5;
+}
+
+.sale-print-btn {
+  background: #0ea5e9;
   color: white;
+}
+
+.sale-print-btn:hover {
+  background: #0284c7;
+}
+
+.sale-cancel-btn {
+  background: #ef4444;
+  color: white;
+}
+
+.sale-cancel-btn:hover {
+  background: #dc2626;
 }
 
 .search-customer {
@@ -582,26 +684,53 @@
   margin-bottom: 6px;
 }
 
-.search-box {
+.sale-search-box {
   display: flex;
   gap: 8px;
+  align-items: center;
+}
+.sale-search-input-wrapper {
+  position: relative;
 }
 
-.search-box input {
+/* .sale-search-box input {
   flex: 0;
-  width: 260px;
+  width: 300px;
   padding: 8px 12px;
   border: 1px solid #d1d5db;
   border-radius: 4px;
   font-size: 14px;
 }
+.sale-search-icon {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 14px;
+  color: #64748b;
+  pointer-events: none;
+} */
+.sale-search-input-wrapper input {
+  width: 300px;
+  padding: 8px 12px 8px 36px;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+}
 
+.sale-search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #6b7280;
+  font-size: 14px;
+}
 .new-customer-btn {
   padding: 5px 16px;
-  background: #eff6ff;
+  background: #f3f0ff;
   border: 1px solid #bfdbfe;
-  color: #1e40af;
-  border-radius: 4px;
+  color: #3b82f6;
+  border-radius: 14px;
   font-weight: 500;
   cursor: pointer;
   white-space: nowrap;
@@ -635,17 +764,18 @@
 .customer-card-header h3 {
   font-size: 15px;
   font-weight: 600;
-  color: #1f2937;
+  color: #6c4cff;
 }
 
-.edit-btn {
+
+.sales-edit-btn {
   padding: 4px 12px;
-  background: white;
+  background:  #6c4cff;
   border: 1px solid #d1d5db;
-  border-radius: 4px;
+  border-radius: 8px;
   font-size: 12px;
   font-weight: 500;
-  color: #4b5563;
+  color: white;
   cursor: pointer;
 }
 
@@ -776,7 +906,7 @@
     border: 1px solid #E5E7EB;
 }
 
-.date-input {
+.sale-date-input {
   width: 100%;
   padding: 8px 10px;
   border: 1px solid #ccc;
@@ -929,25 +1059,25 @@
     font-weight: 600;
     font-size: 11px;
     cursor: pointer;
-    background: linear-gradient(135deg, var(--ledger-success), #059669);
+    background: linear-gradient(135deg, #6c4cff);
     color: white;
     box-shadow: 0 2px 4px rgba(16, 185, 129, 0.2);
 }
 
 .eco-edit-btn:hover {
-  background: #059669;
+  background: #6c4cff;
   border-color: #9ca3af;
 }
 .salesman-create-btn{
     height: 28px;
-    width: 87px;
+    width: 128px;
     padding: 4px 2px;
     border: none;
     border-radius: var(--ledger-radius-md);
     font-weight: 600;
     font-size: 11px;
     cursor: pointer;
-    background: linear-gradient(135deg, var(--ledger-success), #059669);
+    background: linear-gradient(135deg,  #6c4cff);
     color: white;
     box-shadow: 0 2px 4px rgba(16, 185, 129, 0.2);
 
@@ -1252,7 +1382,7 @@
   line-height: 24px;     /* ADD THIS - matches height for vertical centering */
   border-radius: 6px;
   border: none;
-  background: linear-gradient(135deg, var(--ledger-success), #059669);
+  background: linear-gradient(135deg, #6c4cff);
   color: white;
   cursor: pointer;
   white-space: nowrap;
@@ -1297,7 +1427,7 @@
   transform: scale(1.2);
 }
 
-.delete-btn {
+.sale-delete-btn {
   background: #fee2e2;
   color: #dc2626;
   border: none;
@@ -1310,9 +1440,71 @@
   margin-left: 10px;
 }
 
-.delete-btn:hover {
+.sale-delete-btn:hover {
   background: #dc2626;
   color: white;
   transform: scale(1.05);
   transition: 0.2s ease;
+}
+
+.sale-add-item-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 4px 6px;
+  margin-top: 12px;
+  border: none;
+  border-radius: 6px;
+  background: #6c4cff;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.sale-add-item-btn:hover {
+  background: #6c4cff;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(34, 197, 94, 0.25);
+}
+
+.add-item-btn:active {
+  transform: translateY(0);
+}
+
+.sale-tax-summary {
+  width: 230px;
+  margin-left: auto;
+  padding: 10px 12px;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  background: #fff;
+}
+
+.sale-summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  font-size: 12px;
+  font-weight: 600;
+  color: #475569;
+
+  margin-bottom: 4px;
+}
+
+.sale-summary-row span:last-child {
+  color: #6c4cff;
+  font-weight: 700;
+}
+/* .sale-tax-summary {
+  width: 165px;
+  font-family: inherit;
+} */
+
+.sale-summary-row {
+  line-height: 1.2;
+  margin-bottom: 2px;
 }

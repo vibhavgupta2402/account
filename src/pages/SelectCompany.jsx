@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect,useRef  } from "react";
 import "../styles/selectCompany.css";
-import logo from "../assets/Logo.jpeg";
+import logo from "../assets/logo_app.jpeg";
 import {
   Building2,
   BadgeCheck,

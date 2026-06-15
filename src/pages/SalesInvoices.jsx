@@ -1,6 +1,11 @@
   import { useState, useRef, useEffect } from "react";
   import { useOutletContext,useNavigate } from "react-router-dom";
-  import { FaTrash } from "react-icons/fa";
+  import { FaTrash, FaBuilding , FaLocationArrow,FaUniversity,FaTruck, FaBoxOpen,FaPen, FaSearch,FaSave,
+  FaPaperPlane,
+  FaPrint,
+  FaTimes } from "react-icons/fa";
+  // import { FaLocationArrow } from "react-icons/fa";
+  // import { FaBuilding } from "react-icons/fa";
   import DatePicker from "react-datepicker";
   import "react-datepicker/dist/react-datepicker.css";
   import "../styles/SalesInvoice.css";
@@ -278,15 +283,23 @@ const handleGSTChange = (e) => {
       <div className="sales-invoice-app">
         <div className={`main-content ${collapsed ? "collapsed" : ""}`}>
           <div className="invoice-wrapper">
-            <h2>Sale Invoice</h2>
+            
             
             {/* ================= SALE SECTION ================= */}
             <div className="section-card">
-              <div className="sale-header">
+              <div className="sale-header-card">
+                <div className="sale-icon">
+                  <i className="fas fa-file-invoice"></i>
+                </div>
+                <div className="sale-info">
+                  <h2>Sale Invoice</h2>
                   <div className="voucher-row">
                     <label>Voucher No:</label>
-                    <span className="voucher-value">{generateVoucher()}</span>
+                    <span className="sale-voucher-value">{generateVoucher()}</span>
                   </div>
+                </div>
+              </div>
+              <div className="sale-header">
                 {/* ================= HEADER ================= */}
                   <div className="invoice-header-section">     
                     <div className="invoice-row">
@@ -337,6 +350,41 @@ const handleGSTChange = (e) => {
                         </div>
                       </div>
                       {/* Manual */}
+                      <div className="sale-form-group">
+                        <label>Invoice Date</label>
+                        <DatePicker
+                          selected={invoiceDate}
+                          onChange={(date) => setInvoiceDate(date)}
+                          dateFormat="dd/MM/yyyy"
+                          minDate={new Date(new Date().setFullYear(new Date().getFullYear() - 1))} // ✅ last 1 year
+                          className="sales-date-input"
+                          onChangeRaw={(e) => {
+                            if (!e || !e.target) return;
+                            let value = e.target.value || "";
+                            // allow only numbers + /
+                            value = value.replace(/[^0-9/]/g, "");
+                            // auto format DD/MM/YYYY
+                            if (value.length === 2 || value.length === 5) {
+                              if (!value.endsWith("/")) value += "/";
+                            }
+                            // restrict length
+                            if (value.length > 10) {
+                              value = value.slice(0, 10);
+                            }
+                            const parts = value.split("/");
+                            // day check
+                            if (parts[0] && Number(parts[0]) > 31) parts[0] = "31";
+                            // month check
+                            if (parts[1] && Number(parts[1]) > 12) parts[1] = "12";
+                            // year limit (4 digit)
+                            if (parts[2] && parts[2].length > 4) {
+                              parts[2] = parts[2].slice(0, 4);
+                            }
+                            value = parts.join("/");
+                            e.target.value = value;
+                          }}
+                        />
+                      </div>
                     </div>
                     {showInvoiceSettings && (
                       <div className="invoice-popup-overlay">
@@ -437,7 +485,7 @@ const handleGSTChange = (e) => {
                     )}
                   </div>
                 <div className="type-supply-container">
-                  <div className="form-group">
+                  <div className="sale-form-group">
                     <label>Voucher Mode</label>
                     <select value={invoiceType} onChange={(e) => setInvoiceType(e.target.value)}>
                       <option value="item">Item Invoice</option>
@@ -655,57 +703,20 @@ const handleGSTChange = (e) => {
                 </div>
               </div>
               <div className="sale-grid">
-                <div className="form-group">
+                <div className="sale-form-group">
                   <label>Order Number</label>
                   <select>
                     <option>Select</option>
                   </select>
                 </div>
-
-                <div className="form-group">
-                  <label>Invoice Date</label>
-                  <DatePicker
-                    selected={invoiceDate}
-                    onChange={(date) => setInvoiceDate(date)}
-                    dateFormat="dd/MM/yyyy"
-                    minDate={new Date(new Date().setFullYear(new Date().getFullYear() - 1))} // ✅ last 1 year
-                    className="date-input"
-                    onChangeRaw={(e) => {
-                      if (!e || !e.target) return;
-                      let value = e.target.value || "";
-                      // allow only numbers + /
-                      value = value.replace(/[^0-9/]/g, "");
-                      // auto format DD/MM/YYYY
-                      if (value.length === 2 || value.length === 5) {
-                        if (!value.endsWith("/")) value += "/";
-                      }
-                      // restrict length
-                      if (value.length > 10) {
-                        value = value.slice(0, 10);
-                      }
-                      const parts = value.split("/");
-                      // day check
-                      if (parts[0] && Number(parts[0]) > 31) parts[0] = "31";
-                      // month check
-                      if (parts[1] && Number(parts[1]) > 12) parts[1] = "12";
-                      // year limit (4 digit)
-                      if (parts[2] && parts[2].length > 4) {
-                        parts[2] = parts[2].slice(0, 4);
-                      }
-                      value = parts.join("/");
-                      e.target.value = value;
-                    }}
-                  />
-                </div>
-
-                <div className="form-group">
+                <div className="sale-form-group">
                   <label>Order Date</label>
                   <DatePicker
                     selected={orderDate}
                     onChange={(date) => setOrderDate(date)}
                     dateFormat="dd/MM/yyyy"
                     minDate={new Date(new Date().setFullYear(new Date().getFullYear() - 1))} // ✅ last 1 year
-                    className="date-input"
+                    className="sale-date-input"
                     onChangeRaw={(e) => {
                       if (!e || !e.target) return;
                       let value = e.target.value || "";
@@ -733,7 +744,7 @@ const handleGSTChange = (e) => {
                     }}
                   />
                 </div>
-                <div className="form-group">
+                <div className="sale-form-group">
                   <label>Salesman/Agent</label>
                   <div className="eco-inline">
                   <select>
@@ -756,43 +767,48 @@ const handleGSTChange = (e) => {
             {invoiceType !== "accounting" && (
             <div className="section-card">
               <div className="dispatch-header">
-              <h2>Dispatch Details</h2>
-                <div className="transporter-box">
-                  <label>Transporter Name</label>
-                  <div className="transporter-row"> 
-                    <select>
-                      <option>Select</option>
-                    </select>
-                    <button
-                      className="transporter-create-btn"
-                      onClick={() => navigate("/ledger")}
-                    >
-                      Create
-                    </button>
-                  </div>
-                </div>
-                <div className="gstin-container">
-                  <label>Transport GSTIN</label>
-                  <input 
-                    value={gstin}
-                    onChange={handleGSTChange}
-                    placeholder="Transport GSTIN"
-                  />
-
-                  {/* LOADING */}
-                  {gstLoading && <div className="gst-status">Validating...</div>}
-
-                  {/* ERROR */}
-                  {gstError && <div className="gst-error">{gstError}</div>}
-
-                  {/* SUCCESS */}
-                  {gstData && (
-                    <div className="gst-result-box">
-                      <p><strong>{gstData.name}</strong></p>
-                      <p>{gstData.state}</p>
-                      <p>Status: {gstData.status}</p>
+                <h2 className="sale-disp-section-title">
+                  <FaLocationArrow />
+                  <span>Dispatch Details</span>
+                </h2>
+                <div className="dispatch-center-fields">
+                  <div className="transporter-box">
+                    <label>Transporter Name</label>
+                    <div className="transporter-row"> 
+                      <select>
+                        <option>Select</option>
+                      </select>
+                      <button
+                        className="transporter-create-btn"
+                        onClick={() => navigate("/ledger")}
+                      >
+                        Create
+                      </button>
                     </div>
-                  )}
+                  </div>
+                  <div className="gstin-container">
+                    <label>Transport GSTIN</label>
+                    <input 
+                      value={gstin}
+                      onChange={handleGSTChange}
+                      placeholder="Transport GSTIN"
+                    />
+
+                    {/* LOADING */}
+                    {gstLoading && <div className="gst-status">Validating...</div>}
+
+                    {/* ERROR */}
+                    {gstError && <div className="gst-error">{gstError}</div>}
+
+                    {/* SUCCESS */}
+                    {gstData && (
+                      <div className="gst-result-box">
+                        <p><strong>{gstData.name}</strong></p>
+                        <p>{gstData.state}</p>
+                        <p>Status: {gstData.status}</p>
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
               <div className="dispatch-grid">
@@ -918,11 +934,17 @@ const handleGSTChange = (e) => {
             )}
             {/* ================= CUSTOMER ================= */}
             <div className="section-card">
-              <h2>Customer Details</h2>
+              <h2 className="sale-disp-section-title">
+                <FaBuilding />
+                <span>Customer Details</span>
+              </h2>
               <div className="search-customer">
                 <label>Search Customer Name</label>
-                <div className="search-box">
-                  <input type="text" placeholder="Search customer..." />
+                <div className="sale-search-box">
+                  <div className="sale-search-input-wrapper">
+                    <FaSearch className="sale-search-icon" />
+                    <input type="text" placeholder="Search customer..." />
+                  </div>
                   <button
                     className="new-customer-btn"
                     onClick={() => setShowCustomerPopup(true)}
@@ -1084,7 +1106,10 @@ const handleGSTChange = (e) => {
                 {/* Billed To */}
                 <div className="customer-card">
                   <div className="customer-card-header">
-                    <h3>Billed To:</h3>
+                    <h3 className="customer-card-title">
+                      <FaUniversity />
+                      Billed To:
+                    </h3>
                   </div>
                   
                   {editBilled ? (
@@ -1167,11 +1192,15 @@ const handleGSTChange = (e) => {
                 {invoiceType !== "accounting" && (
                 <div className="customer-card">
                   <div className="customer-card-header">
-                    <h3>Shipped To:</h3>
+                    <h3 className="customer-card-title">
+                      <FaTruck />
+                      Shipped To:
+                    </h3>
                     <button 
-                      className="edit-btn"
+                      className="sales-edit-btn"
                       onClick={() => setEditShipped(!editShipped)}
                     >
+                        <FaPen />
                       {editShipped ? 'Save' : 'Edit'}
                     </button>
                   </div>
@@ -1257,7 +1286,10 @@ const handleGSTChange = (e) => {
 
             {/* ================= ITEMS ================= */}
             <div className="section-card">
-              <h2>Items</h2>
+              <h2 className="sale-disp-section-title">
+                <FaBoxOpen />
+                <span>Items</span>
+              </h2>
 
               {invoiceType === "item" ? (
                 <table className="items-table">
@@ -1292,7 +1324,7 @@ const handleGSTChange = (e) => {
                         <tr key={i}>
                           <td>
                             <button
-                              className="delete-btn"
+                              className="sale-delete-btn"
                               onClick={() => deleteRow(i)}
                             >
                               <FaTrash />
@@ -1410,7 +1442,9 @@ const handleGSTChange = (e) => {
                 </table>
               )}
 
-              <button onClick={addRow}>+ Add Item</button>
+              <button className="sale-add-item-btn" onClick={addRow}>
+                + Add Item
+              </button>
             </div>
 
             {/* ================= SUMMARY ================= */}
@@ -1479,23 +1513,66 @@ const handleGSTChange = (e) => {
 
                 return (
                   <>
-                    <div>Sub Total: ₹ {sub.toFixed(2)}</div>
-                    <div>IGST: ₹ {igst.toFixed(2)}</div>
-                    <div>CGST: ₹ {cgst.toFixed(2)}</div>
-                    <div>SGST: ₹ {sgst.toFixed(2)}</div>
-                    <div>CESS: ₹ {cess.toFixed(2)}</div>
-                    <div>TCS: ₹ {tcs.toFixed(2)}</div>
-                    <div>Round Off: ₹ {roundOff.toFixed(2)}</div>
-                    <div className="total">Grand Total: ₹ {grandTotal.toFixed(2)}</div>
+                    <div className="sale-tax-summary">
+                      <div className="sale-summary-row">
+                        <span>Sub Total:</span>
+                        <span>₹ {sub.toFixed(2)}</span>
+                      </div>
+                      <div className="sale-summary-row">
+                        <span>IGST:</span>
+                        <span>₹ {igst.toFixed(2)}</span>
+                      </div>
+
+                      <div className="sale-summary-row">
+                        <span>CGST:</span>
+                        <span>₹ {cgst.toFixed(2)}</span>
+                      </div>
+                      <div className="sale-summary-row">
+                        <span>SGST:</span>
+                        <span>₹ {sgst.toFixed(2)}</span>
+                      </div>
+                      <div className="sale-summary-row">
+                        <span>CESS:</span>
+                        <span>₹ {cess.toFixed(2)}</span>
+                      </div>
+                      <div className="sale-summary-row">
+                        <span>TCS:</span>
+                        <span>₹ {tcs.toFixed(2)}</span>
+                      </div>
+                      <div className="sale-summary-row">
+                        <span>Round Off:</span>
+                        <span>₹ {roundOff.toFixed(2)}</span>
+                      </div>
+                      <div className="sale-summary-row grand-total">
+                        <span>Grand Total:</span>
+                        <span>₹ {grandTotal.toFixed(2)}</span>
+                      </div>
+                    </div>
                   </>
                 );
               })()}
             </div>
             {/* ================= ACTIONS ================= */}
-            <div className="footer-actions">
-              <button>Save</button>
-              <button>Save & Send</button>
-              <button>Cancel</button>
+            <div className="sale-footer-actions">
+              <button className="sale-save-btn">
+                <FaSave />
+                Save
+              </button>
+
+              <button className="sale-save-send-btn">
+                <FaPaperPlane />
+                Save & Send
+              </button>
+
+              <button className="sale-print-btn">
+                <FaPrint />
+                Print
+              </button>
+
+              <button className="sale-cancel-btn">
+                <FaTimes />
+                Cancel
+              </button>
             </div>
           </div>
         </div>

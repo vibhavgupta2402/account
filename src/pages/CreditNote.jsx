@@ -1,6 +1,9 @@
 import { useState ,useEffect} from "react";
 import { useOutletContext } from "react-router-dom";
-import { FaTrash } from "react-icons/fa";
+import { FaTrash,FaSearch,FaUniversity,FaTruck,FaPen,FaSave,
+  FaPaperPlane,
+  FaPrint,
+  FaTimes   } from "react-icons/fa";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "../styles/CreditNote.css";
@@ -141,20 +144,20 @@ const [crNo, setCrNo] = useState("");
 
           {/* HEADER */}
           <div className="header-cr">
-            <h2>Credit Note</h2>
-            <div className="header-grid">
-              {/* <input 
-                placeholder="Cr. Note Number"
-                value={creditNo}
-                onChange={(e) => setCreditNo(e.target.value)}
-              /> */}
-              
-              <div className="cr-section-card"> 
-                
+            <div className="header-grid">   
+              <div className="cr-section-card">
+                <div className="credit-header">
+                  <div className="credit-icon">
+                    <i className="fas fa-file-signature"></i>
+                  </div>
+                  <div className="credit-info">
+                    <h2>Credit Note</h2> 
                     <div className="cr-voucher-row">
                       <label>Voucher No:</label>
-                      <span className="voucher-value">{generateVoucher()}</span>
+                      <span className="credit-voucher-value">{generateVoucher()}</span>
                     </div>
+                  </div>
+                </div>
                   <div className="cr-header">
                     <div className="cr-no-group">
                       <label>Credit Note No.</label>
@@ -292,7 +295,7 @@ const [crNo, setCrNo] = useState("");
                         )}
                       </div>
                     </div>
-                  <div className="form-group">
+                  <div className="cr-form-group">
                   <label>CR.Note Date</label>
                   <DatePicker
                       selected={invoiceDate}
@@ -321,7 +324,7 @@ const [crNo, setCrNo] = useState("");
                       }}
                     />
                   </div>
-                  <div className="form-group">
+                  <div className="cr-form-group">
                     <label>Type of CR. Note</label>
                     <select value={type} onChange={(e) => setType(e.target.value)}>
                       <option value="">Select</option>
@@ -343,7 +346,12 @@ const [crNo, setCrNo] = useState("");
         {type === "sales_return" && (
           <div className="dis-section-card">
           <div className="dispatch-section">
-            <h3>Dispatch Details</h3>
+            <div className="cr-cust-details">
+              <div className="cr-cust-icon">
+                <i className="fas fa-shipping-fast"></i>
+              </div>
+              <h3>Dispatch Details</h3>
+            </div>
             <div className="grid">
               <input 
                 placeholder="Dispatch Doc No"
@@ -399,13 +407,21 @@ const [crNo, setCrNo] = useState("");
 
           {/* ================= CUSTOMER ================= */}
           <div className="section-card">
-            <h2>Customer Details</h2>
+            <div className="cr-cust-details">
+              <div className="cr-cust-icon">
+                <i className="fas fa-users"></i>
+              </div>
+              <h2>Customer Details</h2>
+            </div>
             <div className="search-customer">
               <label>Search Customer Name</label>
-              <div className="search-box">
-                <input type="text" placeholder="Search customer..." />
+              <div className="credit-search-box">
+                <div className="credit-search-input-wrapper">
+                  <FaSearch className="sale-search-icon" />
+                  <input type="text" placeholder="Search customer..." />
+                </div>
                 <button
-                    className="new-customer-btn"
+                    className="cr-new-customer-btn"
                     onClick={() => setShowCustomerPopup(true)}
                   >
                     New Customer
@@ -567,8 +583,12 @@ const [crNo, setCrNo] = useState("");
             <div className="customer-details-container">         
               {/* Billed To */}
               <div className="customer-card">
-                <div className="customer-card-header">
-                  <h3>Billed To:</h3>
+                <div className="cr-customer-card-header">
+                  
+                  <h3 className="cr-customer-card-title">
+                      <FaUniversity />
+                      Billed To:
+                    </h3>
                   {/* <button 
                     className="edit-btn"
                     onClick={() => setEditBilled(!editBilled)}
@@ -656,12 +676,16 @@ const [crNo, setCrNo] = useState("");
               {/* Shipped To */}
             {type === "sales_return" && (
               <div className="customer-card">
-                <div className="customer-card-header">
-                  <h3>Shipped To:</h3>
+                <div className="cr-customer-card-header">
+                  <h3 className="cr-customer-card-title">
+                    <FaTruck />
+                    Shipped To:
+                  </h3>
                   <button 
-                    className="edit-btn"
+                    className="cr-edit-btn"
                     onClick={() => setEditShipped(!editShipped)}
                   >
+                    <FaPen />
                     {editShipped ? 'Save' : 'Edit'}
                   </button>
                 </div>
@@ -747,7 +771,12 @@ const [crNo, setCrNo] = useState("");
 
           {/* ITEMS */}
           <div className="section-card">
-            <h2>Items</h2>
+            <div className="cr-cust-details">
+              <div className="cr-cust-icon">
+                <i className="fas fa-boxes"></i>
+              </div>
+              <h2>Items</h2>
+            </div>
             <table className="items-table">
               <thead>
                 <tr>
@@ -774,7 +803,7 @@ const [crNo, setCrNo] = useState("");
                     <tr key={i}>
                       <td>
                           <button
-                            className="delete-btn"
+                            className="sale-delete-btn"
                             onClick={() => deleteRow(i)}
                           >
                             <FaTrash />
@@ -845,7 +874,7 @@ const [crNo, setCrNo] = useState("");
                 })}
               </tbody>
             </table>
-            <button onClick={addRow}>+ Add Item</button>
+            <button className="cr-add-item-btn" onClick={addRow}>+ Add Item</button>
           </div>
 
           {/* SUMMARY */}
@@ -876,23 +905,66 @@ const [crNo, setCrNo] = useState("");
               const grandTotal = totalBeforeRound + roundOff;
               return (
                 <>
-                  <div>Sub Total: ₹ {sub.toFixed(2)}</div>
-                  <div>IGST: ₹ {igst.toFixed(2)}</div>
-                  <div>CGST: ₹ {cgst.toFixed(2)}</div>
-                  <div>SGST: ₹ {sgst.toFixed(2)}</div>
-                  <div>CESS: ₹ {cess.toFixed(2)}</div>
-                  <div>TCS: ₹ {tcs.toFixed(2)}</div>
-                  <div>Round Off: ₹ {roundOff.toFixed(2)}</div>
-                  <div className="total">Grand Total: ₹ {grandTotal.toFixed(2)}</div>
+                  <div className="cr-tax-summary">
+                      <div className="cr-summary-row">
+                        <span>Sub Total:</span>
+                        <span>₹ {sub.toFixed(2)}</span>
+                      </div>
+                      <div className="cr-summary-row">
+                        <span>IGST:</span>
+                        <span>₹ {igst.toFixed(2)}</span>
+                      </div>
+
+                      <div className="cr-summary-row">
+                        <span>CGST:</span>
+                        <span>₹ {cgst.toFixed(2)}</span>
+                      </div>
+                      <div className="cr-summary-row">
+                        <span>SGST:</span>
+                        <span>₹ {sgst.toFixed(2)}</span>
+                      </div>
+                      <div className="cr-summary-row">
+                        <span>CESS:</span>
+                        <span>₹ {cess.toFixed(2)}</span>
+                      </div>
+                      <div className="cr-summary-row">
+                        <span>TCS:</span>
+                        <span>₹ {tcs.toFixed(2)}</span>
+                      </div>
+                      <div className="cr-summary-row">
+                        <span>Round Off:</span>
+                        <span>₹ {roundOff.toFixed(2)}</span>
+                      </div>
+                      <div className="cr-summary-row grand-total">
+                        <span>Grand Total:</span>
+                        <span>₹ {grandTotal.toFixed(2)}</span>
+                      </div>
+                    </div>
                 </>
               );
             })()}
           </div>
           {/* ================= ACTIONS ================= */}
-          <div className="footer-actions">
-            <button>Save</button>
-            <button>Save & Send</button>
-            <button>Cancel</button>
+          <div className="sale-footer-actions">
+            <button className="sale-save-btn">
+              <FaSave />
+              Save
+            </button>
+
+            <button className="sale-save-send-btn">
+              <FaPaperPlane />
+              Save & Send
+            </button>
+
+            <button className="sale-print-btn">
+              <FaPrint />
+              Print
+            </button>
+
+            <button className="sale-cancel-btn">
+              <FaTimes />
+              Cancel
+            </button>
           </div>
 
         </div>

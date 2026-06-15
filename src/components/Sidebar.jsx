@@ -109,7 +109,7 @@
 
 import { NavLink, useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
-import logo from "../assets/Logo.jpeg";
+import logo from "../assets/logo_app.jpeg";
 import userImg from "../assets/Logo.jpeg";
 import "../styles/dashboard.css";
 import "../styles/style.css";

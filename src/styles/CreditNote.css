@@ -15,6 +15,140 @@
   display: flex;
   gap: 10px;
 }
+.credit-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  background: #f3f0ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.credit-icon i {
+  font-size: 24px;
+  color: #06b6d4;
+}
+.cr-form-group{
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  margin-bottom: 14px;
+}
+.cr-form-group label{
+  font-size: 11px;
+  color: #6b7280;
+}
+.cr-cust-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 12px;
+  background: #f3f0ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.cr-cust-details{
+      display: flex;
+    align-items: center;
+    gap: 16px;
+    border-radius: 14px;
+    padding: 13px 5px;
+    width: fit-content;
+}
+.credit-search-box {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.credit-search-input-wrapper {
+  position: relative;
+}
+.credit-search-input-wrapper input {
+  width: 300px;
+  padding: 8px 12px 8px 36px;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+}
+.cr-new-customer-btn {
+  padding: 5px 16px;
+  background: #f3f0ff;
+  border: 1px solid #bfdbfe;
+  color: #06b6d4;
+  border-radius: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.cr-new-customer-btn:hover {
+  background: #dbeafe;
+}
+.cr-customer-card-title svg {
+  color: #06b6d4;
+  font-size: 14px;
+}
+
+.cr-customer-card-title,
+.cr-edit-btn
+ {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.cr-edit-btn {
+  padding: 4px 12px;
+  background:  #06b6d4;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  color: white;
+  cursor: pointer;
+}
+.cr-customer-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.cr-customer-card-header h3 {
+  font-size: 15px;
+  font-weight: 600;
+  color: #06b6d4;
+}
+.cr-cust-icon i {
+  font-size: 18px;
+  color: #06b6d4;
+}
+.credit-header{
+      display: flex;
+    align-items: center;
+    gap: 16px;
+    border-radius: 14px;
+    padding: 13px 5px;
+    width: fit-content;
+    margin-top: -4px;
+}
+.cr-voucher-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: -8px;
+}
+
+.cr-voucher-row label {
+  font-size: 12px;
+  color: #6b7280;
+}
+.credit-voucher-value {
+  font-size: 14px;
+  font-weight: 600;
+  color: #06b6d4;
+  background: #f3f0ff;
+  padding: 3px 10px;
+  border-radius: 6px;
+}
 .dis-section-card{
   border: 1px solid #e5e7eb;
   width: 100%;
@@ -27,11 +161,11 @@
   gap: 12px;
 
 }
-.cr-voucher-row{
+/* .cr-voucher-row{
   display: flex;
     align-items: center;
     gap: 10px;
-}
+} */
 .cr-header {
   display: grid;
   grid-template-columns: .6fr .4fr .5fr 1fr 1fr;  /* Invoice bigger */
@@ -39,8 +173,8 @@
   align-items: end;
 }
 .dispatch-section h3{
-  font-size: 15px;
-    margin-bottom: -8px;
+  font-size: 21px;
+    margin-bottom: 5px;
 
 }
 .cr-section-card{
@@ -75,6 +209,7 @@
   display: flex;
     flex-direction: column;
     gap: 8px;
+    
 }
 .cr-no-group label{
   font-size: 12px;
@@ -180,4 +315,50 @@ table th, table td {
 .footer-actions button:nth-child(3) {
   background: red;
   color: white;
+}
+
+.cr-tax-summary {
+  width: 230px;
+  margin-left: auto;
+  padding: 10px 12px;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  background: #fff;
+}
+
+.cr-summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 600;
+  color: #475569;
+  margin-bottom: 4px;
+}
+
+.cr-summary-row span:last-child {
+  color: #06b6d4;
+  font-weight: 700;
+}
+.cr-add-item-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 4px 6px;
+  margin-top: 12px;
+  border: none;
+  border-radius: 6px;
+  background: #06b6d4;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.cr-add-item-btn:hover {
+  background: #06b6d4;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(34, 197, 94, 0.25);
 }
