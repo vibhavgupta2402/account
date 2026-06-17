@@ -141,16 +141,27 @@ const handleGSTChange = (e) => {
     <div className="purchase-order-app">
       <div className={`po-main-content ${collapsed ? "collapsed" : ""}`}>
         <div className="po-wrapper">
-           <h2>Purchase Order</h2>
+          
 
           {/* ================= HEADER ================= */}
           <div className="po-card">
            
             <div className="po-header-row">
-              <div className="pur-voucher-row">
-                <label>Voucher No:</label>
-                <span className="voucher-value">{generateVoucher()}</span>
+              <div className="po-title-section">
+                <div className="po-icon-box">
+                 <i className="fas fa-clipboard-check"></i>
+                </div>
+                <div>
+                   <h2>Purchase Order</h2>
+                  <div className="po-voucher-row">
+                    <label>Voucher No:</label>
+                    <span className="po-voucher-badge">
+                      {generateVoucher()}
+                    </span>
+                  </div>
+                </div>
               </div>
+              
               <div className="pur-header-date">
                 <label>Date :</label>
                 <DatePicker
@@ -158,7 +169,7 @@ const handleGSTChange = (e) => {
                   onChange={(date) => setPurorDate(date)}
                   dateFormat="dd/MM/yyyy"
                   minDate={new Date(new Date().setFullYear(new Date().getFullYear() - 1))} // ✅ last 1 year
-                  className="date-input"
+                  className="po-date-input"
                   onChangeRaw={(e) => {
                     if (!e || !e.target) return;
                     let value = e.target.value || "";

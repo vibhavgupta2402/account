@@ -833,7 +833,7 @@ const handleGSTChange = (e) => {
                     onChange={(date) => setDispatchDate(date)}
                     dateFormat="dd/MM/yyyy"
                     minDate={new Date(new Date().setFullYear(new Date().getFullYear() - 1))} // ✅ last 1 year
-                    className="date-input"
+                    className="sale-date-input"
                     onChangeRaw={(e) => {
                       if (!e || !e.target) return;
                       let value = e.target.value || "";

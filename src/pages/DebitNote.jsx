@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
 import { useOutletContext } from "react-router-dom";
-import { FaTrash } from "react-icons/fa";
+import { FaTrash ,FaSearch,FaUniversity,FaTruck,FaPen,FaSave,
+  FaPaperPlane,
+  FaPrint,
+  FaTimes } from "react-icons/fa";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "../styles/DebitNote.css";
@@ -147,12 +150,19 @@ const [ewayDate, setEwayDate] = useState(new Date());
 
           {/* HEADER */}
           <div className="header-cr">
-            <h2>Debit Note</h2>
             <div className="header-grid">
               <div className="debit-section-card">
-                <div className="dn-voucher-row">
-                  <label>Voucher No:</label>
-                  <span className="voucher-value">{generateVoucher()}</span>
+                <div className="debit-header">
+                  <div className="debit-icon">
+                    <i className="fas fa-file-import"></i>
+                  </div>
+                  <div className="debit-info">
+                    <h2>Debit Note</h2>
+                    <div className="dn-voucher-row">
+                      <label>Voucher No:</label>
+                      <span className="debit-voucher-value">{generateVoucher()}</span>
+                    </div>
+                  </div>
                 </div>
                 <div className="dn-header">
                   <div className="dn-no-group">
@@ -291,7 +301,7 @@ const [ewayDate, setEwayDate] = useState(new Date());
                         )}
                       </div>
                   </div>
-                  <div className="form-group">
+                  <div className="dn-form-group">
                     <label>Dr.Note Date</label>
                     <DatePicker
                       selected={invoiceDate}
@@ -326,7 +336,7 @@ const [ewayDate, setEwayDate] = useState(new Date());
                       }}
                     />
                   </div>
-                  <div className="form-group">
+                  <div className="dn-form-group">
                     <label>Original Credit Note No</label>
                     <input 
                       // placeholder="Original Invoice No"
@@ -334,7 +344,7 @@ const [ewayDate, setEwayDate] = useState(new Date());
                       onChange={(e) => setOriginalInvoice(e.target.value)}
                     />
                   </div>
-                  <div className="form-group">
+                  <div className="dn-form-group">
                     <label>Original Credit Note Date</label>
                     <DatePicker
                       selected={oriDate}
@@ -369,7 +379,7 @@ const [ewayDate, setEwayDate] = useState(new Date());
                       }}
                     />
                   </div>
-                  <div className="form-group">
+                  <div className="dn-form-group">
                     <label>Type of Dr. Note</label>
                     <select value={type} onChange={(e) => setType(e.target.value)}>
                       <option value="">Select</option>
@@ -390,7 +400,12 @@ const [ewayDate, setEwayDate] = useState(new Date());
           {type === "purchase_return" &&(
             <div className="debit-dispatch-section">
               <div className="dispatch-section">
-                <h3>Dispatch Details</h3>
+                <div className="dn-cust-details">
+                  <div className="dn-cust-icon">
+                    <i className="fas fa-shipping-fast"></i>
+                  </div>
+                  <h3>Dispatch Details</h3>
+                </div>
                 <div className="grid">
                   <div className="dis-no">
                     <label>Dispatch Doc No</label>
@@ -508,13 +523,21 @@ const [ewayDate, setEwayDate] = useState(new Date());
 
           {/* ================= CUSTOMER ================= */}
           <div className="section-card">
-            <h2>Customer Details</h2>
+            <div className="dn-cost-details">
+              <div className="dn-cust-icon">
+                <i className="fas fa-users"></i>
+              </div>
+              <h2>Customer Details</h2>
+            </div>
             <div className="search-customer">
               <label>Search Customer Name</label>
-              <div className="search-box">
-                <input type="text" placeholder="Search customer..." />
+              <div className="debit-search-box">
+                <div className="debit-search-input-wrapper">
+                  <FaSearch className="sale-search-icon" />
+                  <input type="text" placeholder="Search customer..." />
+                </div>
                 <button
-                    className="new-customer-btn"
+                    className="dn-new-customer-btn"
                     onClick={() => setShowCustomerPopup(true)}
                   >
                     New Customer
@@ -675,7 +698,10 @@ const [ewayDate, setEwayDate] = useState(new Date());
               {/* Billed To */}
               <div className="customer-card">
                 <div className="customer-card-header">
-                  <h3>Billed To:</h3>
+                  <h3 className="dn-customer-card-title">
+                    <FaUniversity />
+                    Billed To:
+                  </h3>
                   {/* <button 
                     className="edit-btn"
                     onClick={() => setEditBilled(!editBilled)}
@@ -763,11 +789,15 @@ const [ewayDate, setEwayDate] = useState(new Date());
               {/* Shipped To */}
               <div className="customer-card">
                 <div className="customer-card-header">
-                  <h3>Shipped To:</h3>
+                  <h3 className="dn-customer-card-title">
+                    <FaTruck />
+                    Shipped To:
+                  </h3>
                   <button 
-                    className="edit-btn"
+                    className="dn-edit-btn"
                     onClick={() => setEditShipped(!editShipped)}
                   >
+                    <FaPen />
                     {editShipped ? 'Save' : 'Edit'}
                   </button>
                 </div>
@@ -852,7 +882,12 @@ const [ewayDate, setEwayDate] = useState(new Date());
 
           {/* ITEMS */}
           <div className="section-card">
-            <h2>Items</h2>
+            <div className="dn-cost-details">
+              <div className="dn-cust-icon">
+                <i className="fas fa-boxes"></i>
+              </div>
+              <h2>Items</h2>
+            </div>
             <table className="items-table">
               <thead>
                 <tr>
@@ -879,7 +914,7 @@ const [ewayDate, setEwayDate] = useState(new Date());
                     <tr key={i}>
                       <td>
                         <button
-                          className="delete-btn"
+                          className="sale-delete-btn"
                           onClick={() => deleteRow(i)}
                         >
                           <FaTrash />
@@ -950,7 +985,7 @@ const [ewayDate, setEwayDate] = useState(new Date());
                 })}
               </tbody>
             </table>
-            <button onClick={addRow}>+ Add Item</button>
+            <button className="dn-add-item-btn" onClick={addRow}>+ Add Item</button>
           </div>
 
           {/* SUMMARY */}
@@ -987,23 +1022,66 @@ const [ewayDate, setEwayDate] = useState(new Date());
 
               return (
                 <>
-                  <div>Sub Total: ₹ {sub.toFixed(2)}</div>
-                  <div>IGST: ₹ {igst.toFixed(2)}</div>
-                  <div>CGST: ₹ {cgst.toFixed(2)}</div>
-                  <div>SGST: ₹ {sgst.toFixed(2)}</div>
-                  <div>CESS: ₹ {cess.toFixed(2)}</div>
-                  <div>TCS: ₹ {tcs.toFixed(2)}</div>
-                  <div>Round Off: ₹ {roundOff.toFixed(2)}</div>
-                  <div className="total">Grand Total: ₹ {grandTotal.toFixed(2)}</div>
+                  <div className="dn-tax-summary">
+                      <div className="dn-summary-row">
+                        <span>Sub Total:</span>
+                        <span>₹ {sub.toFixed(2)}</span>
+                      </div>
+                      <div className="dn-summary-row">
+                        <span>IGST:</span>
+                        <span>₹ {igst.toFixed(2)}</span>
+                      </div>
+
+                      <div className="dn-summary-row">
+                        <span>CGST:</span>
+                        <span>₹ {cgst.toFixed(2)}</span>
+                      </div>
+                      <div className="dn-summary-row">
+                        <span>SGST:</span>
+                        <span>₹ {sgst.toFixed(2)}</span>
+                      </div>
+                      <div className="dn-summary-row">
+                        <span>CESS:</span>
+                        <span>₹ {cess.toFixed(2)}</span>
+                      </div>
+                      <div className="dn-summary-row">
+                        <span>TCS:</span>
+                        <span>₹ {tcs.toFixed(2)}</span>
+                      </div>
+                      <div className="dn-summary-row">
+                        <span>Round Off:</span>
+                        <span>₹ {roundOff.toFixed(2)}</span>
+                      </div>
+                      <div className="dn-summary-row grand-total">
+                        <span>Grand Total:</span>
+                        <span>₹ {grandTotal.toFixed(2)}</span>
+                      </div>
+                    </div>
                 </>
               );
             })()}
           </div>
           {/* ================= ACTIONS ================= */}
-          <div className="footer-actions">
-            <button>Save</button>
-            <button>Save & Send</button>
-            <button>Cancel</button>
+          <div className="sale-footer-actions">
+            <button className="sale-save-btn">
+              <FaSave />
+              Save
+            </button>
+
+            <button className="sale-save-send-btn">
+              <FaPaperPlane />
+              Save & Send
+            </button>
+
+            <button className="sale-print-btn">
+              <FaPrint />
+              Print
+            </button>
+
+            <button className="sale-cancel-btn">
+              <FaTimes />
+              Cancel
+            </button>
           </div>
         </div>
       </div>

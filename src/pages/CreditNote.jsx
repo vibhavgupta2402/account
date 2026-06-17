@@ -588,7 +588,7 @@ const [crNo, setCrNo] = useState("");
                   <h3 className="cr-customer-card-title">
                       <FaUniversity />
                       Billed To:
-                    </h3>
+                  </h3>
                   {/* <button 
                     className="edit-btn"
                     onClick={() => setEditBilled(!editBilled)}

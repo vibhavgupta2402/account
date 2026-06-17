@@ -1,5 +1,9 @@
 import { useState } from "react";
 import { useOutletContext, useNavigate } from "react-router-dom";
+import { FaTrash ,FaSearch,FaUniversity,FaTruck,FaPen,FaSave,
+  FaPaperPlane,
+  FaPrint,
+  FaTimes } from "react-icons/fa";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "../styles/Purchase.css";
@@ -18,6 +22,28 @@ const [gstin, setGstin] = useState("");
 const [gstData, setGstData] = useState(null);
 const [gstLoading, setGstLoading] = useState(false);
 const [gstError, setGstError] = useState("");
+const [editBilled, setEditBilled] = useState(false);
+const [editShipped, setEditShipped] = useState(false);
+const [shippedTo, setShippedTo] = useState({
+    name: "SALVIA GRAFICS PVT LTD",
+    address: "2652/F Kuti Choraha, Near PVS Mall, Garh Road",
+    city: "Meerut-250002",
+    contact: "Vikram Singh",
+    mobile: "9897012345",
+    pan: "ABMCS5888A",
+    gstin: "09ABMCS5888A12U",
+    pos: "09-Uttar Pradesh"
+  });
+const [billedTo, setBilledTo] = useState({
+    name: "SALVIA GRAFICS PVT LTD",
+    address: "2652/F Kuti Choraha, Near PVS Mall, Garh Road",
+    city: "Meerut-250002",
+    contact: "Vikram Singh",
+    mobile: "9897012345",
+    pan: "ABMCS5888A",
+    gstin: "09ABMCS5888A12U",
+    pos: "09-Uttar Pradesh"
+  });
 const validateGST = async (value) => {
   if (value.length !== 15) return;
 
@@ -54,16 +80,27 @@ const handleGSTChange = (e) => {
 };
 
   const [items, setItems] = useState([
-    { desc: "", qty: "", rate: "", tax: "", amount: "" }
-  ]);
+  {
+    id: Date.now(),
+    desc: "",
+    qty: "",
+    rate: "",
+    tax: "0"
+  }
+]);
   const [voucherCount, setVoucherCount] = useState(1);
   const generateVoucher = () => {
     const number = String(voucherCount).padStart(2, "0");
     return `PUR-${number}`;
   };
-  const [ledgers, setLedgers] = useState([
-    { ledger: "", tax: "", amount: "" }
-  ]);
+ const [ledgers, setLedgers] = useState([
+  {
+    id: 1,
+    ledger: "",
+    tax: "",
+    amount: ""
+  }
+]);
 
   const [narration, setNarration] = useState("");
 
@@ -86,16 +123,28 @@ const handleGSTChange = (e) => {
     <div className="purchase-app">
       <div className={`main-content ${collapsed ? "collapsed" : ""}`}>
         <div className="purchase-wrapper">
-
           <div className="header-cr">
-            <h2>Purchase</h2>
-
             <div className="pur-header-grid">
               <div className="purchase-section-card">
                 {/* Voucher Row */}
-                <div className="pur-voucher-row">
-                  <label>Voucher No:</label>
-                  <span className="voucher-value">{generateVoucher()}</span>
+                 <div className="purchase-header-top">
+
+                  <div className="purchase-icon">
+                    <i className="fas fa-shopping-cart"></i>
+                  </div>
+
+                  <div className="purchase-header-info">
+                    <h2>Purchase</h2>
+
+                    <div className="purchase-voucher-row">
+                      <label>Voucher No:</label>
+
+                      <span className="purchase-voucher-value">
+                        {generateVoucher()}
+                      </span>
+                    </div>
+                  </div>
+
                 </div>
                 {/* Main Grid */}
                 <div className="pur-header">
@@ -178,7 +227,12 @@ const handleGSTChange = (e) => {
           </div>
           <div className="section-card">
             <div className="dispatch-header">
-            <h2>Dispatch Details</h2>
+            <div className="purchase-dispatch-title">
+              <div className="purchase-dispatch-icon">
+                <i className="fas fa-shipping-fast"></i>
+              </div>
+              <h3>Dispatch Details</h3>
+            </div>
               <div className="transporter-box">
                 <label>Transporter Name</label>
                 <div className="transporter-row"> 
@@ -186,7 +240,7 @@ const handleGSTChange = (e) => {
                     <option>Select</option>
                   </select>
                   <button
-                    className="transporter-create-btn"
+                    className="pur-transporter-create-btn"
                     onClick={() => navigate("/Ledger")}
                   >
                     Create
@@ -327,184 +381,398 @@ const handleGSTChange = (e) => {
           </div>
 
           {/* CUSTOMER / DISPATCH SECTION */}
-          <div className="purchase-customer">
-            <input placeholder="Search Supplier" />
-            <button className="new-btn">New Supplier</button>
-          </div>
+          <div className="section-card">
+            <div className="purchase-customer">
+              <div className="pay-cust-details">
+                <div className="purchase-cust-icon">
+                  <i className="fas fa-users"></i>
+                </div>
 
-          {/* ✅ NEW SECTION ADDED (NO REPLACEMENT) */}
-          {/* ================= CUSTOMER DETAILS ================= */}
-          <div className="purchase-customer-details">
-
-            {/* BILLED TO */}
-            <div className="purchase-customer-card">
-              <h4>Billed To</h4>
-
-              <input className="cust-input" placeholder="Search Supplier Name" />
-
-              <div className="cust-info">
-                <p><b>SALVIA GRAFICS PVT LTD</b></p>
-                <p>265/2 F, Kuti Choraha</p>
-                <p>Near, PVS Mall, Meerut-250002</p>
-                <p>Contact: 9870123456</p>
-
-                <p>PAN: ABMCS5888A</p>
-                <p>GSTIN: 09ABMCS5888A1ZU</p>
-                <p>Place of Supply: Uttar Pradesh</p>
+                <h2>Supplier Details</h2>
               </div>
+
+              <div className="purchase-search-row">
+                <input placeholder="Search Supplier" />
+
+                <button className="new-btn">
+                  + New Supplier
+                </button>
+              </div>
+
             </div>
 
-            {/* SHIPPED TO */}
-            <div className="purchase-customer-card">
-              <h4>Shipped To</h4>
+            {/* ✅ NEW SECTION ADDED (NO REPLACEMENT) */}
+            {/* ================= CUSTOMER DETAILS ================= */}
+            <div className="purchase-customer-details">
 
-              <input className="cust-input" placeholder="Search Supplier Name" />
+              {/* BILLED TO */}
+              <div className="purchase-customer-card">
+                <div className="customer-card-header">
+                  <h3 className="pay-customer-card-title">
+                    <FaUniversity />
+                    Billed To:
+                  </h3>
+                </div>
 
-              <button className="pur-edit-btn">Edit</button>
-
-              <div className="cust-info">
-                <p><b>SALVIA GRAFICS PVT LTD</b></p>
-                <p>265/2 F, Kuti Choraha</p>
-                <p>Near, PVS Mall, Meerut-250002</p>
-                <p>Contact: 9870123456</p>
-
-                <p>PAN: ABMCS5888A</p>
-                <p>GSTIN: 09ABMCS5888A1ZU</p>
-                <p>Place of Supply: Uttar Pradesh</p>
+                {editBilled ? (
+                  <div className="customer-edit-form">
+                    <input 
+                      type="text" 
+                      value={billedTo.name}
+                      onChange={(e) => setBilledTo({...billedTo, name: e.target.value})}
+                      placeholder="Company Name"
+                    />
+                    <input 
+                      type="text" 
+                      value={billedTo.address}
+                      onChange={(e) => setBilledTo({...billedTo, address: e.target.value})}
+                      placeholder="Address"
+                    />
+                    <input 
+                      type="text" 
+                      value={billedTo.city}
+                      onChange={(e) => setBilledTo({...billedTo, city: e.target.value})}
+                      placeholder="City"
+                    />
+                    <div className="form-row">
+                      <input 
+                        type="text" 
+                        value={billedTo.contact}
+                        onChange={(e) => setBilledTo({...billedTo, contact: e.target.value})}
+                        placeholder="Contact Person"
+                      />
+                      <input 
+                        type="text" 
+                        value={billedTo.mobile}
+                        onChange={(e) => setBilledTo({...billedTo, mobile: e.target.value})}
+                        placeholder="Mobile"
+                      />
+                    </div>
+                    <div className="form-row">
+                      <input 
+                        type="text" 
+                        value={billedTo.pan}
+                        onChange={(e) => setBilledTo({...billedTo, pan: e.target.value})}
+                        placeholder="PAN"
+                      />
+                      <input 
+                        type="text" 
+                        value={billedTo.gstin}
+                        onChange={(e) => setBilledTo({...billedTo, gstin: e.target.value})}
+                        placeholder="GSTIN"
+                      />
+                    </div>
+                    <input 
+                      type="text" 
+                      value={billedTo.pos}
+                      onChange={(e) => setBilledTo({...billedTo, pos: e.target.value})}
+                      placeholder="Place of Supply"
+                    />
+                  </div>
+                ) : (
+                  <div className="customer-details">
+                    <p className="customer-name">{billedTo.name}</p>
+                    <p className="customer-address">{billedTo.address}</p>
+                    <p className="customer-address">{billedTo.city}</p>
+                    <p className="customer-contact">
+                      Contact: {billedTo.contact || 'N/A'} (Mobile - {billedTo.mobile || 'N/A'})
+                    </p>
+                    <p className="customer-tax">
+                      PAN: {billedTo.pan || 'N/A'}
+                    </p>
+                    <p className="customer-tax">
+                      GSTIN: {billedTo.gstin}
+                    </p>
+                    <p className="customer-pos">
+                      Place of Supply: {billedTo.pos || 'N/A'}
+                    </p>
+                  </div>
+                )}
               </div>
-            </div>
 
+              {/* SHIPPED TO */}
+              <div className="purchase-customer-card">
+                <div className="customer-card-header">
+                  <h3 className="pay-customer-card-title">
+                    <FaTruck />
+                    Shipped To:
+                  </h3>
+                  <button 
+                      className="pay-edit-btn"
+                      onClick={() => setEditShipped(!editShipped)}
+                    >
+                      <FaPen />
+                      {editShipped ? 'Save' : 'Edit'}
+                    </button>
+                </div>
+
+                {editShipped ? (
+                  <div className="customer-edit-form">
+                    <input 
+                      type="text" 
+                      value={shippedTo.name}
+                      onChange={(e) => setShippedTo({...shippedTo, name: e.target.value})}
+                      placeholder="Company Name"
+                    />
+                    <input 
+                      type="text" 
+                      value={shippedTo.address}
+                      onChange={(e) => setShippedTo({...shippedTo, address: e.target.value})}
+                      placeholder="Address"
+                    />
+                    <input 
+                      type="text" 
+                      value={shippedTo.city}
+                      onChange={(e) => setShippedTo({...shippedTo, city: e.target.value})}
+                      placeholder="City"
+                    />
+                    <div className="form-row">
+                      <input 
+                        type="text" 
+                        value={shippedTo.contact}
+                        onChange={(e) => setShippedTo({...shippedTo, contact: e.target.value})}
+                        placeholder="Contact Person"
+                      />
+                      <input 
+                        type="text" 
+                        value={shippedTo.mobile}
+                        onChange={(e) => setShippedTo({...shippedTo, mobile: e.target.value})}
+                        placeholder="Mobile"
+                      />
+                    </div>
+                    <div className="form-row">
+                      <input 
+                        type="text" 
+                        value={shippedTo.pan}
+                        onChange={(e) => setShippedTo({...shippedTo, pan: e.target.value})}
+                        placeholder="PAN"
+                      />
+                      <input 
+                        type="text" 
+                        value={shippedTo.gstin}
+                        onChange={(e) => setShippedTo({...shippedTo, gstin: e.target.value})}
+                        placeholder="GSTIN"
+                      />
+                    </div>
+                    <input 
+                      type="text" 
+                      value={shippedTo.pos}
+                      onChange={(e) => setShippedTo({...shippedTo, pos: e.target.value})}
+                      placeholder="Place of Supply"
+                    />
+                  </div>
+                ) : (
+                  <div className="customer-details">
+                    <p className="customer-name">{shippedTo.name}</p>
+                    <p className="customer-address">{shippedTo.address}</p>
+                    <p className="customer-address">{shippedTo.city}</p>
+                    <p className="customer-contact">
+                      Contact: {shippedTo.contact || 'N/A'} (Mobile - {shippedTo.mobile || 'N/A'})
+                    </p>
+                    <p className="customer-tax">
+                      PAN: {shippedTo.pan || 'N/A'}
+                    </p>
+                    <p className="customer-tax">
+                      GSTIN: {shippedTo.gstin}
+                    </p>
+                    <p className="customer-pos">
+                      Place of Supply: {shippedTo.pos || 'N/A'}
+                    </p>
+                  </div>
+                )}
+              </div>
+
+            </div>
           </div>
 
           {/* ================= TABLE ================= */}
-          <div className="section-card">
-          {mode === "item" ? (
-            <table className="purchase-table">
-              <thead>
-                <tr>
-                  <th>Description</th>
-                  <th>Qty</th>
-                  <th>Rate</th>
-                  <th>Tax %</th>
-                  <th>Amount</th>
-                </tr>
-              </thead>
-              <tbody>
-                {items.map((row, i) => {
-                  const amount = calculateAmount(row);
-
-                  return (
-                    <tr key={i}>
-                      <td>
-                        <input
-                          onChange={(e) => {
-                            const d = [...items];
-                            d[i].desc = e.target.value;
-                            setItems(d);
-                          }}
-                        />
-                      </td>
-
-                      <td>
-                        <input
-                          type="number"
-                          onChange={(e) => {
-                            const d = [...items];
-                            d[i].qty = e.target.value;
-                            setItems(d);
-                          }}
-                        />
-                      </td>
-
-                      <td>
-                        <input
-                          type="number"
-                          onChange={(e) => {
-                            const d = [...items];
-                            d[i].rate = e.target.value;
-                            setItems(d);
-                          }}
-                        />
-                      </td>
-
-                      <td>
-                        <select
-                          onChange={(e) => {
-                            const d = [...items];
-                            d[i].tax = e.target.value;
-                            setItems(d);
-                          }}
-                        >
-                          <option>0</option>
-                          <option>5</option>
-                          <option>12</option>
-                          <option>18</option>
-                        </select>
-                      </td>
-
-                      <td>
-                        <input value={amount.toFixed(2)} readOnly />
-                      </td>
+            <div className="section-card">
+              {mode === "item" ? (
+                
+                <table className="purchase-table">
+                  <thead>
+                    <tr>
+                      <th>Description</th>
+                      <th>Qty</th>
+                      <th>Rate</th>
+                      <th>Tax %</th>
+                      <th>Amount</th>
+                      <th></th>
                     </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          ) : (
-            <table className="purchase-table">
-              <thead>
-                <tr>
-                  <th>Purchase Ledger</th>
-                  <th>Tax Rate</th>
-                  <th>Amount</th>
-                </tr>
-              </thead>
-              <tbody>
-                {ledgers.map((row, i) => (
-                  <tr key={i}>
-                    <td>
-                      <input
-                        placeholder="Purchase A/c"
-                        onChange={(e) => {
-                          const d = [...ledgers];
-                          d[i].ledger = e.target.value;
-                          setLedgers(d);
-                        }}
-                      />
-                    </td>
+                  </thead>
+                  <tbody>
+                    {items.map((row, i) => {
+                      const amount = calculateAmount(row);
 
-                    <td>
-                      <select
-                        onChange={(e) => {
-                          const d = [...ledgers];
-                          d[i].tax = e.target.value;
-                          setLedgers(d);
-                        }}
-                      >
-                        <option>5%</option>
-                        <option>12%</option>
-                        <option>18%</option>
-                      </select>
-                    </td>
+                      return (
+                        <tr key={row.id}>
+                          <td>
+                            <input
+                              onChange={(e) => {
+                                const d = [...items];
+                                d[i].desc = e.target.value;
+                                setItems(d);
+                              }}
+                            />
+                          </td>
 
-                    <td>
-                      <input
-                        onChange={(e) => {
-                          const d = [...ledgers];
-                          d[i].amount = e.target.value;
-                          setLedgers(d);
-                        }}
-                      />
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          )}
-          
+                          <td>
+                            <input
+                              type="number"
+                              onChange={(e) => {
+                                const d = [...items];
+                                d[i].qty = e.target.value;
+                                setItems(d);
+                              }}
+                            />
+                          </td>
 
-          <button className="add-btn">+ Add Row</button>
-          </div>
+                          <td>
+                            <input
+                              type="number"
+                              onChange={(e) => {
+                                const d = [...items];
+                                d[i].rate = e.target.value;
+                                setItems(d);
+                              }}
+                            />
+                          </td>
+
+                          <td>
+                            <select
+                              onChange={(e) => {
+                                const d = [...items];
+                                d[i].tax = e.target.value;
+                                setItems(d);
+                              }}
+                            >
+                              <option>0</option>
+                              <option>5</option>
+                              <option>12</option>
+                              <option>18</option>
+                            </select>
+                          </td>
+
+                          <td>
+                            <input value={amount.toFixed(2)} readOnly />
+                          </td>
+                          <td className="purchase-delete-cell">
+                            <button
+                              className="purchase-del-btn"
+                              onClick={() => {
+                                setItems(
+                                  items.filter(
+                                    (item) => item.id !== row.id
+                                  )
+                                );
+                              }}
+                            >
+                              <i className="fas fa-trash-alt"></i>
+                            </button>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              ) : (
+                <table className="purchase-table">
+                  <thead>
+                    <tr>
+                      <th>Purchase Ledger</th>
+                      <th>Tax Rate</th>
+                      <th>Amount</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {ledgers.map((row, i) => (
+                      <tr key={row.id}>
+                        <td>
+                          <input
+                            placeholder="Purchase A/c"
+                            onChange={(e) => {
+                              const d = [...ledgers];
+                              d[i].ledger = e.target.value;
+                              setLedgers(d);
+                            }}
+                          />
+                        </td>
+
+                        <td>
+                          <select
+                            onChange={(e) => {
+                              const d = [...ledgers];
+                              d[i].tax = e.target.value;
+                              setLedgers(d);
+                            }}
+                          >
+                            <option>5%</option>
+                            <option>12%</option>
+                            <option>18%</option>
+                          </select>
+                        </td>
+
+                        <td>
+                          <input
+                            onChange={(e) => {
+                              const d = [...ledgers];
+                              d[i].amount = e.target.value;
+                              setLedgers(d);
+                            }}
+                          />
+                        </td>
+                        <td className="purchase-delete-cell">
+                          <button
+                            className="purchase-del-btn"
+                            onClick={() => {
+                              setLedgers(
+                                ledgers.filter(
+                                  (ledger) => ledger.id !== row.id
+                                )
+                              );
+                            }}
+                          >
+                            <i className="fas fa-trash-alt"></i>
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              )}
+              
+
+              <button
+                className="add-btn"
+                onClick={() => {
+                  if (mode === "item") {
+                    setItems([
+                      ...items,
+                      {
+                        id: Date.now(),
+                        desc: "",
+                        qty: "",
+                        rate: "",
+                        tax: "0"
+                      }
+                    ]);
+                  } else {
+                    setLedgers([
+                      ...ledgers,
+                      {
+                        id: Date.now(),
+                        ledger: "",
+                        tax: "",
+                        amount: ""
+                      }
+                    ]);
+                  }
+                }}
+              >
+                + Add Row
+              </button>
+            </div>
 
           <hr />
 

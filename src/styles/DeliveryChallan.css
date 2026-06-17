@@ -11,6 +11,56 @@
   padding: 15px;
   transition: 0.3s;
 }
+
+/* =========================
+   DELIVERY CHALLAN HEADER
+========================= */
+
+.dc-title-section {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.dc-icon-box {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: #fffbeb;
+  color: #f59e0b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+}
+
+.dc-title-section h2 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.dc-voucher-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+  font-size: 13px;
+}
+.dc-voucher-row label {
+    font-size: 12px;
+    color: #6b7280;
+}
+
+.dc-voucher-badge {
+  background: #fffbeb;
+  color: #f59e0b;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+}
 .eway-btn {
   position: relative;
   padding: 3px 7px;
@@ -23,21 +73,20 @@
   margin-bottom: 5px;
 
   /* Gradient background */
-  background: linear-gradient(135deg, #4f46e5, #2563eb);
+  background: linear-gradient(135deg, #f59e0b);
 
   /* Soft shadow */
   box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
-
   /* Smooth animation */
   transition: all 0.25s ease;
 }
 
 /* Hover effect */
-.eway-btn:hover {
+/* .eway-btn:hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 18px rgba(37, 99, 235, 0.35);
   background: linear-gradient(135deg, #4338ca, #1e40af);
-}
+} */
 
 .dc-main-content.collapsed {
   margin-left: 80px;
@@ -61,7 +110,102 @@
 }
 
 .dc-header-row h2 {
+  font-size: 21px;
+  font-weight: 700;
+}
+
+/* =========================
+   DISPATCH DETAILS TITLE
+========================= */
+
+.dc-cust-details {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.dc-cust-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  background: #fffbeb;
+  color: #f59e0b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+.dc-new-customer-btn {
+  padding: 5px 16px;
+  background: #fefff0;
+  border: 1px solid #f59e0b;
+  color: #f59e0b;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.dc-customer-card-title svg {
+  color: #f59e0b;
+  font-size: 14px;
+}
+.dc-customer-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+.dc-customer-card-header h3 {
+    font-size: 15px;
+    font-weight: 600;
+    color: #f59e0b;
+}
+.dc-cost-details{
+      display: flex;
+    align-items: center;
+    gap: 16px;
+    border-radius: 14px;
+    padding: 13px 5px;
+    width: fit-content;
+}
+.dc-cust-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 12px;
+  background: #f3f0ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.dc-cust-icon i {
+    font-size: 18px;
+    color: #f59e0b;
+}
+.dc-customer-card-title,
+.dc-edit-btn
+ {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.dc-edit-btn {
+  padding: 4px 12px;
+  background:  #f59e0b;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  color: white;
+  cursor: pointer;
+}
+.dc-cust-details h3 {
+  margin: 0;
   font-size: 18px;
+  font-weight: 700;
+  color: #1f2937;
+  line-height: 1;
 }
 
 /* ================== SECTION ================== */
@@ -74,7 +218,7 @@
 }
 
 .dc-card h3 {
-  font-size: 15px;
+  font-size: 18px;
   margin-bottom: 6px;
 }
 
@@ -86,9 +230,27 @@
   gap: 6px;
 }
 
+.dc-customer-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.dc-customer-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  background: #fffbeb;
+  color: #f59e0b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .dc-grid-3 {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   gap: 6px;
 }
 /* Main wrapper */
@@ -97,7 +259,20 @@
   gap: 20px;
   align-items: flex-start;
 }
+.dc-section-card {
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.05);
+  background: white;
+  border-radius: 6px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
 
+/* section title */
+.dc-section-card h2 {
+  font-size: 18px;
+  margin-bottom: 2px;
+}
 /* Left section (E-way bill) */
 .eway-left {
   flex: 2;
@@ -224,14 +399,13 @@
 /* ================== ADD BUTTON ================== */
 
 .dc-add-btn {
-  margin-top: 6px;
-  padding: 5px 10px;
-  font-size: 12px;
-  background: #2563eb;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+  background: white;
+    color: #f59e0b;
+    border-color: #f59e0b;
+    border: 1px solid #f59e0b;
+    padding: 5px 7px;
+    border-radius: 8px;
+    cursor: pointer;
 }
 
 /* ================== SUMMARY ================== */

@@ -195,7 +195,7 @@
   color: #6b7280;
 }
 .date-container input{
-  width: 40%;
+  width: 58%;
 }
 
 .sale-voucher-value {
@@ -727,10 +727,10 @@
 }
 .new-customer-btn {
   padding: 5px 16px;
-  background: #f3f0ff;
+  background: #f6f6f8;
   border: 1px solid #bfdbfe;
   color: #3b82f6;
-  border-radius: 14px;
+  border-radius: 6px;
   font-weight: 500;
   cursor: pointer;
   white-space: nowrap;

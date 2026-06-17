@@ -32,7 +32,7 @@
 .cr-form-group{
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 8px;
   margin-bottom: 14px;
 }
 .cr-form-group label{
@@ -55,6 +55,7 @@
     border-radius: 14px;
     padding: 13px 5px;
     width: fit-content;
+    margin-bottom: -11px;
 }
 .credit-search-box {
   display: flex;

@@ -29,47 +29,77 @@ export default function Receipt() {
   };
 
   return (
-    <div className="receipt-app">
-      <div className={`main-content ${collapsed ? "collapsed" : ""}`}>
-        <div className="receipt-wrapper">
+  <div className="receipt-app">
+    <div className={`main-content ${collapsed ? "collapsed" : ""}`}>
+      <div className="receipt-page">
 
-          {/* HEADER */}
-          <div className="receipt-header">
-            <div>
-              <h2>Receipt</h2>
-              <span>Voucher No: {voucherNo}</span>
+        <div className="receipt-card">
+
+          {/* Header */}
+          <div className="receipt-top-header">
+
+            <div className="receipt-title-section">
+              <div className="receipt-icon-box">
+                <i className="fas fa-receipt"></i>
+              </div>
+
+              <div>
+                <h2>Receipt</h2>
+
+                <div className="receipt-voucher-row">
+                  <span>Voucher No:</span>
+                  <span className="receipt-voucher-badge">
+                    {voucherNo}
+                  </span>
+                </div>
+              </div>
             </div>
 
-            <div className="receipt-date">
+            <div className="receipt-date-box">
               <label>Receipt Date:</label>
+
               <DatePicker
                 selected={reciptDate}
-                onChange={(date) =>setReciptDate(date)}
+                onChange={(date) => setReciptDate(date)}
                 dateFormat="dd/MM/yyyy"
-                minDate={new Date(new Date().setFullYear(new Date().getFullYear() - 1))} // ✅ last 1 year
-                className="date-input"
+                minDate={
+                  new Date(
+                    new Date().setFullYear(
+                      new Date().getFullYear() - 1
+                    )
+                  )
+                }
+                className="receipt-date-input"
                 onChangeRaw={(e) => {
                   if (!e || !e.target) return;
+
                   let value = e.target.value || "";
-                  // allow only numbers + /
+
                   value = value.replace(/[^0-9/]/g, "");
-                  // auto format DD/MM/YYYY
+
                   if (value.length === 2 || value.length === 5) {
                     if (!value.endsWith("/")) value += "/";
                   }
-                  // restrict length
+
                   if (value.length > 10) {
                     value = value.slice(0, 10);
                   }
+
                   const parts = value.split("/");
-                  // day check
-                  if (parts[0] && Number(parts[0]) > 31) parts[0] = "31";
-                  // month check
-                  if (parts[1] && Number(parts[1]) > 12) parts[1] = "12";
-                  // year limit (4 digit)
-                  if (parts[2] && parts[2].length > 4) {
+
+                  if (parts[0] && Number(parts[0]) > 31)
+                    parts[0] = "31";
+
+                  if (parts[1] && Number(parts[1]) > 12)
+                    parts[1] = "12";
+
+                  if (
+                    parts[2] &&
+                    parts[2].length > 4
+                  ) {
                     parts[2] = parts[2].slice(0, 4);
                   }
+
                   value = parts.join("/");
                   e.target.value = value;
                 }}
@@ -77,106 +107,238 @@ export default function Receipt() {
             </div>
           </div>
 
-          {/* RECEIPT TO */}
-          <div className="receipt-ledger">
-            <label>Receipt to :</label>
-            <select
-              value={ledger}
-              onChange={(e) => setLedger(e.target.value)}
-            >
-              <option value="">Select</option>
-              <option value="cash">Cash</option>
-              <option value="bank">Bank</option>
-            </select>
-            <button className="payment-ledger-btn" onClick={() => navigate("/Ledger",{state: { defaultGroup: "Bank Accounts" } })} >New ledger</button> 
+          {/* Receipt To */}
+          <div className="receipt-filter-row">
 
-            <label>Against Type :</label>
-            <select
-              value={againstType}
-              onChange={(e) => setAgainstType(e.target.value)}
-            >
-              <option value="invoice">Invoice</option>
-              <option value="advance">Advance</option>
-              <option value="on_account">On Account</option>
-            </select>
-          </div>
+            <div className="receipt-left-controls">
 
-          <hr />
+              <div className="receipt-filter-group">
+                <label>Receipt To</label>
 
-          {/* SEARCH */}
-          <div className="R-customer-header">
-            <input placeholder="R-Search Customer Name" />
-            <button className="R-new-btn">New Customer</button>
-          </div>
-
-          {/* TABLE HEADER */}
-          <div className="R-table-head">
-            <span></span>
-            <span>Chq no / Ref. No</span>
-            {againstType === "invoice" && <span>Invoice No</span>}
-            <span>Amount</span>
-          </div>
-
-          {/* ROWS */}
-          {rows.map((row, i) => (
-              <div
-                key={i}
-                className={`R-customer-row ${againstType !== "invoice" ? "no-against" : ""}`}
-              >
-                <div className="R-customer-name">{row.name}</div>
-
-                {/* ✅ Always visible */}
-                <input
-                  value={row.ref}
-                  onChange={(e) => handleChange(i, "ref", e.target.value)}
-                />
-
-                {/* ✅ Only for invoice */}
-                {againstType === "invoice" && (
-                  <select
-                  value={row.against}
-                  onChange={(e) => handleChange(i, "against", e.target.value)}
+                <select
+                  value={ledger}
+                  onChange={(e) =>
+                    setLedger(e.target.value)
+                  }
                 >
-                  <option value="">Select Invoice</option>
-                  <option>INV-001</option>
-                  <option>INV-002</option>
+                  <option value="">Select</option>
+                  <option value="cash">Cash</option>
+                  <option value="bank">Bank</option>
                 </select>
-                )}
-
-                <input
-                  value={row.amount}
-                  onChange={(e) => handleChange(i, "amount", e.target.value)}
-                />
               </div>
-            ))}
 
-          <hr />
+              <button
+                className="receipt-ledger-btn"
+                onClick={() =>
+                  navigate("/Ledger", {
+                    state: {
+                      defaultGroup:
+                        "Bank Accounts",
+                    },
+                  })
+                }
+              >
+                + New Ledger
+              </button>
 
-          {/* TOTAL */}
-          <div className="R-total-section">
-            <span>TOTAL</span>
-            <input value={total.toFixed(2)} readOnly />
+              <div className="receipt-filter-group">
+                <label>Against Type</label>
+
+                <select
+                  value={againstType}
+                  onChange={(e) =>
+                    setAgainstType(
+                      e.target.value
+                    )
+                  }
+                >
+                  <option value="invoice">
+                    Invoice
+                  </option>
+                  <option value="advance">
+                    Advance
+                  </option>
+                  <option value="on_account">
+                    On Account
+                  </option>
+                </select>
+              </div>
+
+            </div>
           </div>
 
-          {/* NARRATION */}
-          <div className="narration">
-            <label>Voucher Narration:</label>
+          {/* Search */}
+          <div className="receipt-search-row">
+            <input
+              type="text"
+              placeholder="Search Customer Name..."
+            />
+
+            <button className="receipt-new-customer-btn">
+              + New Customer
+            </button>
+          </div>
+
+          {/* Table */}
+          <div className="receipt-table-wrapper">
+            <table className="receipt-table">
+              <thead>
+                <tr>
+                  <th>Customer Name</th>
+                  <th>Chq no / Ref. No</th>
+
+                  {againstType ===
+                    "invoice" && (
+                    <th>Against To</th>
+                  )}
+
+                  <th>Amount (₹)</th>
+                  <th></th>
+                </tr>
+              </thead>
+
+              <tbody>
+                {rows.map((row, i) => (
+                  <tr key={i}>
+                    <td className="receipt-customer-name">
+                      {row.name}
+                    </td>
+
+                    <td>
+                      <input
+                        value={row.ref}
+                        placeholder="Enter Cheque / Reference No"
+                        onChange={(e) =>
+                          handleChange(
+                            i,
+                            "ref",
+                            e.target.value
+                          )
+                        }
+                      />
+                    </td>
+
+                    {againstType === "invoice" && (
+                      <select
+                      value={row.against}
+                      onChange={(e) => handleChange(i, "against", e.target.value)}
+                    >
+                      <option value="">Select Invoice</option>
+                      <option>INV-001</option>
+                      <option>INV-002</option>
+                    </select>
+                    )}
+
+                    <td>
+                      <input
+                        value={row.amount}
+                        placeholder="0.00"
+                        onChange={(e) =>
+                          handleChange(
+                            i,
+                            "amount",
+                            e.target.value
+                          )
+                        }
+                      />
+                    </td>
+
+                    <td className="receipt-delete-cell">
+                      <button
+                        className="receipt-del-btn"
+                        onClick={() => {
+                          const updated =
+                            rows.filter(
+                              (_, index) =>
+                                index !== i
+                            );
+                          setRows(updated);
+                        }}
+                      >
+                        <i className="fas fa-trash-alt"></i>
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* Add Row */}
+          <button
+            className="receipt-add-row-btn"
+            onClick={() =>
+              setRows([
+                ...rows,
+                {
+                  name: "",
+                  ref: "",
+                  against: "",
+                  amount: "",
+                },
+              ])
+            }
+          >
+            + Add Row
+          </button>
+
+          {/* Total */}
+          <div className="receipt-total-wrapper">
+            <div className="receipt-total-box">
+              <span>TOTAL</span>
+
+              <strong>
+                ₹{" "}
+                {total.toLocaleString(
+                  "en-IN",
+                  {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  }
+                )}
+              </strong>
+            </div>
+          </div>
+
+          {/* Narration */}
+          <div className="receipt-narration-box">
+            <label>
+              Voucher Narration
+            </label>
+
             <textarea
               value={narration}
-              onChange={(e) => setNarration(e.target.value)}
+              placeholder="Enter narration for this voucher..."
+              onChange={(e) =>
+                setNarration(
+                  e.target.value
+                )
+              }
             />
           </div>
 
-          {/* ACTION BUTTONS */}
-          <div className="R-actions">
-            <button className="R-save-btn">Save</button>
-            <button className="R-send-btn">Save & Send</button>
-            <button className="R-print-btn">Print</button>
-            <button className="R-cancel-btn">Cancel</button>
+          {/* Actions */}
+          <div className="receipt-action-buttons">
+            <button className="receipt-save-btn">
+              Save
+            </button>
+
+            <button className="receipt-send-btn">
+              Save & Send
+            </button>
+
+            <button className="receipt-print-btn">
+              Print
+            </button>
+
+            <button className="receipt-cancel-btn">
+              Cancel
+            </button>
           </div>
 
         </div>
       </div>
     </div>
-  );
+  </div>
+);
 }

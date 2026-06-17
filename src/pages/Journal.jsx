@@ -1,6 +1,10 @@
   import { useState } from "react";
   import { useOutletContext } from "react-router-dom";
   import DatePicker from "react-datepicker";
+  import { FaTrash ,FaSearch,FaUniversity,FaTruck,FaPen,FaSave,
+    FaPaperPlane,
+    FaPrint,
+    FaTimes } from "react-icons/fa";
   import "react-datepicker/dist/react-datepicker.css";
   import "../styles/Journal.css";
 
@@ -55,11 +59,24 @@ const totalCr = rows.reduce(
 
             {/* HEADER */}
             <div className="journal-header">
-              <div>
-                <h2>Journal</h2>
-                <span>Voucher No: {voucherNo}</span>
-              </div>
+              <div className="journal-title-section">
 
+                <div className="journal-icon-box">
+                  <i className="fas fa-book"></i>
+                </div>
+
+                <div>
+                  <h2>Journal</h2>
+
+                  <div className="journal-voucher-row">
+                    <span>Voucher No:</span>
+
+                    <span className="journal-voucher-badge">
+                      {voucherNo}
+                    </span>
+                  </div>
+                </div>
+              </div>
               <div className="journal-date">
                 <label>Date:</label>
                 <DatePicker
@@ -377,7 +394,10 @@ const totalCr = rows.reduce(
             </div>
             {/* NARRATION */}
             <div className="J-narration">
-              <label>Voucher Narration:</label>
+              <div className="journal-narration-title">
+                <i className="fas fa-file-invoice"></i>
+                <span>Voucher Narration</span>
+              </div>
               <textarea
                 value={narration}
                 onChange={(e) => setNarration(e.target.value)}
@@ -385,8 +405,8 @@ const totalCr = rows.reduce(
             </div>
             {/* ACTIONS */}
             <div className="J-actions">
-              <button className="J-save-btn">Save</button>
-              <button className="J-cancel-btn">Cancel</button>
+              <button className="J-save-btn"><FaSave />Save</button>
+              <button className="sale-cancel-btn"><FaTimes />Cancel</button>
             </div>
           </div>
         </div>

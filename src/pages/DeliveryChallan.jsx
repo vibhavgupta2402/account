@@ -1,6 +1,10 @@
 import { useState } from "react";
 import { useOutletContext } from "react-router-dom";
 import DatePicker from "react-datepicker";
+import { FaTrash ,FaSearch,FaUniversity,FaTruck,FaPen,FaSave,
+  FaPaperPlane,
+  FaPrint,
+  FaTimes } from "react-icons/fa";
 import "react-datepicker/dist/react-datepicker.css";
 import "../styles/DeliveryChallan.css";
 
@@ -60,8 +64,16 @@ export default function DeliveryChallan() {
 
   /* ================= PART 3 ================= */
   const [items, setItems] = useState([
-    { product: "", description: "", hsn: "", qty: "", rate: "", tax: "" }
-  ]);
+  {
+    id: Date.now(),
+    product: "",
+    description: "",
+    hsn: "",
+    qty: "",
+    rate: "",
+    tax: "0"
+  }
+]);
   const [voucherCount, setVoucherCount] = useState(1);
   const generateVoucher = () => {
     const number = String(voucherCount).padStart(2, "0");
@@ -70,9 +82,17 @@ export default function DeliveryChallan() {
 
   const addRow = () => {
     setItems([
-      ...items,
-      { product: "", description: "", hsn: "", qty: "", rate: "", tax: "" }
-    ]);
+  ...items,
+  {
+    id: Date.now() + Math.random(),
+    product: "",
+    description: "",
+    hsn: "",
+    qty: "",
+    rate: "",
+    tax: "0"
+  }
+]);
   };
 
   const handleChange = (index, field, value) => {
@@ -101,14 +121,28 @@ export default function DeliveryChallan() {
     <div className="delivery-challan-app">
       <div className={`dc-main-content ${collapsed ? "collapsed" : ""}`}>
         <div className="dc-wrapper">
-          <h2>Delivery Challan</h2>
+          {/* <h2>Delivery Challan</h2> */}
           {/* ================= PART 1 ================= */}
           <div className="dc-card">
             <div className="dc-header-row">
-              <div className="pur-voucher-row">
+              <div className="dc-title-section">
+                <div className="dc-icon-box">
+                  <i className="fas fa-truck"></i>
+                </div>
+                <div>
+                  <h2>Delivery Challan</h2>
+                  <div className="dc-voucher-row">
+                    <label>Voucher No:</label>
+                    <span className="dc-voucher-badge">
+                      {generateVoucher()}
+                    </span>
+                  </div>
+                </div>
+              </div>
+              {/* <div className="pur-voucher-row">
                   <label>Voucher No:</label>
                   <span className="voucher-value">{generateVoucher()}</span>
-                </div>
+                </div> */}
               <div className="dc-form-group">
                 <label>Challan Type</label>
                 <select
@@ -130,7 +164,7 @@ export default function DeliveryChallan() {
                   onChange={(date) => setInvoiceDate(date)}
                   dateFormat="dd/MM/yyyy"
                   maxDate={new Date()}   // prevent future date
-                  className="date-input"
+                  className="dc-date-input"
                   onChangeRaw={(e) => {
                     let value = e.target.value;
                     // 🔥 limit total length (dd/MM/yyyy = 10 chars)
@@ -148,7 +182,13 @@ export default function DeliveryChallan() {
                 />
               </div>
             </div>
-            <h3>Dispatch details</h3>
+            <div className="dc-cust-details">
+              <div className="dc-cust-icon">
+                <i className="fas fa-shipping-fast"></i>
+              </div>
+              <h3>Dispatch Details</h3>
+            </div>
+            {/* <h3>Dispatch details</h3> */}
             <div className="dc-grid-3">
               <div className="dc-form-group">
                 <label>Vehicle No</label>
@@ -177,7 +217,7 @@ export default function DeliveryChallan() {
                   onChange={(date) => setInvoiceDate(date)}
                   dateFormat="dd/MM/yyyy"
                   maxDate={new Date()}   // prevent future date
-                  className="date-input"
+                  className="dc-date-input"
                   onChangeRaw={(e) => {
                     let value = e.target.value;
                     // 🔥 limit total length (dd/MM/yyyy = 10 chars)
@@ -198,17 +238,25 @@ export default function DeliveryChallan() {
           </div>
 
           {/* ================= PART 2 ================= */}
-          <div className="section-card">
-              <h2>Customer Details</h2>
+          <div className="dc-section-card">
+              <div className="dc-customer-title">
+                <div className="dc-customer-icon">
+                  <i className="fas fa-user-friends"></i>
+                </div>
+                <h2>Customer Details</h2>
+              </div>
               <div className="search-customer">
                 <label>Search Customer Name</label>
                 <div className="search-box">
-                  <input type="text" placeholder="Search customer..." />
+                  <div className="debit-search-input-wrapper">
+                    <FaSearch className="sale-search-icon" />
+                    <input type="text" placeholder="Search customer..." />
+                  </div>
                   <button
-                    className="new-customer-btn"
+                    className="dc-new-customer-btn"
                     onClick={() => setShowCustomerPopup(true)}
                   >
-                    New Customer
+                    + New Customer
                   </button>
                  {showCustomerPopup && (
                   <div
@@ -364,8 +412,11 @@ export default function DeliveryChallan() {
               <div className="customer-details-container">         
                 {/* Billed To */}
                 <div className="customer-card">
-                  <div className="customer-card-header">
-                    <h3>Billed To:</h3>
+                  <div className="dc-customer-card-header">
+                   <h3 className="dc-customer-card-title">
+                    <FaUniversity />
+                    Billed To:
+                  </h3>
                   </div>
                   
                   {editBilled ? (
@@ -447,12 +498,16 @@ export default function DeliveryChallan() {
                 {/* Shipped To */}
                 {invoiceType !== "accounting" && (
                 <div className="customer-card">
-                  <div className="customer-card-header">
-                    <h3>Shipped To:</h3>
+                  <div className="dc-customer-card-header">
+                    <h3 className="dc-customer-card-title">
+                    <FaTruck />
+                    Shipped To:
+                  </h3>
                     <button 
-                      className="edit-btn"
+                      className="dc-edit-btn"
                       onClick={() => setEditShipped(!editShipped)}
                     >
+                      <FaPen />
                       {editShipped ? 'Save' : 'Edit'}
                     </button>
                   </div>
@@ -538,11 +593,16 @@ export default function DeliveryChallan() {
 
           {/* ================= PART 3 ================= */}
           <div className="dc-card">
-            <h3>Product Details</h3>
-
+            <div className="dc-cost-details">
+              <div className="dc-cust-icon">
+                  <i className="fas fa-boxes"></i>
+                </div>
+              <h3>Product Details</h3>
+            </div>
             <table className="dc-table">
               <thead>
                 <tr>
+                  <th></th>
                   <th>Product</th>
                   <th>Description</th>
                   <th>HSN</th>
@@ -561,7 +621,22 @@ export default function DeliveryChallan() {
                   const amount = qty * rate + (qty * rate * tax) / 100;
 
                   return (
-                    <tr key={i}>
+                    <tr key={item.id}>
+                      
+                      <td>
+                        <button
+                          className="sale-delete-btn"
+                          onClick={() => {
+                            setItems(
+                              items.filter(
+                                (row) => row.id !== item.id
+                              )
+                            );
+                          }}
+                        >
+                          <FaTrash />
+                        </button>
+                      </td>
                       <td><input className="dc-input" onChange={(e) => handleChange(i, "product", e.target.value)} /></td>
                       <td><input className="dc-input" onChange={(e) => handleChange(i, "description", e.target.value)} /></td>
                       <td><input className="dc-input" onChange={(e) => handleChange(i, "hsn", e.target.value)} /></td>

@@ -9,7 +9,7 @@
 }
 .grid{
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   gap: 8px;
 }
 .debit-section-card{
@@ -61,10 +61,85 @@
   align-items: center;
   margin-bottom: 14px;
 }
-.dn-voucher-row{
+.dn-voucher-row {
   display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: -8px;
+}
+.dn-voucher-row label {
+  font-size: 12px;
+  color: #6b7280;
+}
+.debit-voucher-value {
+  font-size: 14px;
+  font-weight: 600;
+  color: #6366f1;
+  background: #f3f0ff;
+  padding: 3px 10px;
+  border-radius: 6px;
+}
+.debit-header{
+      display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 16px;
+    border-radius: 14px;
+    padding: 13px 5px;
+    width: fit-content;
+    margin-top: -4px;
+}
+.debit-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  background: #f3f0ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.debit-icon i {
+    font-size: 24px;
+    color: #6366f1;
+}
+.dn-form-group{
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.dn-form-group label{
+  font-size: 11px;
+  color: #6b7280;
+}
+.dn-cust-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 12px;
+  background: #f3f0ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.dn-cust-icon i {
+    font-size: 18px;
+    color: #6366f1;
+}
+.dn-cust-details{
+      display: flex;
+    align-items: center;
+    gap: 16px;
+    border-radius: 14px;
+    padding: 13px 5px;
+    width: fit-content;
+    margin-bottom: -21px;
+}
+.dn-cost-details{
+      display: flex;
+    align-items: center;
+    gap: 16px;
+    border-radius: 14px;
+    padding: 13px 5px;
+    width: fit-content;
 }
 .dn-no-group{
   display: flex;
@@ -77,6 +152,100 @@
     color: #6b7280;
     /* gap: 6px;
     margin-bottom: 6px; */
+}
+.debit-search-box {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.debit-search-input-wrapper {
+  position: relative;
+}
+.debit-search-input-wrapper input {
+  width: 300px;
+  padding: 8px 12px 8px 36px;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+}
+.dn-new-customer-btn {
+  padding: 5px 16px;
+  background: #f3f0ff;
+  border: 1px solid #bfdbfe;
+  color: #6366f1;
+  border-radius: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.dn-customer-card-title svg {
+  color: #6366f1;
+  font-size: 14px;
+}
+
+.dn-customer-card-title,
+.dn-edit-btn
+ {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.dn-edit-btn {
+  padding: 4px 12px;
+  background:  #6366f1;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  color: white;
+  cursor: pointer;
+}
+.dn-new-customer-btn:hover {
+  background: #dbeafe;
+}
+.dn-add-item-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 4px 6px;
+  margin-top: 12px;
+  border: none;
+  border-radius: 6px;
+  background: #6366f1;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.dn-add-item-btn:hover {
+  background: #6366f1;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(34, 197, 94, 0.25);
+}
+.dn-tax-summary {
+  width: 230px;
+  margin-left: auto;
+  padding: 10px 12px;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  background: #fff;
+}
+
+.dn-summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 600;
+  color: #475569;
+  margin-bottom: 4px;
+}
+
+.dn-summary-row span:last-child {
+  color: #6366f1;
+  font-weight: 700;
 }
 .customer-box {
   display: flex;

@@ -33,25 +33,38 @@ export default function Payment() {
   };
 
   return (
-    <div className="payment-app">
-      <div className={`main-content ${collapsed ? "collapsed" : ""}`}>
-        <div className="payment-wrapper">
+  <div className="payment-app">
+    <div className={`main-content ${collapsed ? "collapsed" : ""}`}>
+      <div className="payment-page">
 
-          {/* HEADER */}
-          <div className="payment-header">
-            <div>
-              <h2>Payment</h2>
-              <span>Voucher No: {voucherNo}</span>
+        {/* Voucher Card */}
+        <div className="payment-card">
+
+          {/* Header */}
+          <div className="payment-top-header">
+            <div className="payment-title-section">
+              <div className="payment-icon-box">
+                <i className="fas fa-wallet"></i>
+              </div>
+
+              <div>
+                <h2>Payment</h2>
+
+                <div className="voucher-row">
+                  <span>Voucher No:</span>
+                  <span className="voucher-badge">{voucherNo}</span>
+                </div>
+              </div>
             </div>
 
-            <div className="payment-date">
+            <div className="payment-date-box">
               <label>Payment Date:</label>
               <DatePicker
                 selected={paymentDate}
                 onChange={(date) =>setPaymentDate(date)}
                 dateFormat="dd/MM/yyyy"
                 minDate={new Date(new Date().setFullYear(new Date().getFullYear() - 1))} // ✅ last 1 year
-                className="date-input"
+                className="pay-date-input"
                 onChangeRaw={(e) => {
                   if (!e || !e.target) return;
                   let value = e.target.value || "";
@@ -81,101 +94,200 @@ export default function Payment() {
             </div>
           </div>
 
-          {/* PAYMENT BY */}
-          <div className="payment-ledger">
-            <label>Payment by :</label>
-            <select
-              value={ledger}
-              onChange={(e) => setLedger(e.target.value)}
-            >
-              <option value="">Select</option>
-              <option value="cash">Cash</option>
-              <option value="bank">Bank</option>
-            </select>
-            <button className="payment-ledger-btn" onClick={() => navigate("/Ledger",{state: { defaultGroup: "Bank Accounts" } })} >New ledger</button> 
-            <label>Against Type :</label>
-            <select
-              value={againstType}
-              onChange={(e) => setAgainstType(e.target.value)}
-            >
-              <option value="invoice">Invoice</option>
-              <option value="advance">Advance</option>
-              <option value="on_account">On Account</option>
-            </select>
-          </div>
-          <hr />
+          {/* Payment By */}
+          <div className="payment-filter-row">
 
-          {/* CUSTOMER TABLE */}
-          {/* <div className="customer-section"> */}
+            <div className="payment-left-controls">
 
-            <div className="Py-customer-header">
-              <input placeholder="Search Customer Name" />
-              <button className="P-new-btn">New Customer</button>
-            </div>
-              <div className="table-head">
-                <span></span>
-                <span>Chq no / Ref. No</span>
-                {againstType === "invoice" && <span>Against to:</span>}
-                <span>Amount</span>
+              <div className="pay-filter-group">
+                <label>Payment by</label>
+
+                <select
+                  value={ledger}
+                  onChange={(e) => setLedger(e.target.value)}
+                >
+                  <option value="">Select</option>
+                  <option value="cash">Cash</option>
+                  <option value="bank">Bank</option>
+                </select>
               </div>
-            
 
-            {/* ROWS */}
-            {rows.map((row, i) => (
-              <div
-                key={i}
-                className={`customer-row ${againstType !== "invoice" ? "no-against" : ""}`}
+              <button
+                className="new-ledger-btn"
+                onClick={() =>
+                  navigate("/Ledger", {
+                    state: { defaultGroup: "Bank Accounts" }
+                  })
+                }
               >
-                <div className="customer-name">{row.name}</div>
+                + New Ledger
+              </button>
 
-                {/* ✅ Always visible */}
-                <input
-                  value={row.ref}
-                  onChange={(e) => handleChange(i, "ref", e.target.value)}
-                />
+              <div className="pay-filter-group">
+                <label>Against Type</label>
 
-                {/* ✅ Only for invoice */}
-                {againstType === "invoice" && (
-                  <input
-                    value={row.against}
-                    onChange={(e) => handleChange(i, "against", e.target.value)}
-                  />
-                )}
-
-                <input
-                  value={row.amount}
-                  onChange={(e) => handleChange(i, "amount", e.target.value)}
-                />
+                <select
+                  value={againstType}
+                  onChange={(e) => setAgainstType(e.target.value)}
+                >
+                  <option value="invoice">Invoice</option>
+                  <option value="advance">Advance</option>
+                  <option value="on_account">On Account</option>
+                </select>
               </div>
-            ))}
 
-          {/* </div> */}
+            </div>
 
-          <hr />
-
-          {/* TOTAL */}
-          <div className="total-section">
-            <span>TOTAL</span>
-            <input value={total.toFixed(2)} readOnly />
           </div>
 
-          {/* NARRATION */}
-          <div className="narration">
-            <label>Voucher Narration:</label>
+          {/* Search */}
+          <div className="customer-search-row">
+            <input
+              type="text"
+              placeholder="Search Customer Name..."
+            />
+
+            <button className="pay-new-customer-btn">
+              + New Customer
+            </button>
+          </div>
+
+          {/* Table */}
+          <div className="payment-table-wrapper">
+            <table className="payment-table">
+              <thead>
+                <tr>
+                  <th>Customer Name</th>
+                  <th>Chq no / Ref. No</th>
+
+                  {againstType === "invoice" && (
+                    <th>Against to</th>
+                  )}
+
+                  <th>Amount (₹)</th>
+                  <th></th>
+                </tr>
+              </thead>
+
+              <tbody>
+                {rows.map((row, i) => (
+                  <tr key={i}>
+                    <td className="customer-name">
+                      {row.name}
+                    </td>
+
+                    <td>
+                      <input
+                        value={row.ref}
+                        placeholder="Enter Cheque / Reference No"
+                        onChange={(e) =>
+                          handleChange(i, "ref", e.target.value)
+                        }
+                      />
+                    </td>
+
+                    {againstType === "invoice" && (
+                      <td>
+                        <input
+                          type="text"
+                          value={row.against}
+                          placeholder="Enter Invoice"
+                          onChange={(e) =>
+                            handleChange(
+                              i,
+                              "against",
+                              e.target.value
+                            )
+                          }
+                        />
+                      </td>
+                    )}
+
+                    <td>
+                      <input
+                        value={row.amount}
+                        placeholder="0.00"
+                        onChange={(e) =>
+                          handleChange(
+                            i,
+                            "amount",
+                            e.target.value
+                          )
+                        }
+                      />
+                    </td>
+
+                    <td className="delete-cell">
+                      <button
+                        className="pay-del-btn"
+                        onClick={() => {
+                          const updated = rows.filter(
+                            (_, index) => index !== i
+                          );
+                          setRows(updated);
+                        }}
+                      >
+                        <i className="fas fa-trash-alt"></i>
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* Add Row */}
+          <button
+            className="add-row-btn"
+            onClick={() =>
+              setRows([
+                ...rows,
+                {
+                  name: "",
+                  ref: "",
+                  against: "",
+                  amount: ""
+                }
+              ])
+            }
+          >
+            + Add Row
+          </button>
+
+          {/* Total */}
+          <div className="total-wrapper">
+            <div className="total-box">
+              <span>TOTAL</span>
+              <strong>₹ {total.toFixed(2)}</strong>
+            </div>
+          </div>
+
+          {/* Narration */}
+          <div className="pay-narration-box">
+            <label>Voucher Narration</label>
+
             <textarea
               value={narration}
-              onChange={(e) => setNarration(e.target.value)}
+              placeholder="Enter narration for this voucher..."
+              onChange={(e) =>
+                setNarration(e.target.value)
+              }
             />
           </div>
 
-          {/* ACTIONS */}
-          <div className="actions-but">
-            <button className="save-btn-act">Save</button>
-            <button className="cancel-btn-act">Cancel</button>
-          </div>
+          {/* Footer Buttons */}
+          <div className="action-buttons">
+            <button className="save-btn-act">
+              Save
+            </button>
 
+            <button className="cancel-btn-act">
+              Cancel
+            </button>
+          </div>
         </div>
       </div>
     </div>
-  );
+  </div>
+);
 }
