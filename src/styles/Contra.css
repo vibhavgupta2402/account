@@ -1,167 +1,345 @@
-/* ================= MAIN ================= */
+/* ==================================
+   PAGE
+================================== */
+
 .contra-wrapper {
-  background: white;
-  padding: 18px 22px;
-  min-height: 100vh;
-  font-family: Arial;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 12px;
+  margin: 8px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
 }
 
-/* ================= HEADER ================= */
+/* ==================================
+   HEADER
+================================== */
+
 .contra-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 6px;
 }
 
-.contra-header h2 {
-  margin: 0;
+.contra-title-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
+
+.contra-icon-box {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  background: #f3e8ff;
+  color: #8b5cf6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+
+.contra-title-section h2 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.contra-voucher-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 2px;
+  font-size: 12px;
+}
+
+.contra-voucher-badge {
+  background: #f3e8ff;
+  color: #8b5cf6;
+  padding: 3px 8px;
+  border-radius: 5px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+/* ==================================
+   DATE
+================================== */
 
 .contra-date {
   display: flex;
   align-items: center;
-  gap: 10px;
-}
-
-.contra-date input {
-  height: 26px;
-  width: 150px;
-}
-
-/* ================= MODE ================= */
-.contra-mode {
-  margin-top: 15px;
-}
-
-.contra-mode select {
-  margin-left: 10px;
-  height: 28px;
-  width: 200px;
-}
-
-/* ================= LINE ================= */
-hr {
-  border: none;
-  border-top: 1px solid #ccc;
-  margin: 18px 0;
-}
-
-/* ================= LEDGER ================= */
-.contra-ledger {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 40px;
-}
-
-.contra-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.contra-row label {
-  width: 120px;
-  font-weight: 600;
-}
-
-.contra-row input {
-  flex: 1;
-  height: 26px;
-  border: 1px solid #ccc;
-  padding: 4px 6px;
-}
-
-/* ================= EXTRA ================= */
-.contra-extra {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  margin-top: 15px;
-  gap: 20px;
-}
-
-/* ================= TOTAL ================= */
-.contra-total {
-  display: grid;
-  grid-template-columns: 1fr 150px;
-  align-items: center;
-}
-
-.contra-total span {
-  text-align: right;
-  padding-right: 10px;
-  font-weight: 600;
-}
-
-.contra-total input {
-  height: 26px;
-  border: 1px solid #ccc;
-}
-
-/* ================= NARRATION ================= */
-.contra-narration {
-  margin-top: 15px;
-}
-.contra-narration label{
-  display: block;
-  margin-top: 8px;
-
-}
-.contra-narration textarea {
-  width: 450px;
-  height: 90px;
-  border: 1px solid #ccc;
-  
-}
-.contra-actions{
-  display: flex;
-  justify-content: flex-end;
-  gap: 12px;
-  margin-top: 24px;
-  padding-top: 20px;
-  border-top: 1px solid var(--ledger-border-light);
-}
-
-/* ================= BUTTONS ================= */
-.cont-save-btn,
-.cont-cancel-btn {
-  padding: 10px 24px;
-  border: none;
-  border-radius: var(--ledger-radius-md);
-  font-weight: 600;
-  font-size: 13px;
-  cursor: pointer;
-  transition: var(--ledger-transition);
-  letter-spacing: 0.3px;
-  display: inline-flex;
-  align-items: center;
   gap: 8px;
 }
 
+.contra-date label {
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.date-input {
+  width: 120px;
+  height: 32px;
+  border: 1px solid #dbe2ea;
+  border-radius: 6px;
+  padding: 0 10px;
+  font-size: 12px;
+}
+
+/* ==================================
+   SECTION TITLES
+================================== */
+
+.contra-section-title,
+.contra-ledger-title,
+.contra-cheque-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.contra-section-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: #f3e8ff;
+  color: #8b5cf6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+}
+
+.contra-section-title h3,
+.contra-ledger-title h3,
+.contra-cheque-title h3 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #374151;
+}
+
+/* ==================================
+   MODE
+================================== */
+
+.contra-mode-card {
+  margin-bottom: -5px;
+}
+
+.contra-mode-card select {
+  width: 220px;
+  height: 27px;
+  border: 1px solid #dbe2ea;
+  border-radius: 6px;
+  padding: 0 10px;
+  font-size: 12px;
+  background: white;
+}
+
+/* ==================================
+   LEDGER
+================================== */
+
+.contra-ledger {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+/* ==================================
+   CHEQUE DETAILS
+================================== */
+
+.contra-extra {
+  display: grid;
+  grid-template-columns: .5fr 1fr .5fr;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+/* ==================================
+   FORM FIELDS
+================================== */
+
+.contra-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.contra-row label {
+  font-size: 11px;
+  color: #4b5563;
+  font-weight: 500;
+}
+
+.contra-row input,
+.contra-row select {
+  height: 27px;
+  border: 1px solid #dbe2ea;
+  border-radius: 6px;
+  padding: 0 10px;
+  font-size: 12px;
+  outline: none;
+}
+
+.contra-row input:focus,
+.contra-row select:focus,
+.date-input:focus {
+  border-color: #8b5cf6;
+}
+
+/* ==================================
+   TOTAL
+================================== */
+
+.contra-total-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 8px;
+}
+
+.contra-total-box {
+  min-width: 220px;
+  border: 1px solid #e9d5ff;
+  border-radius: 8px;
+  padding: 10px 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #faf5ff;
+}
+
+.contra-total-box span {
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.contra-total-box strong {
+  font-size: 18px;
+  color: #8b5cf6;
+}
+
+/* ==================================
+   NARRATION
+================================== */
+
+.contra-narration-box {
+  margin-top: 1px;
+}
+
+.contra-narration-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+  color: #8b5cf6;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.contra-narration-box textarea {
+  width: 55%;
+  height: 80px;
+  border: 1px solid #dbe2ea;
+  border-radius: 8px;
+  padding: 10px;
+  resize: none;
+  outline: none;
+  font-size: 12px;
+}
+
+/* ==================================
+   ACTIONS
+================================== */
+
+.contra-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.cont-save-btn,
+.cont-cancel-btn {
+  height: 36px;
+  min-width: 100px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 500;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
 .cont-save-btn {
-  background: linear-gradient(135deg, var(--ledger-success), #059669);
+  background: #8b5cf6;
   color: white;
-  box-shadow: 0 2px 4px rgba(16, 185, 129, 0.2);
+  border: none;
 }
 
 .cont-save-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 16px rgba(16, 185, 129, 0.25);
-  filter: brightness(1.05);
+  background: #7c3aed;
 }
 
 .cont-cancel-btn {
-  background: linear-gradient(135deg, var(--ledger-danger), #DC2626);
-  color: white;
-  box-shadow: 0 2px 4px rgba(239, 68, 68, 0.2);
+  background: white;
+  color: #ef4444;
+  border: 1px solid #ef4444;
 }
 
 .cont-cancel-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 16px rgba(239, 68, 68, 0.25);
-  filter: brightness(1.05);
+  background: #fef2f2;
 }
 
-.cont-save-btn:active,
-.cont-cancel-btn:active {
-  transform: translateY(0);
+/* ==================================
+   DATEPICKER FIX
+================================== */
+
+.react-datepicker-popper {
+  z-index: 9999 !important;
+}
+
+.react-datepicker {
+  border: 1px solid #e5e7eb !important;
+  font-size: 12px !important;
+}
+
+/* ==================================
+   MOBILE
+================================== */
+
+@media (max-width: 768px) {
+
+  .contra-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .contra-ledger,
+  .contra-extra {
+    grid-template-columns: 1fr;
+  }
+
+  .contra-narration-box textarea {
+    width: 100%;
+  }
+
+  .contra-total-wrapper {
+    justify-content: center;
+  }
+
+  .contra-actions {
+    justify-content: center;
+  }
 }

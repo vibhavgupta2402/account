@@ -55,7 +55,7 @@
 
 .so-grid-3 {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   gap: 6px;
 }
 .so-header-date{
@@ -63,7 +63,234 @@
     align-items: center;
     gap: 10px;
 }
+.so-title-section {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
 
+.so-icon-box {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: #fff6eb;
+  color: #f97316;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+}
+
+.so-title-section h2 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.so-voucher-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+  font-size: 13px;
+}
+.so-voucher-row label {
+    font-size: 12px;
+    color: #6b7280;
+}
+
+.so-voucher-badge {
+  background: #fff6eb;
+  color: #f97316;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.so-ord-dispatch-title{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:16px;
+}
+
+.so-ord-dispatch-icon{
+  width:36px;
+  height:36px;
+  border-radius:8px;
+  background:#fff6eb;
+  color:#f97316;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.so-transporter-create-btn {
+  padding: 0 10px;
+  height: 24px;          /* SAME AS SELECT */
+  line-height: 24px;     /* ADD THIS - matches height for vertical centering */
+  border-radius: 6px;
+  border: none;
+  background: linear-gradient(135deg, #f97316);
+  color: white;
+  cursor: pointer;
+  white-space: nowrap;
+  text-align: center;    /* CHANGE from 'justify' to 'center' */
+}
+
+.so-cust-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  background: #fff6eb;
+  color: #f97316;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  
+}
+.so-supplier-card {
+  border: 1px solid #e5e7eb;
+  padding: 8px;
+  border-radius: 6px;
+  background: #f9fafb;
+}
+.so-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.so-customer-card-title svg {
+  color: #f97316;
+  font-size: 14px;
+}
+.so-customer-card-title,
+.so-edit-btn
+ {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.so-supplier-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.so-input {
+  width: 260px;
+  height: 34px;
+  border: 1px solid #dbe2ea;
+  border-radius: 6px;
+  padding: 0 12px;
+  font-size: 13px;
+}
+
+.so-add-btn {
+  height: 31px;
+  padding: 0 14px;
+  border: 1px solid #f97316;
+  border-radius: 6px;
+  background: #f97316;
+  color: white;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+}
+.so-card-header h3 {
+  font-size: 15px;
+  font-weight: 600;
+  color: #f97316;
+}
+.so-supplier-card h4 {
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+
+.so-cust-details{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin:0;
+}
+
+.so-party-details {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.so-detail-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 6px;
+  font-size: 13px;
+}
+
+.so-detail-row span {
+  min-width: 70px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.so-detail-row p {
+  margin: 0;
+  color: #6b7280;
+}
+.so-cost-details{
+      display: flex;
+    align-items: center;
+    gap: 16px;
+    border-radius: 14px;
+    padding: 13px 5px;
+    width: fit-content;
+}
+/* .so-cust-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 12px;
+  background: #f3f0ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.so-cust-icon i {
+    font-size: 18px;
+    color: #2563eb;
+} */
+.so-summary-box {
+  width: 320px;
+  margin-left: auto;
+  background: #fff;
+  border: 1px solid #dbeafe;
+  border-radius: 10px;
+  padding: 8px;
+}
+
+.so-summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 1px 0;
+
+  font-size: 13px;
+  color: #374151;
+
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.so-summary-row:last-of-type {
+  border-bottom: none;
+}
+
+.so-summary-row strong {
+  color: #111827;
+  font-weight: 600;
+}
 /* ================== FORM ================== */
 
 .so-form-group {
@@ -99,6 +326,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 10px;
+  margin-top: 5px;
 }
 
 .so-customer-card {
@@ -108,7 +336,7 @@
   background: #f9fafb;
 }
 
-.so-add-btn {
+/* .so-add-btn {
   margin-top: 5px;
   background: #2563eb;
   color: white;
@@ -116,7 +344,7 @@
   padding: 5px;
   font-size: 12px;
   border-radius: 4px;
-}
+} */
 
 /* ================== TABLE ================== */
 
@@ -149,12 +377,33 @@
   margin-top: 6px;
   padding: 5px 10px;
   font-size: 12px;
-  background: #2563eb;
+  background: #f97316;
   color: white;
   border: none;
   border-radius: 4px;
 }
+.so-grand-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 
+  margin-top: 10px;
+  padding-top: 12px;
+
+  border-top: 2px solid #dbeafe;
+
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.so-grand-total span {
+  color: #f97316;
+}
+
+.so-grand-total strong {
+  color: #f97316;
+  font-size: 18px;
+}
 /* ================== NOTES ================== */
 
 .so-notes {

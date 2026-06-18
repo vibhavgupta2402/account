@@ -41,9 +41,21 @@ export default function Contra() {
 
           {/* HEADER */}
           <div className="contra-header">
-            <div>
-              <h2>Contra</h2>
-              <span>Voucher No: {voucherNo}</span>
+            <div className="contra-title-section">
+              <div className="contra-icon-box">
+                <i className="fas fa-exchange-alt"></i>
+              </div>
+              <div>
+                <h2>Contra</h2>
+                <div className="contra-voucher-row">
+                  <span>Voucher No:</span>
+
+                  <span className="contra-voucher-badge">
+                    {voucherNo}
+                  </span>
+                </div>
+              </div>
+
             </div>
 
             <div className="contra-date">
@@ -78,8 +90,13 @@ export default function Contra() {
           </div>
 
           {/* MODE */}
-          <div className="contra-mode">
-            <label>Transaction Mode</label>
+          <div className="contra-mode-card">
+            <div className="contra-section-title">
+              <div className="contra-section-icon">
+                <i className="fas fa-random"></i>
+              </div>
+              <h3>Transaction Mode</h3>
+            </div>
             <select
               value={mode}
               onChange={(e) => handleModeChange(e.target.value)}
@@ -88,11 +105,18 @@ export default function Contra() {
               <option value="withdraw">Cash Withdrawal</option>
               <option value="transfer">Bank to Bank</option>
             </select>
+
           </div>
 
           <hr />
 
           {/* LEDGER SECTION */}
+          <div className="contra-ledger-title">
+            <div className="contra-section-icon">
+              <i className="fas fa-university"></i>
+            </div>
+            <h3>Ledger Details</h3>
+          </div>
           <div className="contra-ledger">
 
             <div className="contra-row">
@@ -118,6 +142,12 @@ export default function Contra() {
           </div>
 
           {/* CHEQUE DETAILS */}
+          <div className="contra-cheque-title">
+            <div className="contra-section-icon">
+              <i className="fas fa-money-check"></i>
+            </div>
+            <h3>Cheque / Transaction Details</h3>
+          </div>
           <div className="contra-extra">
             <div className="contra-row">
               <label>Chq No/Transcation No/URR No</label>
@@ -169,14 +199,28 @@ export default function Contra() {
           <hr />
 
           {/* TOTAL */}
-          <div className="contra-total">
-            <span>TOTAL</span>
-            <input value={(Number(amount) || 0).toFixed(2)} readOnly />
+          <div className="contra-total-wrapper">
+            <div className="contra-total-box">
+              <span>TOTAL</span>
+              <strong>
+                ₹ {(Number(amount) || 0).toFixed(2)}
+              </strong>
+            </div>
           </div>
 
           {/* NARRATION */}
-          <div className="contra-narration">
+          {/* <div className="contra-narration">
             <label>Voucher Narration:</label>
+            <textarea
+              value={narration}
+              onChange={(e) => setNarration(e.target.value)}
+            />
+          </div> */}
+          <div className="contra-narration-box">
+            <div className="contra-narration-title">
+              <i className="fas fa-file-alt"></i>
+              <span>Voucher Narration</span>
+            </div>
             <textarea
               value={narration}
               onChange={(e) => setNarration(e.target.value)}
@@ -184,9 +228,19 @@ export default function Contra() {
           </div>
 
           {/* ACTION */}
-          <div className="contra-actions">
+          {/* <div className="contra-actions">
             <button className="cont-save-btn">Save</button>
             <button className="cont-cancel-btn">Cancel</button>
+          </div> */}
+          <div className="contra-actions">
+            <button className="cont-cancel-btn">
+              <i className="fas fa-times"></i>
+              Cancel
+            </button>
+            <button className="cont-save-btn">
+              <i className="fas fa-save"></i>
+              Save
+            </button>
           </div>
 
         </div>

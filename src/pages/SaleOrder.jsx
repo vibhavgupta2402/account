@@ -1,5 +1,9 @@
 import { useState,useEffect } from "react";
 import { useOutletContext,useNavigate } from "react-router-dom";
+import { FaTrash ,FaSearch,FaUniversity,FaTruck,FaPen,FaSave,
+  FaPaperPlane,
+  FaPrint,
+  FaTimes } from "react-icons/fa";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "../styles/SaleOrder.css";
@@ -16,9 +20,24 @@ export default function SaleOrder() {
   const [soType, setSoType] = useState("");
   const [buyer, setBuyer] = useState("");
 
+
   /* ================= CUSTOMER ================= */
-  const [billedTo, setBilledTo] = useState("");
-  const [shippedTo, setShippedTo] = useState("");
+   const [billedTo, setBilledTo] = useState({
+  name: "SALVIA GRAFICS PVT LTD",
+  address: "2652/F Kuti Choraha, Near PVS Mall, Garh Road",
+  contact: "Vikram Singh",
+  mobile: "9897012345",
+  gstin: "09ABMCS5888A12U",
+  pos: "09-Uttar Pradesh"
+});
+  const [shippedTo, setShippedTo] = useState({
+  name: "SALVIA GRAFICS PVT LTD",
+  address: "2652/F Kuti Choraha, Near PVS Mall, Garh Road",
+  contact: "Vikram Singh",
+  mobile: "9897012345",
+  gstin: "09ABMCS5888A12U",
+  pos: "09-Uttar Pradesh"
+});
 
   /* ================= TERMS ================= */
   const [paymentTerms, setPaymentTerms] = useState("");
@@ -26,13 +45,27 @@ export default function SaleOrder() {
 
   /* ================= ITEMS ================= */
   const [items, setItems] = useState([
-    { description: "", hsn: "", qty: "", price: "", gst: "" }
-  ]);
+  {
+    id: Date.now(),
+    desc: "",
+    qty: "",
+    rate: "",
+    tax: "0"
+  }
+]);
 
   const addRow = () => {
     setItems([
       ...items,
-      { description: "", hsn: "", qty: "", price: "", gst: "" }
+      {
+        id: Date.now() + Math.random(),
+        product: "",
+        description: "",
+        hsn: "",
+        qty: "",
+        rate: "",
+        tax: "0"
+      }
     ]);
   };
 
@@ -140,15 +173,29 @@ export default function SaleOrder() {
     <div className="sale-order-app">
       <div className={`so-main-content ${collapsed ? "collapsed" : ""}`}>
         <div className="so-wrapper">
-           <h2>Sale Order</h2>
+           
 
           {/* ================= HEADER ================= */}
           <div className="so-card">
             <div className="so-header-row">
-              <div className="pur-voucher-row">
+              <div className="so-title-section">
+                <div className="so-icon-box">
+                 <i className="fas fa-clipboard-check"></i>
+                </div>
+                <div>
+                  <h2>Sale Order</h2>
+                  <div className="so-voucher-row">
+                    <label>Voucher No:</label>
+                    <span className="so-voucher-badge">
+                      {generateVoucher()}
+                    </span>
+                  </div>
+                </div>
+              </div>
+              {/* <div className="pur-voucher-row">
                 <label>Voucher No:</label>
                 <span className="voucher-value">{generateVoucher()}</span>
-              </div>
+              </div> */}
               <div className="so-header-date">
                 <label>Date :</label>
                 <DatePicker
@@ -156,7 +203,7 @@ export default function SaleOrder() {
                   onChange={(date) => setSoDate(date)}
                   dateFormat="dd/MM/yyyy"
                   minDate={new Date(new Date().setFullYear(new Date().getFullYear() - 1))} // ✅ last 1 year
-                  className="date-input"
+                  className="so-date-input"
                   onChangeRaw={(e) => {
                     if (!e || !e.target) return;
                     let value = e.target.value || "";
@@ -385,7 +432,13 @@ export default function SaleOrder() {
           </div>
           <div className="section-card">
             <div className="dispatch-header">
-            <h2>Dispatch Details</h2>
+              <div className="so-ord-dispatch-title">
+                <div className="so-ord-dispatch-icon">
+                  <i className="fas fa-shipping-fast"></i>
+                </div>
+                <h3>Dispatch Details</h3>
+              </div>
+            {/* <h2>Dispatch Details</h2> */}
               <div className="transporter-box">
                 <label>Transporter Name</label>
                 <div className="transporter-row"> 
@@ -393,7 +446,7 @@ export default function SaleOrder() {
                     <option>Select</option>
                   </select>
                   <button
-                    className="transporter-create-btn"
+                    className="so-transporter-create-btn"
                     onClick={() => navigate("/Ledger")}
                   >
                     Create
@@ -446,7 +499,7 @@ export default function SaleOrder() {
                   onChange={(date) => setSodisDate(date)}
                   dateFormat="dd/MM/yyyy"
                   minDate={new Date(new Date().setFullYear(new Date().getFullYear() - 1))} // ✅ last 1 year
-                  className="date-input"
+                  className="so-date-input"
                   onChangeRaw={(e) => {
                     if (!e || !e.target) return;
                     let value = e.target.value || "";
@@ -498,7 +551,7 @@ export default function SaleOrder() {
                   onChange={(date) => setshippingDate(date)}
                   dateFormat="dd/MM/yyyy"
                   minDate={new Date(new Date().setFullYear(new Date().getFullYear() - 1))} // ✅ last 1 year
-                  className="date-input"
+                  className="so-date-input"
                   onChangeRaw={(e) => {
                     if (!e || !e.target) return;
                     let value = e.target.value || "";
@@ -535,21 +588,114 @@ export default function SaleOrder() {
 
           {/* ================= Supplier ================= */}
           <div className="so-card">
-            <h3>Supplier Details</h3>
+            <div className="so-cust-details">
+              <div className="so-cust-icon">
+                <i className="fas fa-users"></i>
+              </div>
+              <h3>Supplier Details</h3>
+            </div>
 
             <div className="so-customer-container">
+              <div className="so-supplier-card">
+                <div className="so-card-header">
+                  <h3 className="so-customer-card-title">
+                    <FaUniversity />
+                    Billed To
+                  </h3>
+                </div>
+                <div className="so-supplier-row">
+                  <input
+                    className="so-input"
+                    placeholder="Search Supplier"
+                  />
+                  <button className="so-add-btn">
+                    Add New
+                  </button>
+                </div>
 
-              <div className="so-customer-card">
-                <h4>Billed To</h4>
-                <input className="so-input" onChange={(e) => setBilledTo(e.target.value)} />
-                <button className="so-add-btn">Add New</button>
+                <div className="so-party-details">
+                  <div className="so-detail-row">
+                    <span>Name :</span>
+                    <p>{billedTo.name}</p>
+                  </div>
+
+                  <div className="so-detail-row">
+                    <span>Address :</span>
+                    <p>{billedTo.address}</p>
+                  </div>
+
+                  <div className="so-detail-row">
+                    <span>Contact :</span>
+                    <p>{billedTo.contact}</p>
+                  </div>
+
+                  <div className="so-detail-row">
+                    <span>Mobile :</span>
+                    <p>{billedTo.mobile}</p>
+                  </div>
+
+                  <div className="so-detail-row">
+                    <span>GSTIN :</span>
+                    <p>{billedTo.gstin}</p>
+                  </div>
+
+                  <div className="so-detail-row">
+                    <span>POS :</span>
+                    <p>{billedTo.pos}</p>
+                  </div>
+
+                </div>
+
+              </div>
+            <div className="so-supplier-card">
+              <div className="so-card-header">
+                <h3 className="so-customer-card-title">
+                  <FaTruck />
+                  Shipped To
+                </h3>
               </div>
 
-              <div className="so-customer-card">
-                <h4>Shipped To</h4>
-                <input className="so-input" onChange={(e) => setShippedTo(e.target.value)} />
+              <div className="so-supplier-row">
+                <input
+                    className="so-input"
+                    placeholder="Search Supplier"
+                  />
               </div>
 
+              <div className="so-party-details">
+                <div className="so-detail-row">
+                  <span>Name :</span>
+                  <p>{billedTo.name}</p>
+                </div>
+
+                <div className="so-detail-row">
+                  <span>Address :</span>
+                  <p>{shippedTo.address}</p>
+                </div>
+
+                <div className="so-detail-row">
+                  <span>Contact :</span>
+                  <p>{shippedTo.contact}</p>
+                </div>
+
+                <div className="so-detail-row">
+                  <span>Mobile :</span>
+                  <p>{shippedTo.mobile}</p>
+                </div>
+
+                <div className="so-detail-row">
+                  <span>GSTIN :</span>
+                  <p>{shippedTo.gstin}</p>
+                </div>
+
+                <div className="so-detail-row">
+                  <span>POS :</span>
+                  <p>{shippedTo.pos}</p>
+                </div>
+
+              </div>
+
+            </div>
             </div>
           </div>
 
@@ -573,11 +719,17 @@ export default function SaleOrder() {
 
           {/* ================= ITEMS ================= */}
           <div className="so-card">
-            <h3>Description of Goods</h3>
+            <div className="so-cost-details">
+              <div className="so-cust-icon">
+                  <i className="fas fa-boxes"></i>
+                </div>
+              <h3>Description of Goods</h3>
+            </div>
 
             <table className="so-table">
               <thead>
                 <tr>
+                  <th></th>
                   <th>Description</th>
                   <th>HSN</th>
                   <th>Qty</th>
@@ -595,7 +747,21 @@ export default function SaleOrder() {
                   const amount = qty * price + (qty * price * gst) / 100;
 
                   return (
-                    <tr key={i}>
+                    <tr key={item.id}>
+                      <td>
+                        <button
+                          className="sale-delete-btn"
+                          onClick={() => {
+                            setItems(
+                              items.filter(
+                                (row) => row.id !== item.id
+                              )
+                            );
+                          }}
+                        >
+                          <FaTrash />
+                        </button>
+                      </td>
                       <td><input className="so-input" onChange={(e) => handleChange(i, "description", e.target.value)} /></td>
                       <td><input className="so-input" onChange={(e) => handleChange(i, "hsn", e.target.value)} /></td>
                       <td><input className="so-input" type="number" onChange={(e) => handleChange(i, "qty", e.target.value)} /></td>
@@ -622,26 +788,64 @@ export default function SaleOrder() {
           <div className="so-grid-2">
 
             <div className="so-notes">
-              <label>Notes</label>
+              <label>Narration</label>
               <textarea className="so-textarea" />
             </div>
 
             <div className="so-summary-box">
-              <div>Subtotal: ₹ {subtotal.toFixed(2)}</div>
-              <div>CGST: ₹ {cgst.toFixed(2)}</div>
-              <div>SGST: ₹ {sgst.toFixed(2)}</div>
-              <div>Total GST: ₹ {totalGST.toFixed(2)}</div>
-              <div className="so-total">Grand Total: ₹ {total.toFixed(2)}</div>
+
+              <div className="so-summary-row">
+                <span>Subtotal</span>
+                <strong>₹ {subtotal.toFixed(2)}</strong>
+              </div>
+
+              <div className="so-summary-row">
+                <span>CGST</span>
+                <strong>₹ {cgst.toFixed(2)}</strong>
+              </div>
+
+              <div className="so-summary-row">
+                <span>SGST</span>
+                <strong>₹ {sgst.toFixed(2)}</strong>
+              </div>
+
+              <div className="so-summary-row">
+                <span>Total GST</span>
+                <strong>₹ {totalGST.toFixed(2)}</strong>
+              </div>
+
+              <div className="so-grand-total">
+                <span>Grand Total</span>
+                <strong>₹ {total.toFixed(2)}</strong>
+              </div>
+
             </div>
 
           </div>
 
           {/* ================= ACTIONS ================= */}
-          <div className="so-footer-actions">
-            <button>Save</button>
-            <button>Save & Print</button>
-            <button>Save & Send</button>
-            <button>Cancel</button>
+          <div className="po-footer-actions">
+
+            <button className="po-save-btn">
+              <i className="fas fa-save"></i>
+              Save
+            </button>
+
+            <button className="po-print-btn">
+              <i className="fas fa-print"></i>
+              Save & Print
+            </button>
+
+            <button className="po-send-btn">
+              <i className="fas fa-paper-plane"></i>
+              Save & Send
+            </button>
+
+            <button className="po-cancel-btn">
+              <i className="fas fa-times"></i>
+              Cancel
+            </button>
+
           </div>
 
         </div>

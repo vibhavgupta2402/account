@@ -92,16 +92,333 @@
 }
 
 .po-card h3 {
-  font-size: 15px;
+  font-size: 19px;
   margin-bottom: 6px;
 }
 
+.purchase-ord-dispatch-title{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:16px;
+}
+
+.purchase-ord-dispatch-icon{
+  width:36px;
+  height:36px;
+  border-radius:8px;
+  background:#ebefff;
+  color:#2563eb;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.ord-transporter-create-btn {
+  padding: 0 10px;
+  height: 24px;          /* SAME AS SELECT */
+  line-height: 24px;     /* ADD THIS - matches height for vertical centering */
+  border-radius: 6px;
+  border: none;
+  background: linear-gradient(135deg, #2563eb);
+  color: white;
+  cursor: pointer;
+  white-space: nowrap;
+  text-align: center;    /* CHANGE from 'justify' to 'center' */
+}
+.po-cust-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  background: #ebefff;
+  color: #2563eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  
+}
+
+.po-cust-details{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin:0;
+}
+
+.po-billed-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.po-billed-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  background: #f0f9ff;
+  color: #0ea5e9;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 14px;
+}
+
+.po-billed-title h4 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.po-supplier-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.po-input {
+  width: 260px;
+  height: 34px;
+  border: 1px solid #dbe2ea;
+  border-radius: 6px;
+  padding: 0 12px;
+  font-size: 13px;
+}
+
+.po-add-btn {
+  height: 31px;
+  padding: 0 14px;
+  border: 1px solid #0ea5e9;
+  border-radius: 6px;
+  background: #2563eb;
+  color: white;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.po-add-btn:hover {
+  background: #0e2fe9;
+}
+
+.po-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.po-card-header h3 {
+  font-size: 15px;
+  font-weight: 600;
+  color: #2563eb;
+}
+.po-customer-card-title svg {
+  color: #2563eb;
+  font-size: 14px;
+}
+.po-customer-card-title,
+.po-edit-btn
+ {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.po-party-details {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.po-detail-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 6px;
+  font-size: 13px;
+}
+
+.po-detail-row span {
+  min-width: 70px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.po-detail-row p {
+  margin: 0;
+  color: #6b7280;
+}
+.po-cost-details{
+      display: flex;
+    align-items: center;
+    gap: 16px;
+    border-radius: 14px;
+    padding: 13px 5px;
+    width: fit-content;
+}
+.po-cust-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 12px;
+  background: #f3f0ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.po-cust-icon i {
+    font-size: 18px;
+    color: #2563eb;
+}
+.po-summary-box {
+  width: 320px;
+  margin-left: auto;
+  background: #fff;
+  border: 1px solid #dbeafe;
+  border-radius: 10px;
+  padding: 8px;
+}
+
+.po-summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 1px 0;
+
+  font-size: 13px;
+  color: #374151;
+
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.po-summary-row:last-of-type {
+  border-bottom: none;
+}
+
+.po-summary-row strong {
+  color: #111827;
+  font-weight: 600;
+}
+
+.po-grand-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-top: 10px;
+  padding-top: 12px;
+
+  border-top: 2px solid #dbeafe;
+
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.po-grand-total span {
+  color: #0ea5e9;
+}
+
+.po-grand-total strong {
+  color: #0ea5e9;
+  font-size: 18px;
+}
+
+/* =========================
+   FOOTER ACTIONS
+========================= */
+
+.po-footer-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+.po-footer-actions button {
+  height: 28px;
+  min-width: 10px;
+
+  border-radius: 8px;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 500;
+
+  transition: all 0.2s ease;
+}
+
+/* Save */
+
+.po-save-btn {
+  background: #0ea5e9;
+  color: white;
+  border: none;
+}
+
+.po-save-btn:hover {
+  background: #0284c7;
+}
+
+/* Save & Print */
+
+.po-print-btn {
+  background: white;
+  color: #0ea5e9;
+  border: 1px solid #0ea5e9;
+}
+
+.po-print-btn:hover {
+  background: #f0f9ff;
+}
+
+/* Save & Send */
+
+.po-send-btn {
+  background: #ecfeff;
+  color: #0891b2;
+  border: 1px solid #a5f3fc;
+}
+
+.po-send-btn:hover {
+  background: #cffafe;
+}
+
+/* Cancel */
+
+.po-cancel-btn {
+  background: white;
+  color: #ef4444;
+  border: 1px solid #ef4444;
+}
+
+.po-cancel-btn:hover {
+  background: #fef2f2;
+}
+
+/* Icons */
+
+.po-footer-actions button i {
+  font-size: 12px;
+}
 /* ================== GRID ================== */
 
 .po-grid-2 {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 6px;
+}
+.po-dispatch-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
 }
 
 .po-grid-3 {
@@ -154,6 +471,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 10px;
+  margin-top: 5px;
 }
 
 .po-supplier-card {
@@ -168,7 +486,7 @@
   margin-bottom: 6px;
 }
 
-.po-add-btn {
+/* .po-add-btn {
   background: #2563eb;
   color: white;
   border: none;
@@ -176,7 +494,7 @@
   font-size: 12px;
   border-radius: 4px;
   cursor: pointer;
-}
+} */
 
 /* ================== TABLE ================== */
 

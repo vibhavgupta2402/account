@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import taxImage from "../assets/tax.jpeg";
+import taxImage from "../assets/logo_app.jpeg";
 import "../styles/login.css";
 
 

@@ -1,6 +1,10 @@
 import { useState,useEffect } from "react";
 import { useOutletContext,useNavigate } from "react-router-dom";
 import DatePicker from "react-datepicker";
+import { FaTrash ,FaSearch,FaUniversity,FaTruck,FaPen,FaSave,
+  FaPaperPlane,
+  FaPrint,
+  FaTimes } from "react-icons/fa";
 import "react-datepicker/dist/react-datepicker.css";
 import "../styles/PurchaseOrder.css";
 
@@ -16,8 +20,22 @@ export default function PurchaseOrder() {
   const [buyer, setBuyer] = useState("");
 
   /* ================= SUPPLIER ================= */
-  const [billedTo, setBilledTo] = useState("");
-  const [shippedTo, setShippedTo] = useState("");
+  const [billedTo, setBilledTo] = useState({
+  name: "SALVIA GRAFICS PVT LTD",
+  address: "2652/F Kuti Choraha, Near PVS Mall, Garh Road",
+  contact: "Vikram Singh",
+  mobile: "9897012345",
+  gstin: "09ABMCS5888A12U",
+  pos: "09-Uttar Pradesh"
+});
+  const [shippedTo, setShippedTo] = useState({
+  name: "SALVIA GRAFICS PVT LTD",
+  address: "2652/F Kuti Choraha, Near PVS Mall, Garh Road",
+  contact: "Vikram Singh",
+  mobile: "9897012345",
+  gstin: "09ABMCS5888A12U",
+  pos: "09-Uttar Pradesh"
+});
 
   /* ================= TERMS ================= */
   const [paymentTerms, setPaymentTerms] = useState("");
@@ -61,14 +79,28 @@ useEffect(() => {
 
   /* ================= ITEMS ================= */
   const [items, setItems] = useState([
-    { description: "", hsn: "", qty: "", price: "", gst: "" }
-  ]);
+  {
+    id: Date.now(),
+    desc: "",
+    qty: "",
+    rate: "",
+    tax: "0"
+  }
+]);
 
   const addRow = () => {
     setItems([
-      ...items,
-      { description: "", hsn: "", qty: "", price: "", gst: "" }
-    ]);
+  ...items,
+  {
+    id: Date.now() + Math.random(),
+    product: "",
+    description: "",
+    hsn: "",
+    qty: "",
+    rate: "",
+    tax: "0"
+  }
+]);
   };
 
   const handleChange = (index, field, value) => {
@@ -82,6 +114,7 @@ const [gstin, setGstin] = useState("");
 const [gstData, setGstData] = useState(null);
 const [gstLoading, setGstLoading] = useState(false);
 const [gstError, setGstError] = useState("");
+
 const validateGST = async (value) => {
   if (value.length !== 15) return;
 
@@ -400,7 +433,12 @@ const handleGSTChange = (e) => {
           </div>
           <div className="section-card">
             <div className="dispatch-header">
-            <h2>Dispatch Details</h2>
+            <div className="purchase-ord-dispatch-title">
+              <div className="purchase-ord-dispatch-icon">
+                <i className="fas fa-shipping-fast"></i>
+              </div>
+              <h3>Dispatch Details</h3>
+            </div>
               <div className="transporter-box">
                 <label>Transporter Name</label>
                 <div className="transporter-row"> 
@@ -408,7 +446,7 @@ const handleGSTChange = (e) => {
                     <option>Select</option>
                   </select>
                   <button
-                    className="transporter-create-btn"
+                    className="ord-transporter-create-btn"
                     onClick={() => navigate("/Ledger")}
                   >
                     Create
@@ -439,7 +477,7 @@ const handleGSTChange = (e) => {
                 )}
               </div>
             </div>
-            <div className="dispatch-grid">
+            <div className="po-dispatch-grid">
               <div className="dis-container">
                 <label>Dispatch Doc No</label>
                 <input placeholder="Dispatch Doc No" />
@@ -461,7 +499,7 @@ const handleGSTChange = (e) => {
                   onChange={(date) => setPurordisDate(date)}
                   dateFormat="dd/MM/yyyy"
                   minDate={new Date(new Date().setFullYear(new Date().getFullYear() - 1))} // ✅ last 1 year
-                  className="date-input"
+                  className="ord-date-input"
                   onChangeRaw={(e) => {
                     if (!e || !e.target) return;
                     let value = e.target.value || "";
@@ -513,7 +551,7 @@ const handleGSTChange = (e) => {
                   onChange={(date) => setshippingDate(date)}
                   dateFormat="dd/MM/yyyy"
                   minDate={new Date(new Date().setFullYear(new Date().getFullYear() - 1))} // ✅ last 1 year
-                  className="date-input"
+                  className="ord-date-input"
                   onChangeRaw={(e) => {
                     if (!e || !e.target) return;
                     let value = e.target.value || "";
@@ -551,28 +589,124 @@ const handleGSTChange = (e) => {
 
           {/* ================= SUPPLIER ================= */}
           <div className="po-card">
-            <h3>Supplier Details</h3>
+            <div className="po-cust-details">
+              <div className="po-cust-icon">
+                <i className="fas fa-users"></i>
+              </div>
+              <h3>Supplier Details</h3>
+            </div>
 
             <div className="po-supplier-container">
 
               <div className="po-supplier-card">
-                <h4>Billed To</h4>
-                <input
-                  className="po-input"
-                  placeholder="Enter Supplier"
-                  onChange={(e) => setBilledTo(e.target.value)}
-                />
-                <button className="po-add-btn">Add New</button>
+
+                <div className="po-card-header">
+                  <h3 className="po-customer-card-title">
+                    <FaUniversity />
+                    Billed To
+                  </h3>
+                </div>
+
+                <div className="po-supplier-row">
+                  <input
+                    className="po-input"
+                    placeholder="Search Supplier"
+                  />
+
+                  <button className="po-add-btn">
+                    Add New
+                  </button>
+                </div>
+
+                <div className="po-party-details">
+                  <div className="po-detail-row">
+                    <span>Name :</span>
+                    <p>{billedTo.name}</p>
+                  </div>
+
+                  <div className="po-detail-row">
+                    <span>Address :</span>
+                    <p>{billedTo.address}</p>
+                  </div>
+
+                  <div className="po-detail-row">
+                    <span>Contact :</span>
+                    <p>{billedTo.contact}</p>
+                  </div>
+
+                  <div className="po-detail-row">
+                    <span>Mobile :</span>
+                    <p>{billedTo.mobile}</p>
+                  </div>
+
+                  <div className="po-detail-row">
+                    <span>GSTIN :</span>
+                    <p>{billedTo.gstin}</p>
+                  </div>
+
+                  <div className="po-detail-row">
+                    <span>POS :</span>
+                    <p>{billedTo.pos}</p>
+                  </div>
+
+                </div>
+
               </div>
 
-              <div className="po-supplier-card">
-                <h4>Shipped To</h4>
-                <input
-                  className="po-input"
-                  placeholder="Enter Location"
-                  onChange={(e) => setShippedTo(e.target.value)}
-                />
+            <div className="po-supplier-card">
+
+              <div className="po-card-header">
+                <h3 className="po-customer-card-title">
+                  <FaTruck />
+                  Shipped To
+                </h3>
               </div>
+
+              <div className="po-supplier-row">
+                <input
+                    className="po-input"
+                    placeholder="Search Supplier"
+                  />
+
+                {/* <button className="po-add-btn">
+                  Add New
+                </button> */}
+              </div>
+
+              <div className="po-party-details">
+                <div className="po-detail-row">
+                  <span>Name :</span>
+                  <p>{billedTo.name}</p>
+                </div>
+
+                <div className="po-detail-row">
+                  <span>Address :</span>
+                  <p>{shippedTo.address}</p>
+                </div>
+
+                <div className="po-detail-row">
+                  <span>Contact :</span>
+                  <p>{shippedTo.contact}</p>
+                </div>
+
+                <div className="po-detail-row">
+                  <span>Mobile :</span>
+                  <p>{shippedTo.mobile}</p>
+                </div>
+
+                <div className="po-detail-row">
+                  <span>GSTIN :</span>
+                  <p>{shippedTo.gstin}</p>
+                </div>
+
+                <div className="po-detail-row">
+                  <span>POS :</span>
+                  <p>{shippedTo.pos}</p>
+                </div>
+
+              </div>
+
+            </div>
 
             </div>
           </div>
@@ -603,11 +737,16 @@ const handleGSTChange = (e) => {
 
           {/* ================= ITEMS ================= */}
           <div className="po-card">
-            <h3>Description of Goods</h3>
-
+            <div className="po-cost-details">
+              <div className="po-cust-icon">
+                  <i className="fas fa-boxes"></i>
+                </div>
+              <h3>Description of Goods</h3>
+            </div>
             <table className="po-table">
               <thead>
                 <tr>
+                  <th></th>
                   <th>Description</th>
                   <th>HSN</th>
                   <th>Qty</th>
@@ -625,7 +764,21 @@ const handleGSTChange = (e) => {
                   const amount = qty * price + (qty * price * gst) / 100;
 
                   return (
-                    <tr key={i}>
+                    <tr key={item.id}>
+                      <td>
+                        <button
+                          className="sale-delete-btn"
+                          onClick={() => {
+                            setItems(
+                              items.filter(
+                                (row) => row.id !== item.id
+                              )
+                            );
+                          }}
+                        >
+                          <FaTrash />
+                        </button>
+                      </td>
                       <td>
                         <input
                           className="po-input"
@@ -690,26 +843,64 @@ const handleGSTChange = (e) => {
           <div className="po-grid-2">
 
             <div className="po-notes">
-              <label>Notes</label>
+              <label>Narrations</label>
               <textarea className="po-textarea" />
             </div>
 
             <div className="po-summary-box">
-              <div>Subtotal: ₹ {subtotal.toFixed(2)}</div>
-              <div>CGST: ₹ {cgst.toFixed(2)}</div>
-              <div>SGST: ₹ {sgst.toFixed(2)}</div>
-              <div>Total GST: ₹ {totalGST.toFixed(2)}</div>
-              <div className="po-total">Grand Total: ₹ {total.toFixed(2)}</div>
+
+              <div className="po-summary-row">
+                <span>Subtotal</span>
+                <strong>₹ {subtotal.toFixed(2)}</strong>
+              </div>
+
+              <div className="po-summary-row">
+                <span>CGST</span>
+                <strong>₹ {cgst.toFixed(2)}</strong>
+              </div>
+
+              <div className="po-summary-row">
+                <span>SGST</span>
+                <strong>₹ {sgst.toFixed(2)}</strong>
+              </div>
+
+              <div className="po-summary-row">
+                <span>Total GST</span>
+                <strong>₹ {totalGST.toFixed(2)}</strong>
+              </div>
+
+              <div className="po-grand-total">
+                <span>Grand Total</span>
+                <strong>₹ {total.toFixed(2)}</strong>
+              </div>
+
             </div>
 
           </div>
 
           {/* ================= ACTIONS ================= */}
           <div className="po-footer-actions">
-            <button>Save</button>
-            <button>Save & Print</button>
-            <button>Save & Send</button>
-            <button>Cancel</button>
+
+            <button className="po-save-btn">
+              <i className="fas fa-save"></i>
+              Save
+            </button>
+
+            <button className="po-print-btn">
+              <i className="fas fa-print"></i>
+              Save & Print
+            </button>
+
+            <button className="po-send-btn">
+              <i className="fas fa-paper-plane"></i>
+              Save & Send
+            </button>
+
+            <button className="po-cancel-btn">
+              <i className="fas fa-times"></i>
+              Cancel
+            </button>
+
           </div>
 
         </div>
