@@ -146,6 +146,33 @@
   font-weight: 500;
   flex-shrink: 0;
 }
+.voucher-btn.active {
+  background: var(--btn-color);
+  border-color: var(--btn-color);
+  color: #fff;
+  /* transform: translateY(-1px); */
+  box-shadow:
+    0 8px 20px rgba(0,0,0,0.12),
+    0 0 0 3px color-mix(in srgb, var(--btn-color) 18%, white);
+  position: relative;
+}
+
+.voucher-btn.active .voucher-icon,
+.voucher-btn.active .voucher-label {
+  color: #fff;
+}
+
+.voucher-btn.active::after {
+  content: "";
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: -5px;
+  height: 3px;
+  border-radius: 999px;
+  background: #fff;
+  opacity: 0.9;
+}
 @media (max-width: 1600px) {
   .voucher-label {
     font-size: 11px;

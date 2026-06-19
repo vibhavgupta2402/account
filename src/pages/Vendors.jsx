@@ -609,7 +609,7 @@ const [showPrinting, setShowPrinting] =
         </div>
 
         <div>
-         <button className="vendor-btn" onClick={() => navigate("/Ledger",{state: { defaultGroup: "Sundry Creditors" } })}> Create Vendor</button>
+         <button className="vendor-btn" onClick={() => navigate("/Ledger",{state: { defaultGroup: "Sundry Creditors" } })}>+ Create Vendor</button>
         </div>
 
       </div>

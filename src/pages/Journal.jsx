@@ -84,7 +84,7 @@ const totalCr = rows.reduce(
                     onChange={(date) => setInvoiceDate(date)}
                     dateFormat="dd/MM/yyyy"
                     maxDate={new Date()}   // prevent future date
-                    className="date-input"
+                    className="j-date-input"
     
                     onChangeRaw={(e) => {
                       let value = e.target.value;
@@ -375,7 +375,7 @@ const totalCr = rows.reduce(
                   readOnly
                 />
               </div>
-              <div className="J-total-box">
+              <div className="J-total-box-cr">
                 <span>Total CR</span>
                 <input
                   value={totalCr.toFixed(2)}
@@ -406,7 +406,7 @@ const totalCr = rows.reduce(
             {/* ACTIONS */}
             <div className="J-actions">
               <button className="J-save-btn"><FaSave />Save</button>
-              <button className="sale-cancel-btn"><FaTimes />Cancel</button>
+              <button className="j-cancel-btn"><FaTimes />Cancel</button>
             </div>
           </div>
         </div>
