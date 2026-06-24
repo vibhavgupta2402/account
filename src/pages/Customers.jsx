@@ -844,9 +844,10 @@ const [showPrinting, setShowPrinting] =
               <div className="vendor-dropdown-wrapper">
                 <button
                   className="vendor-toolbar-btn"
-                  onClick={() =>
-                    setShowConfig(!showConfig)
-                  }
+                  onClick={() =>{
+                    setShowConfig(!showConfig);
+                    setShowPrinting(false);
+                  }}
                 >
                   <Settings2 size={15} />
                   Configuration
@@ -886,9 +887,10 @@ const [showPrinting, setShowPrinting] =
               <div className="vendor-dropdown-wrapper">
                 <button
                   className="vendor-toolbar-btn"
-                  onClick={() =>
-                    setShowPrinting(!showPrinting)
-                  }
+                  onClick={() =>{
+                    setShowPrinting(!showPrinting);
+                    setShowConfig(false);
+                  }}
                 >
                   <Printer size={15} />
                   Printing

@@ -171,7 +171,7 @@ export default function SaleOrder() {
 
   return (
     <div className="sale-order-app">
-      <div className={`so-main-content ${collapsed ? "collapsed" : ""}`}>
+      <div className={`main-content ${collapsed ? "collapsed" : ""}`}>
         <div className="so-wrapper">
            
 

@@ -1,0 +1,439 @@
+/* =========================
+   PREMIUM ERP INVENTORY UI
+   ========================= */
+
+:root{
+  --primary:#0f3d6e;
+  --primary-light:#1f5fa7;
+  --primary-soft:#eef5ff;
+
+  --success:#22c55e;
+  --warning:#f59e0b;
+  --danger:#ef4444;
+
+  --bg:#f4f7fb;
+  --card:#ffffff;
+
+  --border:#dbe5f0;
+  --text:#1e293b;
+  --text-light:#64748b;
+
+  --shadow-sm:0 2px 8px rgba(15,23,42,.05);
+  --shadow-md:0 8px 24px rgba(15,23,42,.08);
+
+  --radius:14px;
+}
+
+/* ========================= */
+
+.pro-Item_main{
+  padding:20px;
+  background:var(--bg);
+  min-height:100vh;
+}
+
+/* =========================
+   TABS
+   ========================= */
+
+.pro-tabs{
+  display:flex;
+  gap:12px;
+
+  background:#fff;
+
+  padding:12px;
+
+  border-radius:18px;
+
+  margin-bottom:20px;
+
+  box-shadow:var(--shadow-md);
+}
+
+.tab{
+  padding:12px 24px;
+
+  border-radius:12px;
+
+  font-size:14px;
+  font-weight:600;
+
+  color:var(--text-light);
+
+  cursor:pointer;
+
+  transition:.25s ease;
+}
+
+.tab:hover{
+  background:#f8fafc;
+}
+
+.tab.active{
+  background:linear-gradient(
+    135deg,
+    var(--primary),
+    var(--primary-light)
+  );
+
+  color:#fff;
+
+  box-shadow:
+    0 10px 25px rgba(15,61,110,.25);
+}
+
+/* =========================
+   TOOLBAR
+   ========================= */
+
+.pro-toolbar-modern-v2{
+  background:#fff;
+
+  border-radius:20px;
+
+  padding:22px;
+
+  margin-bottom:22px;
+
+  box-shadow:var(--shadow-md);
+}
+
+.pro-toolbar-top-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  gap:20px;
+}
+
+.pro-toolbar-filters{
+  display:flex;
+  flex-wrap:wrap;
+  gap:18px;
+}
+
+.pro-toolbar-group{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+
+.pro-toolbar-group label{
+  font-size:12px;
+  font-weight:700;
+
+  text-transform:uppercase;
+  letter-spacing:.6px;
+
+  color:var(--text-light);
+}
+
+.pro-toolbar-select,
+.date-range input{
+  height:42px;
+
+  border:1px solid var(--border);
+
+  border-radius:12px;
+
+  padding:0 14px;
+
+  background:#fff;
+}
+
+.date-range{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+/* =========================
+   BUTTON
+   ========================= */
+
+.pro-btn-primary{
+  height:44px;
+
+  padding:0 22px;
+
+  border:none;
+
+  border-radius:12px;
+
+  background:linear-gradient(
+    135deg,
+    var(--primary),
+    var(--primary-light)
+  );
+
+  color:#fff;
+
+  font-weight:700;
+
+  cursor:pointer;
+
+  transition:.25s ease;
+}
+
+.pro-btn-primary:hover{
+  transform:translateY(-2px);
+
+  box-shadow:
+    0 12px 24px rgba(15,61,110,.25);
+}
+
+/* =========================
+   SEARCH
+   ========================= */
+
+.pro-toolbar-search-row{
+  margin-top:18px;
+}
+
+.search-field{
+  position:relative;
+  max-width:360px;
+}
+
+.search-field i{
+  position:absolute;
+  left:14px;
+  top:50%;
+  transform:translateY(-50%);
+
+  color:#94a3b8;
+}
+
+.search-field input{
+  width:100%;
+  height:44px;
+
+  padding-left:42px;
+
+  border:1px solid var(--border);
+
+  border-radius:999px;
+
+  background:#fff;
+}
+
+/* =========================
+   INVENTORY TABLE
+   ========================= */
+
+.pro-inventory-wrapper{
+  background:#fff;
+
+  border-radius:22px;
+
+  overflow:hidden;
+
+  box-shadow:var(--shadow-md);
+}
+
+.pro-inventory-header{
+  display:grid;
+
+  grid-template-columns:
+    2fr
+    1.5fr
+    1fr
+    1.2fr
+    1.2fr
+    .8fr;
+
+  padding:18px 20px;
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--primary),
+      var(--primary-light)
+    );
+
+  color:#fff;
+
+  font-weight:700;
+}
+
+.pro-inventory-row{
+  display:grid;
+
+  grid-template-columns:
+    2fr
+    1.5fr
+    1fr
+    1.2fr
+    1.2fr
+    .8fr;
+
+  align-items:center;
+
+  padding:18px 20px;
+
+  border-bottom:1px solid #edf2f7;
+
+  transition:.2s ease;
+}
+
+.pro-inventory-row:hover{
+  background:#f8fbff;
+}
+
+/* =========================
+   DETAILS BUTTON
+   ========================= */
+
+.pro-details-btn{
+  height:36px;
+
+  border:none;
+
+  border-radius:10px;
+
+  background:#22c55e;
+
+  color:#fff;
+
+  font-weight:600;
+
+  cursor:pointer;
+}
+
+/* =========================
+   DETAILS PANEL
+   ========================= */
+
+.pro-details-box{
+  margin:14px;
+
+  border:1px solid var(--border);
+
+  border-radius:18px;
+
+  overflow:hidden;
+
+  background:#fff;
+}
+
+.pro-details-toolbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+
+  padding:18px 20px;
+
+  background:#f8fbff;
+}
+
+.pro-details-toolbar h4{
+  margin:0;
+  color:var(--primary);
+}
+
+.date-filter{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.date-filter input{
+  height:38px;
+
+  border:1px solid var(--border);
+
+  border-radius:10px;
+
+  padding:0 12px;
+}
+
+/* =========================
+   DETAILS TABLE
+   ========================= */
+
+.pro-details-header{
+  display:grid;
+
+  grid-template-columns:
+    1.2fr
+    1.5fr
+    1fr
+    .8fr
+    .8fr
+    .8fr;
+
+  padding:14px 20px;
+
+  background:#f1f5f9;
+
+  font-weight:700;
+}
+
+.pro-details-row{
+  display:grid;
+
+  grid-template-columns:
+    1.2fr
+    1.5fr
+    1fr
+    .8fr
+    .8fr
+    .8fr;
+
+  padding:14px 20px;
+
+  border-bottom:1px solid #edf2f7;
+}
+
+.pro-details-row:hover{
+  background:#fafcff;
+}
+
+/* =========================
+   ACTIONS
+   ========================= */
+
+.pro-details-actions{
+  display:flex;
+  justify-content:flex-end;
+  gap:12px;
+
+  padding:18px;
+}
+
+.pro-print-btn,
+.pro-pdf-btn{
+  height:40px;
+
+  padding:0 18px;
+
+  border:none;
+
+  border-radius:10px;
+
+  color:#fff;
+
+  cursor:pointer;
+}
+
+.pro-print-btn{
+  background:#0f3d6e;
+}
+
+.pro-pdf-btn{
+  background:#ef4444;
+}
+
+/* =========================
+   STATUS BADGES
+   ========================= */
+
+.status-paid{
+  background:#dcfce7;
+  color:#15803d;
+}
+
+.status-received{
+  background:#dbeafe;
+  color:#1d4ed8;
+}

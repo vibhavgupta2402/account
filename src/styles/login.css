@@ -30,12 +30,12 @@
   justify-content: center;
 }
 
-.image-wrapper {
+.login-image-wrapper {
   position: absolute;
-  top: 0;
-  left: 7;
+  top: 12px;
+  /* left: 87; */
   width: 100%;
-  height: 42%;
+  height: 32%;
   z-index: 0;
 }
 
@@ -65,7 +65,7 @@
   font-weight: 800;
   margin-bottom: 1rem;
   letter-spacing: -0.02em;
-  background: linear-gradient(135deg, rgb(8, 8, 189) 0%, rgb(203, 213, 225) 100%);
+  background: linear-gradient(135deg, rgb(8, 8, 189) 0%, #21074c 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -145,7 +145,7 @@
 
 /* TOP LIGHT EFFECT */
 
-.smartgst-login-card::before {
+/* .smartgst-login-card::before {
   content: "";
 
   position: absolute;
@@ -166,11 +166,11 @@
     );
 
   pointer-events: none;
-}
+} */
 
 /* BOTTOM PURPLE GLOW */
 
-.smartgst-login-card::after {
+/* .smartgst-login-card::after {
   content: "";
 
   position: absolute;
@@ -183,21 +183,16 @@
 
   border-radius: 50%;
 
-  background:
-    radial-gradient(
-      circle,
-      rgba(99,102,241,0.22),
-      transparent 70%
-    );
+ 
 
   filter: blur(10px);
 
   pointer-events: none;
-}
+} */
 
 /* HOVER EFFECT */
 
-.smartgst-login-card:hover {
+/* .smartgst-login-card:hover {
 
   transform:
     perspective(1800px)
@@ -210,7 +205,7 @@
     0 30px 70px rgba(15,23,42,0.26),
     0 12px 30px rgba(99,102,241,0.18),
     inset 0 1px 1px rgba(255,255,255,0.28);
-}
+} */
 
 
 .smartgst-login-card h2 {
@@ -342,7 +337,7 @@
 .smartgst-btn {
   width: 100%;
   padding: 0.875rem;
-  background: linear-gradient(135deg, rgb(15, 23, 42) 0%, rgb(30, 41, 59) 100%);
+  background: linear-gradient(135deg, hwb(263 4% 68%) 100%);
   color: rgb(255, 255, 255);
   border: none;
   border-radius: 12px;

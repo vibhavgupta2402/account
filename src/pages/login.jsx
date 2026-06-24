@@ -113,16 +113,16 @@ export default function Login() {
     <div className="smartgst-login-container">
       {/* Left Side - Image */}
       <div className="smartgst-image-half">
-  <div className="image-wrapper">   {/* ← yeh naya div add kar */}
+  <div className="login-image-wrapper">   {/* ← yeh naya div add kar */}
     <img src={taxImage} alt="SmartGST" className="smartgst-bg-image" />
   </div>
   <div class="smartgst-overlay">
-    <h1 class="smartgst-title">SmartGST</h1>
+    <h1 class="smartgst-title">SmartAccounts</h1>
     <div class="smartgst-powered">Powered by Sharma & Co</div>
     <p class="smartgst-desc">
-    Secure, compliant, and enterprise-grade GST & accounting platform designed
-        for professionals and growing businesses.
+    A secure, reliable, and enterprise-grade accounting platform designed for businesses, accountants, and finance professionals. Streamline financial management, invoicing, bookkeeping, reporting, and operational workflows through one integrated solution.
     </p>
+    <h4 className="smartgst-desc">Designed, developed, and maintained by AnuBrain Technology.</h4>
   </div>
 
 

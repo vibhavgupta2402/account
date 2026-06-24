@@ -1,5 +1,18 @@
 import { useState, useRef, useEffect } from 'react';
 import { useOutletContext } from "react-router-dom";
+import {
+  Search,
+  CalendarDays,
+  Settings2,
+  Printer,
+  FileSpreadsheet,
+  FileText,
+  Eye,
+  Building2,
+  BadgeIndianRupee,
+  ReceiptText,
+   BookOpen
+} from "lucide-react";
 import '../styles/LedgerBook.css';
 
 // Mock data for demonstration
@@ -327,11 +340,20 @@ const LedgerBook = () => {
         {/* Header Bar */}
         <div className="ledger-header-bar">
           <div className="header-title">
-            <h2>Ledger Book</h2>
-            <p className="header-subtitle">View and manage ledger transactions</p>
+            <div className="led-book-hed-title">
+              <div className="led-book-header-icon">
+                <BookOpen size={24} />
+              </div>
+              <div className="led-book-title-content">
+                <h2>Ledger Book</h2>
+                <p className="header-subtitle">
+                  View and manage ledger transactions
+                </p>
+              </div>
+            </div>
           </div>
-          <div className="header-actions">
-            <button className="action-btn secondary">
+          <div className="led-book-header-actions">
+            <button className="action-btn export-led-btn">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
                 <polyline points="14 2 14 8 20 8"/>
@@ -341,7 +363,7 @@ const LedgerBook = () => {
               </svg>
               Export
             </button>
-            <button className="action-btn secondary">
+            <button className="action-btn pdf-led-btn">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
                 <polyline points="7 10 12 15 17 10"/>
@@ -349,7 +371,7 @@ const LedgerBook = () => {
               </svg>
               PDF
             </button>
-            <button className="action-btn secondary">
+            <button className="action-btn print-led-btn">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M6 18L18 18"/>
                 <path d="M6 14L18 14"/>
@@ -416,7 +438,7 @@ const LedgerBook = () => {
                   </svg>
                 </button>
                 {isLedgerDropdownOpen && (
-                  <div className="ledger-dropdown-menu">
+                  <div className="ledgerbook-dropdown-menu">
                     {mockLedgers.map((ledger) => (
                       <button
                         key={ledger.id}

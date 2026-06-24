@@ -1,6 +1,6 @@
 import { useOutletContext } from "react-router-dom";
 import { useState, useMemo, useRef, useEffect } from "react";
-// import "./ItemsServices.css";
+// import "../styles/products.css";
 
 export default function ItemsServices() {
   const { collapsed } = useOutletContext();
@@ -261,10 +261,10 @@ const [openingAmount, setOpeningAmount] = useState("");
 
   return (
     <div className={`main ${collapsed?"collapsed":""}`}>
-      <div className="Item_main">
+      <div className="pro-Item_main">
 
         {/* TABS */}
-        <div className="tabs">
+        <div className="pro-tabs">
           {/* {["products","services","category","units"].map(tab=>( */}
           {["products","services"].map(tab=>(
             <div key={tab}
@@ -305,13 +305,13 @@ const [openingAmount, setOpeningAmount] = useState("");
               </button>
 
             </div> */}
-            <div className="toolbar-modern-v2">
+            <div className="pro-toolbar-modern-v2">
               {/* TOP ROW */}
-              <div className="toolbar-top-row">
+              <div className="pro-toolbar-top-row">
                 {/* LEFT FILTERS */}
-                <div className="toolbar-filters">
+                <div className="pro-toolbar-filters">
                   {/* DATE RANGE */}
-                  <div className="toolbar-group">
+                  <div className="pro-toolbar-group">
                     <label>Date Range</label>
                     <div className="date-range">
                       <input type="date" />
@@ -320,9 +320,9 @@ const [openingAmount, setOpeningAmount] = useState("");
                     </div>
                   </div>
                   {/* DATE PERIOD */}
-                  <div className="toolbar-group">
+                  <div className="pro-toolbar-group">
                     <label>Date Period</label>
-                    <select className="toolbar-select">
+                    <select className="pro-toolbar-select">
                       <option>Yearly</option>
                       <option>Quarterly</option>
                       <option>Monthly</option>
@@ -330,9 +330,9 @@ const [openingAmount, setOpeningAmount] = useState("");
                     </select>
                   </div>
                   {/* CONFIGURATION */}
-                  <div className="toolbar-group">
+                  <div className="pro-toolbar-group">
                     <label>Configuration</label>
-                    <select className="toolbar-select">
+                    <select className="pro-toolbar-select">
                       <option>Item + Godown</option>
                       <option>Item Wise</option>
                       <option>Godown Wise</option>
@@ -340,9 +340,9 @@ const [openingAmount, setOpeningAmount] = useState("");
                   </div>
                 </div>
                 {/* RIGHT BUTTON */}
-                <div className="toolbar-action">
+                <div className="pro-toolbar-action">
                   <button
-                    className="btn-primary"
+                    className="pro-btn-primary"
                     onClick={()=>setShowModal(true)}
                   >
                     + Add Item
@@ -352,7 +352,7 @@ const [openingAmount, setOpeningAmount] = useState("");
               </div>
 
               {/* SEARCH ROW */}
-              <div className="toolbar-search-row">
+              <div className="pro-toolbar-search-row">
 
                 <div className="search-field">
                   <i className="fa fa-search"></i>
@@ -457,10 +457,10 @@ const [openingAmount, setOpeningAmount] = useState("");
                 </div>
               )} */}
             {/* </div> */}
-            <div className="inventory-wrapper">
+            <div className="pro-inventory-wrapper">
 
               {/* TABLE HEADER */}
-              <div className="inventory-header">
+              <div className="pro-inventory-header">
 
                 <span>Goods Description</span>
                 <span>Godown</span>
@@ -477,7 +477,7 @@ const [openingAmount, setOpeningAmount] = useState("");
                 <div key={item.id}>
 
                   {/* MAIN ROW */}
-                  <div className="inventory-row">
+                  <div className="pro-inventory-row">
 
                     <span>{item.name}</span>
 
@@ -503,7 +503,7 @@ const [openingAmount, setOpeningAmount] = useState("");
                     </span>
 
                     <button
-                      className="details-btn"
+                      className="pro-details-btn"
                       onClick={() =>
                         setSelectedProduct(
                           selectedProduct?.id === item.id
@@ -522,10 +522,10 @@ const [openingAmount, setOpeningAmount] = useState("");
                   {/* DETAILS TABLE */}
                   {selectedProduct?.id === item.id && (
 
-                    <div className="details-box">
+                    <div className="pro-details-box">
 
                       {/* TOP */}
-                      <div className="details-toolbar">
+                      <div className="pro-details-toolbar">
 
                         <div>
                           <h4>
@@ -546,7 +546,7 @@ const [openingAmount, setOpeningAmount] = useState("");
                       </div>
 
                       {/* HEADER */}
-                      <div className="details-header">
+                      <div className="pro-details-header">
 
                         <span>Voucher Type</span>
                         <span>Party</span>
@@ -561,7 +561,7 @@ const [openingAmount, setOpeningAmount] = useState("");
                       {item.transactions.map((t) => (
 
                         <div
-                          className="details-row"
+                          className="pro-details-row"
                           key={t.id}
                         >
 
@@ -577,12 +577,12 @@ const [openingAmount, setOpeningAmount] = useState("");
                       ))}
 
                       {/* FOOTER */}
-                      <div className="details-actions">
-                        <button className="print-btn">
+                      <div className="pro-details-actions">
+                        <button className="pro-print-btn">
                           Print
                         </button>
 
-                        <button className="pdf-btn">
+                        <button className="pro-pdf-btn">
                           PDF
                         </button>
                       </div>
@@ -603,16 +603,16 @@ const [openingAmount, setOpeningAmount] = useState("");
         {/* ================= DARK SECTIONS ================= */}
 
         {activeTab==="services" && (
-          <div className="services-wrapper">
+          <div className="pro-services-wrapper">
             {/* TOOLBAR */}
-            <div className="toolbar-modern-v2">
+            <div className="pro-toolbar-modern-v2">
               {/* TOP */}
-              <div className="toolbar-top-row">
-                <div className="toolbar-filters">
+              <div className="pro-toolbar-top-row">
+                <div className="pro-toolbar-filters">
                   {/* DATE PERIOD */}
-                  <div className="toolbar-group">
+                  <div className="pro-toolbar-group">
                     <label>Date Period</label>
-                    <select className="toolbar-select">
+                    <select className="pro-toolbar-select">
                       <option>Yearly</option>
                       <option>Quarterly</option>
                       <option>Monthly</option>
@@ -621,9 +621,9 @@ const [openingAmount, setOpeningAmount] = useState("");
                   </div>
                 </div>
                 {/* BUTTON */}
-                <div className="toolbar-action">
+                <div className="pro-toolbar-action">
                   <button
-                    className="btn-primary"
+                    className="pro-btn-primary"
                     onClick={()=>setShowModal(true)}
                   >
                     + Add Item
@@ -631,7 +631,7 @@ const [openingAmount, setOpeningAmount] = useState("");
                 </div>
               </div>
               {/* SEARCH */}
-              <div className="toolbar-search-row">
+              <div className="pro-toolbar-search-row">
                 <div className="search-field">
                   <i className="fa fa-search"></i>
                   <input
@@ -643,9 +643,9 @@ const [openingAmount, setOpeningAmount] = useState("");
               </div>
             </div>
             {/* TABLE */}
-            <div className="inventory-wrapper">
+            <div className="pro-inventory-wrapper">
               {/* HEADER */}
-              <div className="inventory-header services-grid">
+              <div className="pro-inventory-header services-grid">
                 <span>Goods Description</span>
                 <span>Qty</span>
                 <span>Stock Avg Rate</span>
@@ -661,7 +661,7 @@ const [openingAmount, setOpeningAmount] = useState("");
                 .map((item)=>(
                 <div key={item.id}>
                   {/* MAIN ROW */}
-                  <div className="inventory-row services-grid">
+                  <div className="pro-inventory-row services-grid">
                     <span>{item.name}</span>
                     <span>{item.qty}</span>
                     <span>₹ {item.avgRate}</span>
@@ -669,7 +669,7 @@ const [openingAmount, setOpeningAmount] = useState("");
                       ₹ {item.closingBalance.toLocaleString()}
                     </span>
                     <button
-                      className="details-btn"
+                      className="pro-details-btn"
                       onClick={() =>
                         setSelectedService(
                           selectedService?.id === item.id
@@ -685,9 +685,9 @@ const [openingAmount, setOpeningAmount] = useState("");
                   </div>
                   {/* DETAILS */}
                   {selectedService?.id === item.id && (
-                    <div className="details-box">
+                    <div className="pro-details-box">
                       {/* TOP */}
-                      <div className="details-toolbar">
+                      <div className="pro-details-toolbar">
                         <h4>
                           {item.name} Report
                         </h4>
@@ -698,7 +698,7 @@ const [openingAmount, setOpeningAmount] = useState("");
                         </div>
                       </div>
                       {/* HEADER */}
-                      <div className="details-header">
+                      <div className="pro-details-header">
                         <span>Voucher Type</span>
                         <span>Party</span>
                         <span>Date</span>
@@ -709,7 +709,7 @@ const [openingAmount, setOpeningAmount] = useState("");
                       {/* ROWS */}
                       {item.transactions.map((t)=>(
                         <div
-                          className="details-row"
+                          className="pro-details-row"
                           key={t.id}
                         >
                           <span>{t.type}</span>

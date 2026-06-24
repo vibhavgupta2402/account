@@ -1,6 +1,7 @@
 import { useOutletContext, useNavigate, } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import { FaClipboardList } from "react-icons/fa";
 import GroupSecondary from "../pages/SecGroupList";
 import "../styles/ledger.css";
 
@@ -230,7 +231,15 @@ export default function LedgerCreate() {
         <div className="ledger-wrapper">
 
           {/* HEADER */}
-          <h2 className="heading">Ledger Creation</h2>
+          <div className="ledger-title-section">
+            <div className="ledger-icon-box">
+              <i className="fas fa-book"></i>
+            </div>
+
+            <div>
+              <h2>Ledger Creation</h2>
+            </div>
+          </div>
 
           {/* TOP */}
           <div className="ledger-top">
@@ -314,8 +323,10 @@ export default function LedgerCreate() {
               <div className="under-ledger-row">
                 <label>Under</label>
                 <input
+
                   value={ledger.group}
                   readOnly
+                  placeholder="Select Group"
                   onClick={() => setShowGroup(true)}
                 />
               </div>
